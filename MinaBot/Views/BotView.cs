@@ -21,41 +21,42 @@ namespace MinaBot.Views
             var result = new EmbedBuilder();
             result.Author = new EmbedAuthorBuilder()
             {
-                Name=controller.GetTitle(),
-                IconUrl=author.GetAvatarUrl()
+                Name = controller.GetTitle(),
+                IconUrl = author.GetAvatarUrl()
             };
             result.Color = Color.DarkRed;
             result.ThumbnailUrl = controller.GetUrl();
             result.Description =
                 "Статус: " + controller.GetStatus() + "\n" +
-                "Уровень: " + controller.GetLevel();
+                "Уровень: " + controller.GetLevel() + "\n" +
+                "Деньги: " + controller.getMoney();
             result.ImageUrl = @"https://i.imgur.com/UH85rST.png";
             result.AddField(new EmbedFieldBuilder()
             {
-                Name="Характеристика:",
-                Value=":heart:  **Здоровье**: " + controller.GetHealth() + " hp\n" +
+                Name = "Характеристика:",
+                Value = ":heart:  **Здоровье**: " + controller.GetHealth() + " hp\n" +
                     ":clock4:  **Возраст**: " + controller.GetAge() + " days\n" +
                     ":meat_on_bone:  **Голод**: " + controller.GetHungry() + " p\n" +
                     ":sweat_drops:  **Жажда**: " + controller.GetThirsty() + " p\n",
-                IsInline=true
+                IsInline = true
             });
             result.AddField(new EmbedFieldBuilder()
             {
-                Name="Одежда:",
-                Value="**Шляпа**: "  + controller.GetHat()    + "\n" +
-                    "**Куртка**: "   + controller.GetJacket() + "\n" +
-                    "**Штаны**: "    + controller.GetPants()  + "\n" +
-                    "**Ботинки**: "  + controller.GetBoots(),
+                Name = "Одежда:",
+                Value = "**Шляпа**: " + controller.GetHat() + "\n" +
+                    "**Куртка**: " + controller.GetJacket() + "\n" +
+                    "**Штаны**: " + controller.GetPants() + "\n" +
+                    "**Ботинки**: " + controller.GetBoots(),
                 IsInline = true
             });
             result.AddField(new EmbedFieldBuilder()
             {
                 Name = "Инвентарь:",
-                Value = ":shirt::necktie::dress::bikini::one_piece_swimsuit::kimono::sari::running_shirt_with_sash::martial_arts_uniform:"
+                Value = controller.GetBackpack()
             });
             result.Footer = new EmbedFooterBuilder()
             {
-                Text="Дата рождения: " + controller.GetBirthday().ToString(),
+                Text = "Дата рождения: " + controller.GetBirthday().ToString(),
             };
             return result.Build();
         }

@@ -13,8 +13,7 @@ namespace MinaBot.Models
             hat = EBotHats.CLEAR;
             boots = EBotBoots.CLEAR;
             jacket = EBotJackets.CLEAR;
-            pants = EbotPants.CLEAR;
-
+            pants = EBotPants.CLEAR;
         }
 
         public IItem hat;

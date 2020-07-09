@@ -1,4 +1,5 @@
-﻿using MinaBot.Models;
+﻿using MinaBot.Interfaces;
+using MinaBot.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,6 +20,8 @@ namespace MinaBot.Controllers
             model.toUpLevelScore *= model.level;
         }
 
+
+        public Backpack GetBackpack() => model.backpack;
         public string GetTitle() => model.name;
         public string GetStatus() => model.status;
         public uint GetHealth() => model.health;
@@ -28,9 +31,10 @@ namespace MinaBot.Controllers
         public uint GetHungry() => model.hungry;
         public uint GetThirsty() => model.thirsty;
         public DateTime GetBirthday() => model.birthday;
-        public string GetHat() => model.clothes.hat;
-        public string GetJacket() => model.clothes.jacket;
-        public string GetPants() => model.clothes.pants;
-        public string GetBoots() => model.clothes.boots;
+        public IItem GetHat() => model.clothes.hat;
+        public IItem GetJacket() => model.clothes.jacket;
+        public IItem GetPants() => model.clothes.pants;
+        public IItem GetBoots() => model.clothes.boots;
+        public int getMoney() => model.Money;
     }
 }
