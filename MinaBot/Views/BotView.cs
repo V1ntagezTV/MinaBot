@@ -1,4 +1,5 @@
 ﻿using Discord;
+using MinaBot.BotPackValues;
 using MinaBot.Controllers;
 using MinaBot.Models;
 using System;
@@ -18,6 +19,7 @@ namespace MinaBot.Views
 
         public Embed CreateBotInfoEmbed(IUser author)
         {
+            controller.GetBackpack().Add(EBotPants.BRIEFS);
             var result = new EmbedBuilder();
             result.Author = new EmbedAuthorBuilder()
             {
@@ -33,7 +35,7 @@ namespace MinaBot.Views
             result.ImageUrl = @"https://i.imgur.com/UH85rST.png";
             result.AddField(new EmbedFieldBuilder()
             {
-                Name = "Характеристика:",
+                Name = "`Характеристика:`",
                 Value = ":heart:  **Здоровье**: " + controller.GetHealth() + " hp\n" +
                     ":clock4:  **Возраст**: " + controller.GetAge() + " days\n" +
                     ":meat_on_bone:  **Голод**: " + controller.GetHungry() + " p\n" +
@@ -42,21 +44,21 @@ namespace MinaBot.Views
             });
             result.AddField(new EmbedFieldBuilder()
             {
-                Name = "Одежда:",
-                Value = "**Шляпа**: " + controller.GetHat() + "\n" +
-                    "**Куртка**: " + controller.GetJacket() + "\n" +
-                    "**Штаны**: " + controller.GetPants() + "\n" +
-                    "**Ботинки**: " + controller.GetBoots(),
+                Name = "`Одежда:`",
+                Value = "**Шляпа**: " + controller.GetHat().Name + "\n" +
+                    "**Куртка**: " + controller.GetJacket().Name + "\n" +
+                    "**Штаны**: " + controller.GetPants().Name + "\n" +
+                    "**Ботинки**: " + controller.GetBoots().Name,
                 IsInline = true
             });
             result.AddField(new EmbedFieldBuilder()
             {
-                Name = "Инвентарь:",
-                Value = controller.GetBackpack()
+                Name = "`Инвентарь:`",
+                Value = controller.GetBackpack().ToString()
             });
             result.Footer = new EmbedFooterBuilder()
             {
-                Text = "Дата рождения: " + controller.GetBirthday().ToString(),
+                Text = "Дата рождения: " + controller.GetBirthday().ToString()
             };
             return result.Build();
         }

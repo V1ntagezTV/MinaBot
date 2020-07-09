@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using MinaBot.BotPackValues;
 using MinaBot.Interfaces;
 using System;
 using System.Collections;
@@ -27,8 +28,8 @@ namespace MinaBot.Models
             string result = "";
             for (int ind=0; ind < inventory.Count(); ind++)
             {
-                result += inventory[ind];
-                if (ind % 10 == 10)
+                result += inventory[ind].Name;
+                if (ind % 10 == 0)
                     result += '\n';
             }
             return result;
