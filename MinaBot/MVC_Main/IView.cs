@@ -10,5 +10,6 @@ namespace MinaBot.Main
         abstract IController GetController { get; set; }
         Embed ConstructMainEmbed();
         Embed ConstructInfoEmbed();
+        EmbedFieldBuilder[] CommandFieldSettings(string[] commandOptions);
     }
 }

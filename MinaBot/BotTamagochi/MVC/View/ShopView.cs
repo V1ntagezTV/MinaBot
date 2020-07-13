@@ -31,7 +31,7 @@ namespace MinaBot.Views
             result.Description = controller.GetDescription();
             result.Color = (Discord.Color?)SystemColor.Yellow;
             var fields = this.CommandFieldSettings(command.Options);
-            for (int ind = 0; ind < fields.Length - 1; ind++ )
+            for (int ind = 0; ind < fields.Length; ind++ )
             {
                 result.AddField(fields[ind]);
             }
@@ -47,7 +47,7 @@ namespace MinaBot.Views
         }
 
         public EmbedFieldBuilder[] CommandFieldSettings(string[] commandOptions)
-        {
+        {   
             var result = new List<EmbedFieldBuilder>();
             for (int ind = 0; ind < commandOptions.Length; ind++)
             {
