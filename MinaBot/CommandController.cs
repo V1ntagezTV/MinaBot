@@ -12,7 +12,6 @@ namespace MinaBot.Controllers
         {
             this.model = model;
         }
-
         public string GetPrefix => model.Prefix;
         public string GetInfo => model.Info; 
     }

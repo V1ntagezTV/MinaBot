@@ -11,10 +11,12 @@ namespace MinaBot.Models
             Prefix = prefix;
             Options = options;
         }
+
         public CommandModel(string prefix)
         {
             Prefix = prefix;
         }
+
         public string Prefix;
         public string[] Options;
         public string Info;

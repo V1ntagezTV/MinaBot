@@ -3,6 +3,8 @@ using MinaBot.BotPackValues;
 using MinaBot.Controllers;
 using MinaBot.Main;
 using MinaBot.Models;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using SystemColor = System.Drawing.Color;
 
@@ -28,26 +30,11 @@ namespace MinaBot.Views
             result.Title = controller.GetTitle();
             result.Description = controller.GetDescription();
             result.Color = (Discord.Color?)SystemColor.Yellow;
-            result.AddField(new EmbedFieldBuilder()
+            var fields = this.CommandFieldSettings(command.Options);
+            for (int ind = 0; ind < fields.Length - 1; ind++ )
             {
-                Name = "`Шапочки:`",
-                Value = new EBotHats().ToString()
-            });
-            result.AddField(new EmbedFieldBuilder()
-            {
-                Name = "`Курточки:`",
-                Value = new EBotJackets().ToString()
-            });
-            result.AddField(new EmbedFieldBuilder()
-            {
-                Name = "`Штанишки:`",
-                Value = new EBotPants().ToString()
-            });
-            result.AddField(new EmbedFieldBuilder()
-            {
-                Name = "`Ботиночки:`",
-                Value = new EBotBoots().ToString()
-            });
+                result.AddField(fields[ind]);
+            }
             return result.Build();
         }
 
@@ -57,6 +44,61 @@ namespace MinaBot.Views
             result.Title = controller.GetTitle();
             result.Description = controller.GetDescription();
             return result.Build();
+        }
+
+        public EmbedFieldBuilder[] CommandFieldSettings(string[] commandOptions)
+        {
+            var result = new List<EmbedFieldBuilder>();
+            for (int ind = 0; ind < commandOptions.Length; ind++)
+            {
+                switch (commandOptions[ind])
+                {
+                    case "boots":
+                    case "b":
+                        result.Add(
+                            new EmbedFieldBuilder()
+                            {
+                                Name = "`Ботиночки:`",
+                                Value = new EBotBoots().ToString()
+                            });
+                        break;
+
+                    case "hat":
+                    case "h":
+                    case "hats":
+                        result.Add(
+                            new EmbedFieldBuilder()
+                            {
+                                Name = "`Шапочки:`",
+                                Value = new EBotHats().ToString()
+                            });
+                        break;
+
+                    case "j":
+                    case "jackets":
+                    case "jacket":
+                        result.Add(
+                            new EmbedFieldBuilder()
+                            {
+                                Name = "`Курточки:`",
+                                Value = new EBotJackets().ToString()
+                            });
+                        break;
+
+                    case "pants":
+                    case "p":
+                        result.Add(
+                            new EmbedFieldBuilder()
+                            {
+                                Name = "`Штанишки:`",
+                                Value = new EBotPants().ToString()
+                            });
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return result.ToArray();
         }
     }
 }

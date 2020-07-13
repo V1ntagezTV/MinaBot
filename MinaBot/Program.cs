@@ -1,10 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using MinaBot.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace MinaBot
