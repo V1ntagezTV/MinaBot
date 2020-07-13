@@ -1,30 +1,41 @@
 ﻿using Discord;
 using MinaBot.BotPackValues;
 using MinaBot.Controllers;
+using MinaBot.Interfaces;
+using MinaBot.Main;
 using MinaBot.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Text;
 
+
 namespace MinaBot.Views
 {
-    class BotView
+    class BotView: IView
     {
-        BotController controller;
-        public BotView()
+        private BotController controller;
+        private IMessage message;
+        public BotView(IMessage mess, CommandModel command)
         {
+            message = mess;
             controller = new BotController(new BotModel());
         }
 
-        public Embed CreateBotInfoEmbed(IUser author)
+        IController IView.GetController 
+        {
+            get => controller;
+            set => controller = (BotController)value;
+        }
+
+        public Embed ConstructMainEmbed()
         {
             controller.GetBackpack().Add(EBotPants.BRIEFS);
             var result = new EmbedBuilder();
             result.Author = new EmbedAuthorBuilder()
             {
                 Name = controller.GetTitle(),
-                IconUrl = author.GetAvatarUrl()
+                IconUrl = message.Author.GetAvatarUrl()
             };
             result.Color = Color.DarkRed;
             result.ThumbnailUrl = controller.GetUrl();
@@ -45,10 +56,10 @@ namespace MinaBot.Views
             result.AddField(new EmbedFieldBuilder()
             {
                 Name = "`Одежда:`",
-                Value = "**Шляпа**: " + controller.GetHat().Name + "\n" +
-                    "**Куртка**: " + controller.GetJacket().Name + "\n" +
-                    "**Штаны**: " + controller.GetPants().Name + "\n" +
-                    "**Ботинки**: " + controller.GetBoots().Name,
+                Value = "**Шляпа**: " + controller.GetClothes().Hat.Name + "\n" +
+                    "**Куртка**: " + controller.GetClothes().Jacket.Name + "\n" +
+                    "**Штаны**: " + controller.GetClothes().Pants.Name + "\n" +
+                    "**Ботинки**: " + controller.GetClothes().Boots.Name,
                 IsInline = true
             });
             result.AddField(new EmbedFieldBuilder()
@@ -61,6 +72,11 @@ namespace MinaBot.Views
                 Text = "Дата рождения: " + controller.GetBirthday().ToString()
             };
             return result.Build();
+        }
+
+        public Embed ConstructInfoEmbed()
+        {
+            throw new NotImplementedException();
         }
     }
 }

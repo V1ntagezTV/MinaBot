@@ -7,10 +7,10 @@ using System.Text;
 
 namespace MinaBot.BotPackValues
 {
-    sealed class EBotBoots
+    class EBotBoots
     {
         //1st default item for all
-        public static readonly IItem CLEAR = new Item("", 0);
+        public static readonly IItem CLEAR = new Item("empty", 0);
 
         public static readonly IItem SOCKS = new Item(":socks:", 50);
         public static readonly IItem ICE_SKATE = new Item(":ice_skate:", 2000);
@@ -23,7 +23,28 @@ namespace MinaBot.BotPackValues
         public static readonly IItem ATHLETIC_SHOE = new Item(":athletic_shoe:", 5000);
         public static readonly IItem HIKING_BOOT = new Item(":hiking_boot:", 5000);
 
+        public static List<IItem> ToList()
+        {
+            return new List<IItem>() 
+            { 
+                SOCKS, ICE_SKATE, WOMANS_FLAT_SHOE,
+                HIGH_HEEL, SANDAL, BOOT, BALLET_SHOES,
+                MANS_SHOE, ATHLETIC_SHOE, HIKING_BOOT
+            };
+        }
 
-        
+        public override string ToString()
+        {
+            List<IItem> items = ToList();
+            string result = "";
+            for (int ind = 0; ind < items.Count; ind++)
+            {
+                result += items[ind].Name + " ";
+                if (ind == 9)
+                    result += '\n';
+            }
+            return result;
+        }
+
     }
 }

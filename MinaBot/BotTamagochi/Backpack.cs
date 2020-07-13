@@ -22,7 +22,6 @@ namespace MinaBot.Models
 
         public void Add(IItem item) => inventory.Add(item);
         public void Remove(IItem item) => inventory.Remove(item);
-
         public override string ToString()
         {
             string result = "";

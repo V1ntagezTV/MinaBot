@@ -6,10 +6,10 @@ using System.Text;
 
 namespace MinaBot.BotPackValues
 {
-    sealed class EBotJackets
+    class EBotJackets
     {
         //1st default item for all
-        public static readonly IItem CLEAR = new Item("", 0);
+        public static readonly IItem CLEAR = new Item("empty", 0);
 
         public static readonly IItem COAT = new Item(":coat:", 4000);
         public static readonly IItem LAB_COAT = new Item(":lab_coat:", 1500);
@@ -24,5 +24,27 @@ namespace MinaBot.BotPackValues
         public static readonly IItem SARI = new Item(":sari:", 5000);
         public static readonly IItem RUNNING_SHIRT_WITH_SASH = new Item(":running_shirt_with_sash:", 1200);
         public static readonly IItem MARTIAL_ARTS_UNIFORM = new Item(":martial_arts_uniform:", 3000);
+
+        public static List<IItem> ToList()
+        {
+            return new List<IItem>() 
+            {
+                COAT, LAB_COAT, SAFETY_VEST, WOMANS_CLOTHES,
+                SHIRT, NECKTIE, DRESS, BIKINI, ONE_PIECE_SWIMSUIT,
+                KIMONO, SARI, RUNNING_SHIRT_WITH_SASH, MARTIAL_ARTS_UNIFORM
+            };
+        }
+        public override string ToString()
+        {
+            List<IItem> items = ToList();
+            string result = "";
+            for (int ind = 0; ind < items.Count; ind++)
+            {
+                result += items[ind].Name + " ";
+                if (ind == 9)
+                    result += '\n';
+            }
+            return result;
+        }
     }
 }

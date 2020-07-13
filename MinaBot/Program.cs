@@ -2,6 +2,8 @@
 using Discord.WebSocket;
 using MinaBot.Views;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
@@ -9,15 +11,15 @@ namespace MinaBot
 {
     class Program
     {
-		private DiscordSocketClient client;
-		private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XwMDMg.BkEtu1TJoXxIRcgGLBEA8YJ9HZo";
-		public static void Main(string[] args)
-			=> new Program().MainAsync().GetAwaiter().GetResult();
+        private DiscordSocketClient client;
+        private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XwMDMg.BkEtu1TJoXxIRcgGLBEA8YJ9HZo";
+        public static void Main(string[] args)
+            => new Program().MainAsync().GetAwaiter().GetResult();
 
-		public async Task MainAsync()
-		{
-			client = new DiscordSocketClient();
-			client.Log += Logging;
+        public async Task MainAsync()
+        {
+            client = new DiscordSocketClient();
+            client.Log += Logging;
             client.MessageReceived += MessageReceivedFunction;
             await client.LoginAsync(TokenType.Bot, token);
             await client.StartAsync();
@@ -26,13 +28,14 @@ namespace MinaBot
 
         private async Task MessageReceivedFunction(SocketMessage message)
         {
-            if (message.Author.Id.ToString() == "236546146477146121" && message.Content == "-bot")
+            if (message.Content.StartsWith("mina.") || message.Content.StartsWith("m."))
             {
-                var view = new BotView();
-                await message.Channel.SendMessageAsync(embed: view.CreateBotInfoEmbed(message.Author));
+                string[] commandOptions = message.Content.Split(' ');
+                string commandType = commandOptions[0].Split('.')[1];
+                var command = new CommandManager(commandType, commandOptions);
+                var view = command.GetView(message);
+                await message.Channel.SendMessageAsync(embed: view.ConstructMainEmbed());
             }
-            if (message.Content == "ping")
-                await message.Channel.SendMessageAsync(text: "pong!");
         }
 
         private Task Logging(LogMessage log)
