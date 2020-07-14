@@ -7,13 +7,13 @@ using System.Text;
 
 namespace MinaBot.Controllers
 {
-    class BotController: IController
+    class TamagochiController: IController
     {
-        private BotModel model;
+        private TamagochiModel model;
 
-        public IModel GetModel { get => model; set => model = (BotModel)value; }
+        public IModel GetModel { get => model; set => model = (TamagochiModel)value; }
 
-        public BotController(BotModel model)
+        public TamagochiController(TamagochiModel model)
         {
             this.model = model;
         }

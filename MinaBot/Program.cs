@@ -26,10 +26,8 @@ namespace MinaBot
         {
             if (message.Content.StartsWith("mina.") || message.Content.StartsWith("m."))
             {
-                string[] commandOptions = message.Content.Split(' ');
-                string commandType = commandOptions[0].Split('.')[1];
-                var command = new CommandManager(commandType, commandOptions);
-                var view = command.GetView(message);
+                var model = new AuthorModel(message);
+                var view = model.GetCommand.GetView(message);
                 await message.Channel.SendMessageAsync(embed: view.ConstructMainEmbed());
             }
         }

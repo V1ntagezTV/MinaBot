@@ -12,20 +12,20 @@ using System.Text;
 
 namespace MinaBot.Views
 {
-    class BotView: IView
+    class TamagochiView: IView
     {
-        private BotController controller;
+        private TamagochiController controller;
         private IMessage message;
-        public BotView(IMessage mess, CommandModel command)
+        public TamagochiView(IMessage mess, CommandModel command)
         {
             message = mess;
-            controller = new BotController(new BotModel());
+            controller = new TamagochiController(new TamagochiModel());
         }
 
         IController IView.GetController 
         {
             get => controller;
-            set => controller = (BotController)value;
+            set => controller = (TamagochiController)value;
         }
 
         public Embed ConstructMainEmbed()
@@ -75,6 +75,11 @@ namespace MinaBot.Views
         }
 
         public Embed ConstructInfoEmbed()
+        {
+            throw new NotImplementedException();
+        }
+
+        public EmbedFieldBuilder[] CommandFieldSettings(string[] commandOptions)
         {
             throw new NotImplementedException();
         }

@@ -1,12 +1,11 @@
 ﻿using MinaBot.BotPackValues;
-using MinaBot.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MinaBot.Models
 {
-    public class Clothes
+    class Clothes
     {
         public Clothes()
         {
@@ -16,9 +15,9 @@ namespace MinaBot.Models
             Pants = EBotPants.CLEAR;
         }
 
-        public IItem Hat { get; set; }
-        public IItem Jacket { get; set; }
-        public IItem Pants { get; set; }
-        public IItem Boots { get; set; }
+        public Item Hat { get; set; }
+        public Item Jacket { get; set; }
+        public Item Pants { get; set; }
+        public Item Boots { get; set; }
     }
 }

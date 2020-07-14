@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MinaBot.Models
 {
-    class Item: IItem
+    class Item
     {
         public Item(string name, int price)
         {

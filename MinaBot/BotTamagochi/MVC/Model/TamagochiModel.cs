@@ -8,9 +8,9 @@ using System.Text;
 
 namespace MinaBot.Models
 {
-    public class BotModel: IModel
+    public class TamagochiModel: IModel
     {
-        public BotModel()
+        public TamagochiModel()
         {
             birthday = DateTime.Now;
         }

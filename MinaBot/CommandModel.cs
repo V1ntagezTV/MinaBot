@@ -8,17 +8,12 @@ namespace MinaBot.Models
     {
         public CommandModel(string prefix, string[] options)
         {
-            Prefix = prefix;
-            Options = options;
+            GetPrefix = prefix;
+            GetOptions = options;
         }
 
-        public CommandModel(string prefix)
-        {
-            Prefix = prefix;
-        }
-
-        public string Prefix;
-        public string[] Options;
-        public string Info;
+        public string GetPrefix { get; }
+        public string GetInfo { get; }
+        public string[] GetOptions { get; private set; }
     }
 }

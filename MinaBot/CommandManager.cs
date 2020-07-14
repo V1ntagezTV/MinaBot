@@ -12,30 +12,23 @@ namespace MinaBot
 {
     class CommandManager
     {
-        CommandModel model;
-        public CommandManager(string prefix, string[] args)
-        {
-            model = new CommandModel(prefix, args);
-        }
-        public CommandManager(string prefix)
-        {
-            model = new CommandModel(prefix);
-        }
+        AuthorModel model;
 
         public IView GetView(IMessage message)
         {
+            model = new AuthorModel(message);
             IView result;
-            switch(model.Prefix)
+            switch(model.GetCommand.GetPrefix)
             {
                 case "shop":
-                    result = new ShopView(model);
+                    result = new ShopView(model.GetCommand);
                     break;
                 case "bot":
-                    result = new BotView(message, model);
+                    result = new TamagochiView(message, model.GetCommand);
                     break;
 
                 default:
-                    result = new ExceptionView(message);
+                    result = new ExceptionView();
                     break;
             }
             return result;

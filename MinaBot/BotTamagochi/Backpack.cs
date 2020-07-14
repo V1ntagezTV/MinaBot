@@ -12,16 +12,16 @@ namespace MinaBot.Models
     public class Backpack
     {
         uint places;
-        List<IItem> inventory;
+        List<Item> inventory;
 
         public Backpack(uint places)
         {
             this.places = places;
-            this.inventory = new List<IItem>((int)places);
+            this.inventory = new List<Item>((int)places);
         }
 
-        public void Add(IItem item) => inventory.Add(item);
-        public void Remove(IItem item) => inventory.Remove(item);
+        public void Add(Item item) => inventory.Add(item);
+        public void Remove(Item item) => inventory.Remove(item);
         public override string ToString()
         {
             string result = "";
