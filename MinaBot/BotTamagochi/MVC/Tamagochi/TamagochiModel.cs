@@ -8,7 +8,7 @@ using System.Text;
 
 namespace MinaBot.Models
 {
-    public class TamagochiModel: IModel
+    class TamagochiModel: IModel
     {
         public TamagochiModel()
         {

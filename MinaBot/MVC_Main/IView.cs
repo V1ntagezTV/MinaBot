@@ -1,4 +1,5 @@
 ﻿using Discord;
+using MinaBot.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,9 +8,8 @@ namespace MinaBot.Main
 {
     interface IView
     {
-        abstract IController GetController { get; set; }
-        Embed ConstructMainEmbed();
-        Embed ConstructInfoEmbed();
-        EmbedFieldBuilder[] CommandFieldSettings(string[] commandOptions);
+        MessageResult ConstructMainEmbed();
+        MessageResult ConstructInfoEmbed();
+        public MessageResult ChooseMessageResult(CommandModel command);
     }
 }

@@ -7,31 +7,35 @@ using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
+using static MinaBot.MessageResult;
 
 namespace MinaBot
 {
     class CommandManager
     {
         AuthorModel model;
-
-        public IView GetView(IMessage message)
+        public CommandManager(AuthorModel model)
+        {
+            this.model = model;
+        }
+        public MessageResult GetViewResult(IMessage message)
         {
             model = new AuthorModel(message);
-            IView result;
+            MessageResult result;
             switch(model.GetCommand.GetPrefix)
             {
                 case "shop":
-                    result = new ShopView(model.GetCommand);
+                    result = new ShopView(model).ChooseMessageResult(model.GetCommand);
                     break;
                 case "bot":
-                    result = new TamagochiView(message, model.GetCommand);
+                    result = new TamagochiView(model).ChooseMessageResult(model.GetCommand);
                     break;
 
                 default:
-                    result = new ExceptionView();
-                    break;
+                    throw new Exception("unvalueble message");
             }
             return result;
         }
+
     }
 }

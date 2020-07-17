@@ -1,41 +1,32 @@
 ﻿using Discord;
 using MinaBot.BotPackValues;
 using MinaBot.Controllers;
-using MinaBot.Interfaces;
 using MinaBot.Main;
 using MinaBot.Models;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Text;
-
+using static MinaBot.MessageResult;
 
 namespace MinaBot.Views
 {
     class TamagochiView: IView
     {
         private TamagochiController controller;
-        private IMessage message;
-        public TamagochiView(IMessage mess, CommandModel command)
+        private AuthorModel authorModel;
+        private EmbedBuilder embed;
+        public TamagochiView(AuthorModel model)
         {
-            message = mess;
-            controller = new TamagochiController(new TamagochiModel());
+            this.authorModel = model;
+            controller = new TamagochiController(authorModel);
         }
 
-        IController IView.GetController 
-        {
-            get => controller;
-            set => controller = (TamagochiController)value;
-        }
-
-        public Embed ConstructMainEmbed()
+        public MessageResult ConstructMainEmbed()
         {
             controller.GetBackpack().Add(EBotPants.BRIEFS);
             var result = new EmbedBuilder();
             result.Author = new EmbedAuthorBuilder()
             {
                 Name = controller.GetTitle(),
-                IconUrl = message.Author.GetAvatarUrl()
+                IconUrl = authorModel.GetMessage.Author.GetAvatarUrl()
             };
             result.Color = Color.DarkRed;
             result.ThumbnailUrl = controller.GetUrl();
@@ -71,17 +62,36 @@ namespace MinaBot.Views
             {
                 Text = "Дата рождения: " + controller.GetBirthday().ToString()
             };
-            return result.Build();
+            return new EmbedView<Embed>(result.Build());
         }
-
-        public Embed ConstructInfoEmbed()
+        public MessageResult ConstructInfoEmbed()
         {
             throw new NotImplementedException();
         }
 
-        public EmbedFieldBuilder[] CommandFieldSettings(string[] commandOptions)
+
+        public MessageResult ChooseMessageResult(CommandModel command)
         {
-            throw new NotImplementedException();
+            switch (command.GetOptions)
+            {
+                case "inventory":
+                case "i":
+                    embed.AddField(controller.GetFieldBackpack);
+                    break;
+                case "clothes":
+                case "c":
+                    embed.AddField(controller.GetFieldClothes);
+                    break;
+                case "stats":
+                case "s":
+                    embed.AddField(controller.GetFieldStats);
+                    break;
+                case "info":
+                    return ConstructInfoEmbed();
+                default:
+                    return ConstructMainEmbed();
+            }
+            return new EmbedView<Embed>(embed.Build());
         }
     }
 }

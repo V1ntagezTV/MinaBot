@@ -1,7 +1,4 @@
-﻿using MinaBot.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Discord.Commands;
 
 namespace MinaBot.Models
 {
@@ -17,5 +14,7 @@ namespace MinaBot.Models
         public string Name { get; set; }
         public int Price { get; set; }
         public int SoldPrice { get; set; }
+        public override string ToString() 
+            => Name + " " + Price + " " + SoldPrice;
     }
 }

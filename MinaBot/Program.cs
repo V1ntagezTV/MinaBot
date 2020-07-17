@@ -2,6 +2,7 @@
 using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
+using static MinaBot.MessageResult;
 
 namespace MinaBot
 {
@@ -26,9 +27,20 @@ namespace MinaBot
         {
             if (message.Content.StartsWith("mina.") || message.Content.StartsWith("m."))
             {
-                var model = new AuthorModel(message);
-                var view = model.GetCommand.GetView(message);
-                await message.Channel.SendMessageAsync(embed: view.ConstructMainEmbed());
+                var manager = new CommandManager(new AuthorModel(message));
+                var view = manager.GetViewResult(message);
+                if (view is EmbedView<Embed>)
+                {
+                    await message.Channel.SendMessageAsync(embed: ((EmbedView<Embed>)view).Data);
+                }
+                else if (view is EmbedView<string>)
+                {
+                    await message.Channel.SendMessageAsync(text: ((MessageView)view).Data);
+                }
+                else if (view is ErrorView)
+                {
+                    await message.Channel.SendMessageAsync(text: ((ErrorView)view).Exception.Message);
+                }
             }
         }
 

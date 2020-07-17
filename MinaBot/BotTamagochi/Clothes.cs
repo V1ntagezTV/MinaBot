@@ -19,5 +19,10 @@ namespace MinaBot.Models
         public Item Jacket { get; set; }
         public Item Pants { get; set; }
         public Item Boots { get; set; }
+        public override string ToString()
+        {
+            return Hat.ToString() + "\n" + Jacket.ToString() + "\n" +
+                Pants.ToString() + "\n" + Boots.ToString();
+        }
     }
 }

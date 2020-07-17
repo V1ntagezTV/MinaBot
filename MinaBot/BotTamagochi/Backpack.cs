@@ -1,15 +1,9 @@
-﻿using Microsoft.VisualBasic;
-using MinaBot.BotPackValues;
-using MinaBot.Interfaces;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MinaBot.Models
 {
-    public class Backpack
+    class Backpack
     {
         uint places;
         List<Item> inventory;
@@ -25,7 +19,7 @@ namespace MinaBot.Models
         public override string ToString()
         {
             string result = "";
-            for (int ind=0; ind < inventory.Count(); ind++)
+            for (int ind = 0; ind < inventory.Count(); ind++)
             {
                 result += inventory[ind].Name;
                 if (ind % 10 == 0)

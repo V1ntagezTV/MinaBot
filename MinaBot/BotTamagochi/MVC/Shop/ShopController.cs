@@ -1,10 +1,6 @@
 ﻿using MinaBot.BotPackValues;
-using MinaBot.Interfaces;
 using MinaBot.Models;
 using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Text;
 
 namespace MinaBot.Controllers
 {
@@ -17,7 +13,7 @@ namespace MinaBot.Controllers
         ShopModel model;
         public string GetTitle() => model.Title;
         public string GetDescription() => model.Description;
-        public IItem BuyItem(string itemType, string itemName)
+        public Item BuyItem(string itemType, string itemName)
         {
             return itemType switch
             {
