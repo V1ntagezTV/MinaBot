@@ -1,9 +1,10 @@
-﻿using MinaBot.Models;
+﻿using MinaBot.BotTamagochi.BotPackValues;
+using MinaBot.Models;
 using System.Collections.Generic;
 
 namespace MinaBot.BotPackValues
 {
-    class EBotJackets
+    class EBotJackets: AClothesType
     {
         //1st default item for all
         public static readonly Item CLEAR = new Item("empty", 0);
@@ -22,7 +23,7 @@ namespace MinaBot.BotPackValues
         public static readonly Item RUNNING_SHIRT_WITH_SASH = new Item(":running_shirt_with_sash:", 1200);
         public static readonly Item MARTIAL_ARTS_UNIFORM = new Item(":martial_arts_uniform:", 3000);
 
-        public static List<Item> ToList()
+        public override List<Item> AllClothes()
         {
             return new List<Item>() 
             {
@@ -30,18 +31,6 @@ namespace MinaBot.BotPackValues
                 SHIRT, NECKTIE, DRESS, BIKINI, ONE_PIECE_SWIMSUIT,
                 KIMONO, SARI, RUNNING_SHIRT_WITH_SASH, MARTIAL_ARTS_UNIFORM
             };
-        }
-        public override string ToString()
-        {
-            List<Item> items = ToList();
-            string result = "";
-            for (int ind = 0; ind < items.Count; ind++)
-            {
-                result += items[ind].Name + " ";
-                if (ind == 9)
-                    result += '\n';
-            }
-            return result;
         }
     }
 }

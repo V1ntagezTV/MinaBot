@@ -1,9 +1,10 @@
-﻿using MinaBot.Models;
+﻿using MinaBot.BotTamagochi.BotPackValues;
+using MinaBot.Models;
 using System.Collections.Generic;
 
 namespace MinaBot.BotPackValues
 {
-    class EBotBoots
+    class EBotBoots: AClothesType
     {
         //1st default item for all
         public static readonly Item CLEAR = new Item("empty", 0);
@@ -19,7 +20,7 @@ namespace MinaBot.BotPackValues
         public static readonly Item ATHLETIC_SHOE = new Item(":athletic_shoe:", 5000);
         public static readonly Item HIKING_BOOT = new Item(":hiking_boot:", 5000);
 
-        public static List<Item> ToList()
+        public override List<Item> AllClothes()
         {
             return new List<Item>() 
             { 
@@ -28,31 +29,5 @@ namespace MinaBot.BotPackValues
                 MANS_SHOE, ATHLETIC_SHOE, HIKING_BOOT
             };
         }
-
-        public override string ToString()
-        {
-            List<Item> items = ToList();
-            string result = "";
-            for (int ind = 0; ind < items.Count; ind++)
-            {
-                result += items[ind].Name + " ";
-                if (ind == 9)
-                    result += '\n';
-            }
-            return result;
-        }
-        public string ToStringWithPrices()
-        {
-            List<Item> items = ToList();
-            string result = "";
-            for (int ind = 0; ind < items.Count; ind++)
-            {
-                result += items[ind].Name + " " + items[ind].Price;
-                if (ind == 9)
-                    result += '\n';
-            }
-            return result;
-        }
-
     }
 }

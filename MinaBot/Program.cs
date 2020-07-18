@@ -28,18 +28,22 @@ namespace MinaBot
             if (message.Content.StartsWith("mina.") || message.Content.StartsWith("m."))
             {
                 var manager = new CommandManager(new AuthorModel(message));
-                var view = manager.GetViewResult(message);
-                if (view is EmbedView<Embed>)
+                var view = manager.GetViewResult();
+                if (view is EmbedView<Embed> EmbView)
                 {
-                    await message.Channel.SendMessageAsync(embed: ((EmbedView<Embed>)view).Data);
+                    await message.Channel.SendMessageAsync(embed: EmbView.Data);
                 }
-                else if (view is EmbedView<string>)
+                else if (view is EmbedView<string> EStrView)
                 {
-                    await message.Channel.SendMessageAsync(text: ((MessageView)view).Data);
+                    await message.Channel.SendMessageAsync(text: EStrView.Data);
                 }
-                else if (view is ErrorView)
+                else if (view is ErrorView EView)
                 {
-                    await message.Channel.SendMessageAsync(text: ((ErrorView)view).Exception.Message);
+                    await message.Channel.SendMessageAsync(text: EView.Exception.Message);
+                } 
+                else if (view is BooleanView)
+                {
+                    await message.Channel.SendMessageAsync(text: "true");
                 }
             }
         }

@@ -30,5 +30,13 @@ namespace MinaBot
                 this.Exception = exception;
             }
         }
+        public class BooleanView: MessageResult
+        {
+            public bool Value { get; private set; }
+            public BooleanView(bool value)
+            {
+                Value = value;
+            }
+        }
     }
 }

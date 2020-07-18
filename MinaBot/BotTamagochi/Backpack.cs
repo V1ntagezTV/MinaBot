@@ -15,15 +15,14 @@ namespace MinaBot.Models
         }
 
         public void Add(Item item) => inventory.Add(item);
-        public void Remove(Item item) => inventory.Remove(item);
+        public bool Remove(Item item) => inventory.Remove(item);
+        public bool Remove(int ind) => inventory.Remove(inventory[ind]);
         public override string ToString()
         {
             string result = "";
             for (int ind = 0; ind < inventory.Count(); ind++)
             {
-                result += inventory[ind].Name;
-                if (ind % 10 == 0)
-                    result += '\n';
+                result += inventory[ind].Name + '\n';
             }
             return result;
         }

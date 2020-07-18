@@ -1,9 +1,10 @@
-﻿using MinaBot.Models;
+﻿using MinaBot.BotTamagochi.BotPackValues;
+using MinaBot.Models;
 using System.Collections.Generic;
 
 namespace MinaBot.BotPackValues
 {
-    class EBotHats
+    class EBotHats: AClothesType
     {
         //1st default item for all
         public static readonly Item CLEAR = new Item("empty", 0);
@@ -14,21 +15,9 @@ namespace MinaBot.BotPackValues
         public static readonly Item MORTAR_BOARD = new Item(":mortar_board:", 1000);
         public static readonly Item HELMET_WITH_CROSS = new Item(":helmet_with_cross:", 3000);
         public static readonly Item CROWN = new Item(":crown:", 5000);
-        public static List<Item> ToList()
+        public override List<Item> AllClothes()
         {
             return new List<Item>() { WOMANS_HAT, TOPHAT, BILLED_CAP, MORTAR_BOARD, HELMET_WITH_CROSS, CROWN };
-        }
-        public override string ToString()
-        {
-            List<Item> items = ToList();
-            string result = "";
-            for (int ind = 0; ind < items.Count; ind++)
-            {
-                result += items[ind].Name + " ";
-                if (ind == 9)
-                    result += '\n';
-            }
-            return result;
         }
     }
 }

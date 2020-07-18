@@ -8,8 +8,8 @@ namespace MinaBot.Main
 {
     interface IView
     {
-        MessageResult ConstructMainEmbed();
-        MessageResult ConstructInfoEmbed();
+        EmbedBuilder ConstructMainEmbed();
+        EmbedBuilder ConstructInfoEmbed();
         public MessageResult ChooseMessageResult(CommandModel command);
     }
 }

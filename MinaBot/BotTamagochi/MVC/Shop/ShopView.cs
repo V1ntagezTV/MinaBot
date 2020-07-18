@@ -13,46 +13,44 @@ namespace MinaBot.Views
     class ShopView: IView
     {
         AuthorModel model;
-        EmbedBuilder embed;
-        public ShopView(AuthorModel command)
+        ShopController controller;
+        EmbedBuilder embed = new EmbedBuilder();
+        public ShopView(AuthorModel model)
         {
-            this.model = command;
-        }
-        ShopController controller = new ShopController(new ShopModel());
-        public IController GetController 
-        { 
-            get => (IController)controller;
-            set => controller = (ShopController)value;
+            this.model = model;
+            controller = new ShopController(model);
         }
 
-        public MessageResult ConstructMainEmbed()
+
+        public EmbedBuilder ConstructMainEmbed()
         {
             var result = new EmbedBuilder();
             result.Title = controller.GetTitle();
             result.Description = controller.GetDescription();
             result.Color = (Color?)SystemColor.Yellow;
-            return new EmbedView<Embed>(result.Build());
+            return result;
         }
-
-        public MessageResult ConstructInfoEmbed()
+        public EmbedBuilder ConstructInfoEmbed()
         {
             var result = new EmbedBuilder();
             result.Title = controller.GetTitle();
             result.Description = controller.GetDescription();
-            return new EmbedView<Embed>(result.Build());
+            return result;
         }
         public MessageResult ChooseMessageResult(CommandModel command)
         {
             switch (command.GetOptions)
             {
+                case "buy":
+                    new BooleanView(controller.BuyItem(command.GetArgs[0], Convert.ToInt32(command.GetArgs[1])));
+                    break;
                 case "boots":
                 case "b":
-                    embed.AddField(
-                        new EmbedFieldBuilder() 
-                        { 
-                            Name = "Boots:", 
-                            Value = new EBotBoots().ToStringWithPrices() 
-                        });
+                    embed.AddField(new EmbedFieldBuilder()
+                    {
+                        Name = "Boots:",
+                        Value = new EBotBoots().ToStringInLine()
+                    });
                     break;
                 case "hat":
                 case "h":
@@ -60,7 +58,7 @@ namespace MinaBot.Views
                     embed.AddField(new EmbedFieldBuilder()
                     {
                         Name = "`Hats:`",
-                        Value = new EBotHats().ToString()
+                        Value = new EBotHats().ToStringInLine()
                     });
                     break;
                 case "j":
@@ -69,24 +67,24 @@ namespace MinaBot.Views
                     embed.AddField(new EmbedFieldBuilder()
                     {
                         Name = "`Jackets:`",
-                        Value = new EBotJackets().ToString()
+                        Value = new EBotJackets().ToStringInLine()
                     });
                     break;
                 case "pants":
                 case "p":
                     embed.AddField(new EmbedFieldBuilder()
                     {
-                        Name = "`Jackets:`",
-                        Value = new EBotJackets().ToString()
+                        Name = "`Pants:`",
+                        Value = new EBotPants().ToStringInLine()
                     });
-                        break;
-                    case "info":
-                        return ConstructInfoEmbed();
-                    default:
-                        return ConstructMainEmbed();
+                    break;
+                case "info":
+                    return new EmbedView<Embed>(ConstructInfoEmbed().Build());
+                default:
+                    return new EmbedView<Embed>(ConstructMainEmbed().Build());
             }
             return new EmbedView<Embed>(embed.Build());
         }
 
-}
+    }
 }

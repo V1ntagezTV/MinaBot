@@ -6,23 +6,48 @@ namespace MinaBot.Controllers
 {
     class ShopController
     {
-        public ShopController(ShopModel model)
+        ShopModel shop = new ShopModel();
+        AuthorModel model;
+        public ShopController(AuthorModel model)
         {
             this.model = model;
         }
-        ShopModel model;
-        public string GetTitle() => model.Title;
-        public string GetDescription() => model.Description;
-        public Item BuyItem(string itemType, string itemName)
+
+        public string GetTitle() => shop.Title;
+        public string GetDescription() => shop.Description;
+        public bool BuyItem(string itemType, int number)
         {
-            return itemType switch
+
+            Item item;
+            switch (itemType)
             {
-                ("boots") => EBotBoots.ToList().Find(item => item.Name == itemName),
-                ("hat") => EBotHats.ToList().Find(item => item.Name == itemName),
-                ("jacket") => EBotJackets.ToList().Find(item => item.Name == itemName),
-                ("pants") => EBotPants.ToList().Find(item => item.Name == itemName),
-                _ => throw new Exception(),
-            };
+                case "hats":
+                case "h":
+                    item = new EBotHats().AllClothes()[number];
+                    break;
+                case "jacket":
+                case "j":
+                    item = new EBotBoots().AllClothes()[number];
+                    break;
+                case "boots":
+                case "b":
+                    item = new EBotJackets().AllClothes()[number];
+                    break;
+                case "pants":
+                case "p":
+                    item = new EBotPants().AllClothes()[number];
+                    break;
+                default:
+                    throw new ArgumentException();
+            }
+            if (model.GetTamagochi.Money - item.Price > 0)
+            {
+                model.GetTamagochi.backpack.Add(item);
+                model.GetTamagochi.Money -= item.Price;
+                return true;
+            }
+            return false;
+
         }
     }
 }

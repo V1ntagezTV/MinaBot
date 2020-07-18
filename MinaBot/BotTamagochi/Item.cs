@@ -14,7 +14,6 @@ namespace MinaBot.Models
         public string Name { get; set; }
         public int Price { get; set; }
         public int SoldPrice { get; set; }
-        public override string ToString() 
-            => Name + " " + Price + " " + SoldPrice;
+        public override string ToString() => Name;
     }
 }
