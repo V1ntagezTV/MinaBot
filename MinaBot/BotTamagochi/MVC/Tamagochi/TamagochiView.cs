@@ -27,24 +27,21 @@ namespace MinaBot.Views
 
         public EmbedBuilder ConstructMainEmbed()
         {
-            /***delete after***/
-            controller.GetBackpack().Add(EBotPants.BRIEFS);
-            /***delete after***/
             embed.Color = Color.DarkRed;
 
             embed.ImageUrl = @"https://i.imgur.com/UH85rST.png";
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = "`Характеристика:`",
-                Value = ":heart:  **Здоровье**: " + controller.GetHealth() + " hp\n" +
-                    ":clock4:  **Возраст**: " + controller.GetAge() + " days\n" +
+                Name = "**ХАРАКТЕРИСТИКА:**",
+                Value = ":heart:  **Здоровье**: " + controller.GetHealth() + " хп\n" +
+                    ":clock4:  **Возраст**: " + controller.GetAge() + " дней\n" +
                     ":meat_on_bone:  **Голод**: " + controller.GetHungry() + " p\n" +
                     ":sweat_drops:  **Жажда**: " + controller.GetThirsty() + " p\n",
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = "`Одежда:`",
+                Name = "**ОДЕЖДА:**",
                 Value = "**Шляпа**: " + controller.GetClothes().Hat.Name + "\n" +
                     "**Куртка**: " + controller.GetClothes().Jacket.Name + "\n" +
                     "**Штаны**: " + controller.GetClothes().Pants.Name + "\n" +
@@ -53,7 +50,7 @@ namespace MinaBot.Views
             });
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = "`Инвентарь:`",
+                Name = "**ИНВЕНТАРЬ:**",
                 Value = controller.GetBackpack().ToString()
             });
             embed.Footer = new EmbedFooterBuilder()
@@ -110,7 +107,6 @@ namespace MinaBot.Views
         public EmbedBuilder ConstructInventoryEmbed()
         {
             var inventory = authorModel.GetTamagochi.backpack;
-            controller.GetBackpack().Add(EBotBoots.ATHLETIC_SHOE);
             embed.Color = Color.Green;
             embed.AddField(new EmbedFieldBuilder()
             {
@@ -131,13 +127,12 @@ namespace MinaBot.Views
                     return new EmbedView<Embed>(ConstructClothesEmbed().Build());
                 case "info":
                     return new EmbedView<Embed>(ConstructInfoEmbed().Build());
-                case "r":
-                case "remove":
-                    return new BooleanView(controller
-                        .GetBackpack()
-                        .Remove(Convert.ToInt32(authorModel.GetCommand.GetArgs[0])));
                 case "wear":
                 case "w":
+                    return new BooleanView(controller.WearClothes(Convert.ToInt32(command.GetArgs[0])));
+                case "sold":
+                case "s":
+                    return new BooleanView(controller.SoldItem(Convert.ToInt32(command.GetArgs[0])));
                 case "avatar":
                 case "a":
                     return new EmbedView<Embed>(ConstructAvatarEmbed().Build());

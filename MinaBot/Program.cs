@@ -27,7 +27,7 @@ namespace MinaBot
         {
             if (message.Content.StartsWith("mina.") || message.Content.StartsWith("m."))
             {
-                var manager = new CommandManager(new AuthorModel(message));
+                var manager = new CommandManager(message);
                 var view = manager.GetViewResult();
                 if (view is EmbedView<Embed> EmbView)
                 {
@@ -41,9 +41,9 @@ namespace MinaBot
                 {
                     await message.Channel.SendMessageAsync(text: EView.Exception.Message);
                 } 
-                else if (view is BooleanView)
+                else if (view is BooleanView BoolView)
                 {
-                    await message.Channel.SendMessageAsync(text: "true");
+                    await message.Channel.SendMessageAsync(text: BoolView.Value.ToString());
                 }
             }
         }

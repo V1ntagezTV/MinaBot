@@ -3,6 +3,7 @@ using MinaBot.BotPackValues;
 using MinaBot.Main;
 using MinaBot.Models;
 using System;
+using static MinaBot.BotTamagochi.BotPackValues.AClothesType;
 
 namespace MinaBot.Controllers
 {
@@ -28,22 +29,37 @@ namespace MinaBot.Controllers
         public Clothes GetClothes() => model.GetTamagochi.clothes;
         public int GetMoney() => model.GetTamagochi.Money;
 
-        public EmbedFieldBuilder GetFieldClothes => new EmbedFieldBuilder()
+        public bool WearClothes(int itemInd)
         {
-            Name = "`Clothes:`",
-            Value = model.GetTamagochi.clothes.ToString()
-        };
-        public EmbedFieldBuilder GetFieldBackpack => new EmbedFieldBuilder()
+            if (GetBackpack().AllClothes().Count < itemInd && itemInd < 0)
+                return false;
+
+            var item = GetBackpack().AllClothes()[itemInd];
+
+            if (item is Hat) GetClothes().Hat = item;
+            else if (item is Jacket) GetClothes().Jacket = item;
+            else if (item is Pants) GetClothes().Pants = item;
+            else GetClothes().Boots = item;
+
+            item.Equiped = true;
+            return true;
+        }
+        public bool SoldItem(int itemInd)
         {
-            Name = "`Backpack:`",
-            Value = model.GetTamagochi.backpack.ToString()
-        };
-        public EmbedFieldBuilder GetFieldStats => new EmbedFieldBuilder()
-        {
-            Name = "`Stats:`",
-            Value = model.GetTamagochi.status + "\n"
-                    + model.GetTamagochi.level + "\n"
-                    + model.GetTamagochi.Money
-        };
+            if (GetBackpack().AllClothes().Count < itemInd && itemInd < 0)
+                return false;
+
+            var item = GetBackpack().AllClothes()[itemInd];
+            GetBackpack().Remove(item);
+            model.GetTamagochi.Money += item.SoldPrice;
+            if (item.Equiped)
+            {
+                if (item is Hat) GetClothes().Hat = EBotHats.CLEAR;
+                else if (item is Jacket) GetClothes().Jacket = EBotJackets.CLEAR;
+                else if (item is Pants) GetClothes().Pants = EBotPants.CLEAR;
+                else GetClothes().Boots = EBotBoots.CLEAR;
+            }
+            return true;
+        }
     }
 }

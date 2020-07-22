@@ -11,11 +11,11 @@ namespace MinaBot
     {   
         //TODO: тянем из датабейз
         static TamagochiModel tamagochi = new TamagochiModel();
+
         public AuthorModel(IMessage message)
         {
             string[] commandOptions = message.Content.Split(' ');
             string commandType = commandOptions[0].Split('.')[1];
-            Console.WriteLine(message.Content);
             switch (commandOptions.Length)
             {
                 case 1:
@@ -25,7 +25,6 @@ namespace MinaBot
                     GetCommand = new CommandModel(commandType, commandOptions[1]);
                     break;
                 default:
-                    Console.WriteLine(commandOptions[2..][0]);
                     GetCommand = new CommandModel(commandType, commandOptions[1], commandOptions[2..]);
                     break;
             }

@@ -7,21 +7,21 @@ namespace MinaBot.BotPackValues
     class EBotJackets: AClothesType
     {
         //1st default item for all
-        public static readonly Item CLEAR = new Item("empty", 0);
+        public static readonly Jacket CLEAR = new Jacket("empty", 0);
 
-        public static readonly Item COAT = new Item(":coat:", 4000);
-        public static readonly Item LAB_COAT = new Item(":lab_coat:", 1500);
-        public static readonly Item SAFETY_VEST = new Item(":safety_vest:", 4000);
-        public static readonly Item WOMANS_CLOTHES = new Item(":womans_clothes:", 2500);
-        public static readonly Item SHIRT = new Item(":shirt:", 1000);
-        public static readonly Item NECKTIE = new Item(":necktie:", 2000);
-        public static readonly Item DRESS = new Item(":dress:", 7000);
-        public static readonly Item BIKINI = new Item(":bikini:", 3000);
-        public static readonly Item ONE_PIECE_SWIMSUIT = new Item(":one_piece_swimsuit:", 3000);
-        public static readonly Item KIMONO = new Item(":kimono:", 2000);
-        public static readonly Item SARI = new Item(":sari:", 5000);
-        public static readonly Item RUNNING_SHIRT_WITH_SASH = new Item(":running_shirt_with_sash:", 1200);
-        public static readonly Item MARTIAL_ARTS_UNIFORM = new Item(":martial_arts_uniform:", 3000);
+        public static readonly Jacket COAT = new Jacket(":coat:", 4000);
+        public static readonly Jacket LAB_COAT = new Jacket(":lab_coat:", 1500);
+        public static readonly Jacket SAFETY_VEST = new Jacket(":safety_vest:", 4000);
+        public static readonly Jacket WOMANS_CLOTHES = new Jacket(":womans_clothes:", 2500);
+        public static readonly Jacket SHIRT = new Jacket(":shirt:", 1000);
+        public static readonly Jacket NECKTIE = new Jacket(":necktie:", 2000);
+        public static readonly Jacket DRESS = new Jacket(":dress:", 7000);
+        public static readonly Jacket BIKINI = new Jacket(":bikini:", 3000);
+        public static readonly Jacket ONE_PIECE_SWIMSUIT = new Jacket(":one_piece_swimsuit:", 3000);
+        public static readonly Jacket KIMONO = new Jacket(":kimono:", 2000);
+        public static readonly Jacket SARI = new Jacket(":sari:", 5000);
+        public static readonly Jacket RUNNING_SHIRT_WITH_SASH = new Jacket(":running_shirt_with_sash:", 1200);
+        public static readonly Jacket MARTIAL_ARTS_UNIFORM = new Jacket(":martial_arts_uniform:", 3000);
 
         public override List<Item> AllClothes()
         {
