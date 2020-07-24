@@ -1,4 +1,5 @@
 ﻿using Discord;
+using MinaBot.BotTamagochi.MVC.Tamagochi;
 using MinaBot.Main;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace MinaBot.Models
         public Clothes clothes = new Clothes();
         public Backpack backpack = new Backpack(10);
         public DateTime birthday;
+        public HealthStats Stats;
 
         public uint health = 100;
         public uint thirsty = 100;

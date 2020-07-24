@@ -12,23 +12,9 @@ namespace MinaBot
         //TODO: тянем из датабейз
         static TamagochiModel tamagochi = new TamagochiModel();
 
-        public AuthorModel(IMessage message)
+        public AuthorModel(IMessage message, CommandModel command)
         {
-            string[] commandOptions = message.Content.Split(' ');
-            string commandType = commandOptions[0].Split('.')[1];
-            switch (commandOptions.Length)
-            {
-                case 1:
-                    GetCommand = new CommandModel(commandType);
-                    break;
-                case 2:
-                    GetCommand = new CommandModel(commandType, commandOptions[1]);
-                    break;
-                default:
-                    GetCommand = new CommandModel(commandType, commandOptions[1], commandOptions[2..]);
-                    break;
-            }
-
+            GetCommand = command;
             GetMessage = message;
             //TODO: тянем из датабейз
             GetTamagochi = tamagochi;

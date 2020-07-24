@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
 using System;
 using System.Threading.Tasks;
 using static MinaBot.MessageResult;
@@ -22,10 +23,11 @@ namespace MinaBot
             await client.StartAsync();
             await Task.Delay(-1);
         }
-
+        Hungry hung = new Hungry(DateTime.Now);
         private async Task MessageReceivedFunction(SocketMessage message)
         {
-            if (message.Content.StartsWith("mina.") || message.Content.StartsWith("m."))
+
+            if (message.Content.ToLower().StartsWith("m!") || message.Content.ToLower().StartsWith("mina!"))
             {
                 var manager = new CommandManager(message);
                 var view = manager.GetViewResult();
@@ -45,6 +47,11 @@ namespace MinaBot
                 {
                     await message.Channel.SendMessageAsync(text: BoolView.Value.ToString());
                 }
+            }
+
+            else if (message.Content.ToLower().StartsWith("korm"))
+            {
+                await message.Channel.SendMessageAsync(text: hung.UpdateStats(DateTime.Now));
             }
         }
 
