@@ -13,7 +13,7 @@ namespace MinaBot.Models
     {
         public TamagochiModel()
         {
-            birthday = DateTime.Now;
+            Birthday = DateTime.Now;
         }
 
         public Color color = Color.DarkRed;
@@ -23,14 +23,9 @@ namespace MinaBot.Models
         public string avatarUrl = @"https://i.pinimg.com/736x/16/f9/60/16f960c5ba68b8f0b88f1c571e8bf9ce--kim-taehyung-twice-cute.jpg";
         public uint toUpLevelScore = 100;
         public int Money = 200000;
-        public int AgeDays { get => (DateTime.Now - birthday).Days + 1; }
+        public int AgeDays { get => (DateTime.Now - Birthday).Days + 1; }
         public Clothes clothes = new Clothes();
         public Backpack backpack = new Backpack(10);
-        public DateTime birthday;
-        public StatsController Stats;
-
-        public uint health = 100;
-        public uint thirsty = 100;
-        public uint hungry = 100;
+        public DateTime Birthday { get; }
     }
 }

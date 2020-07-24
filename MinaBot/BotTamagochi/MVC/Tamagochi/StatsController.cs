@@ -6,11 +6,11 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi
 {
     class StatsController
     {
-        public int HP = 100;
         private DateTime lastCheckDate = DateTime.Now;
-        public Hungry hungry = new Hungry(DateTime.Now);
-        public Thirsty thirsty = new Thirsty(DateTime.Now);
-        public TimeSpan MinusTimeCycle { get; } = new TimeSpan(0, 0, 5);
+        public int HP { get; private set; } = 100;
+        public Hungry Hungry = new Hungry(DateTime.Now);
+        public Thirsty Thirsty = new Thirsty(DateTime.Now);
+        public TimeSpan TickLengthTime { get; } = new TimeSpan(0, 30, 0);
 
         public virtual bool Consume(Food food)
         {
@@ -18,19 +18,18 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi
             UpdateStats(calledTime);
             if (HP > 0)
             {
-
                 return true;
             }
             return false;
         }
 
-        public string UpdateStats(DateTime updateTime)
+        public void UpdateStats(DateTime updateTime)
         {
             var lastTime = lastCheckDate;
             while (HP > 0)
             {
                 if (HP <= 0) break;
-                lastTime += MinusTimeCycle;
+                lastTime += TickLengthTime;
                 if (lastTime > updateTime)
                 {
                     lastCheckDate = updateTime;
@@ -38,17 +37,17 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi
                 }
                 else
                 {
-                    hungry.MainPoints -= hungry.MinusValueInCycle;
-                    thirsty.MainPoints -= hungry.MinusValueInCycle;
-                    if (hungry.MainPoints + thirsty.MainPoints < 40)
+                    Hungry.MainPoints -= Hungry.MinusValueInCycle;
+                    Thirsty.MainPoints -= Hungry.MinusValueInCycle;
+                    if (Hungry.MainPoints + Thirsty.MainPoints < 40)
                         HP -= 20;
                 }
             }
-            if (HP > 0)
-            {
-                return $"ЖИВ ЦЕЛ hg: {hungry.MainPoints}, th: {thirsty.MainPoints}, hp: {HP}";
-            }
-            return $"поминки: hg: {hungry.MainPoints}, th: {thirsty.MainPoints}, hp: {HP}";
+            //if (HP > 0)
+            //{
+            //    return $"ЖИВ ЦЕЛ hg: {hungry.MainPoints}, th: {thirsty.MainPoints}, hp: {HP}";
+            //}
+            //return $"поминки: hg: {hungry.MainPoints}, th: {thirsty.MainPoints}, hp: {HP}";
         }
     }
 }

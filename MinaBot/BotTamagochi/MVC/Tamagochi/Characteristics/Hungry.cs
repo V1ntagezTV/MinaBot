@@ -13,12 +13,9 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
         public override int MainPoints
         {
             get => mainPoints;
-            set
-            {
-               mainPoints = value > 0 ? value : 0; 
-            }
+            set => mainPoints = value > 0 ? value : 0;
         }
-        public override int MinusValueInCycle { get; } = 15;
+        public override int MinusValueInCycle => 10;
         public override DateTime LastConsume { get; set; }
     }
 }

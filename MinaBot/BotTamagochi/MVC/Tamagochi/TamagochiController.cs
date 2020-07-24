@@ -1,5 +1,6 @@
 ﻿using Discord;
 using MinaBot.BotPackValues;
+using MinaBot.BotTamagochi.MVC.Tamagochi;
 using MinaBot.Main;
 using MinaBot.Models;
 using System;
@@ -9,26 +10,37 @@ namespace MinaBot.Controllers
 {
     class TamagochiController: IController
     {
+        private StatsController Stats = new StatsController();
         private AuthorModel model;
+
+        public IModel GetModel { get; }
+
         public TamagochiController(AuthorModel model)
         {
             this.model = model;
+            GetModel = (IModel)model;
         }
-        IModel IController.GetModel { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public Backpack GetBackpack() => model.GetTamagochi.backpack;
         public string GetName() => model.GetTamagochi.name;
         public string GetStatus() => model.GetTamagochi.status;
-        public uint GetHealth() => model.GetTamagochi.health;
+        public int GetHealth() => Stats.HP;
         public string GetUrl() => model.GetTamagochi.avatarUrl;
         public uint GetLevel() => model.GetTamagochi.level;
         public int GetAge() => model.GetTamagochi.AgeDays;
-        public uint GetHungry() => model.GetTamagochi.hungry;
-        public uint GetThirsty() => model.GetTamagochi.thirsty;
-        public DateTime GetBirthday() => model.GetTamagochi.birthday;
+        public int GetHungry()
+        {
+            Stats.UpdateStats(DateTime.Now);
+            return Stats.Hungry.MainPoints;
+        }
+        public int GetThirsty()
+        {
+            Stats.UpdateStats(DateTime.Now);
+            return Stats.Thirsty.MainPoints;
+        }
+        public DateTime GetBirthday() => model.GetTamagochi.Birthday;
         public Clothes GetClothes() => model.GetTamagochi.clothes;
         public int GetMoney() => model.GetTamagochi.Money;
-
         public bool WearClothes(int itemInd)
         {
             if (GetBackpack().AllClothes().Count < itemInd && itemInd < 0)

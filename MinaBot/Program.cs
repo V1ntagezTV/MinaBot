@@ -50,11 +50,6 @@ namespace MinaBot
                     await message.Channel.SendMessageAsync(text: BoolView.Value.ToString());
                 }
             }
-
-            else if (message.Content.ToLower().StartsWith("korm"))
-            {
-                await message.Channel.SendMessageAsync(text: hung.UpdateStats(DateTime.Now));
-            }
         }
 
         private Task Logging(LogMessage log)

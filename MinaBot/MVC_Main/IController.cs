@@ -6,6 +6,6 @@ namespace MinaBot.Main
 {
     interface IController
     {
-        public abstract IModel GetModel { get; set; }
+        public abstract IModel GetModel { get; }
     }
 }
