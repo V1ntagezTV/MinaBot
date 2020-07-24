@@ -27,7 +27,7 @@ namespace MinaBot.Models
         public Clothes clothes = new Clothes();
         public Backpack backpack = new Backpack(10);
         public DateTime birthday;
-        public HealthStats Stats;
+        public StatsController Stats;
 
         public uint health = 100;
         public uint thirsty = 100;
