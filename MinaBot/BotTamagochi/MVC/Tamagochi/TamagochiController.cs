@@ -4,7 +4,7 @@ using MinaBot.BotTamagochi.MVC.Tamagochi;
 using MinaBot.Main;
 using MinaBot.Models;
 using System;
-using static MinaBot.BotTamagochi.BotPackValues.AClothesType;
+using static MinaBot.BotTamagochi.BotPackValues.AItemCollections;
 
 namespace MinaBot.Controllers
 {
@@ -28,6 +28,11 @@ namespace MinaBot.Controllers
         public string GetUrl() => model.GetTamagochi.avatarUrl;
         public uint GetLevel() => model.GetTamagochi.level;
         public int GetAge() => model.GetTamagochi.AgeDays;
+        public int GetHappiness()
+        {
+            Stats.UpdateStats(DateTime.Now);
+            return Stats.Happiness.MainPoints;
+        }
         public int GetHungry()
         {
             Stats.UpdateStats(DateTime.Now);

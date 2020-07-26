@@ -8,10 +8,5 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
         public abstract int MinusValueInCycle { get; }
         public abstract int MainPoints { get; set; }
         public abstract DateTime LastConsume { get; set; }
-
-        public ACharacteristic(DateTime createTime)
-        {
-            LastConsume = createTime;
-        }
     }
 }

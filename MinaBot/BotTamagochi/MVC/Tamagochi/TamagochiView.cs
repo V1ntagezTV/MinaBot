@@ -36,7 +36,7 @@ namespace MinaBot.Views
                 Value = ":heart:  **Здоровье**: " + controller.GetHealth() + " хп\n" +
                     ":meat_on_bone:  **Голод**: " + controller.GetHungry() + " p\n" +
                     ":sweat_drops:  **Жажда**: " + controller.GetThirsty() + " p\n" +
-                    ":clock4:  **Возраст**: " + controller.GetAge() + " дней\n",
+                    ":clock4:  **Счастье**: " + controller.GetAge() + " дней\n",
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()

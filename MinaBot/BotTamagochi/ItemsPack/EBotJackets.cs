@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MinaBot.BotPackValues
 {
-    class EBotJackets: AClothesType
+    class EBotJackets: AItemCollections
     {
         //1st default item for all
         public static readonly Jacket CLEAR = new Jacket("empty", 0);

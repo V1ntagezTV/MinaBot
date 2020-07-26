@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MinaBot.BotPackValues
 {
-    class EBotBoots: AClothesType
+    class EBotBoots: AItemCollections
     {
         //1st default item for all
         public static readonly Boots CLEAR = new Boots("empty", 0);

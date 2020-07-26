@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MinaBot.BotTamagochi.BotPackValues
 {
-    abstract class AClothesType
+    abstract class AItemCollections
     {
         public class Hat : Item
         {
@@ -27,6 +27,14 @@ namespace MinaBot.BotTamagochi.BotPackValues
             public Pants(string name, int price) : base(name, price) { }
         }
 
+        public class Food : Item
+        {
+            public int Satiety { get; private set; }
+            public Food(string name, int price, int satiety) : base(name, price)
+            {
+                Satiety = satiety;
+            }
+        }
 
         public abstract List<Item> AllClothes();
 

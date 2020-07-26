@@ -1,24 +1,22 @@
-﻿using MinaBot.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using static MinaBot.Models.Item;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
 {
-    class Hungry: ACharacteristic
+    class Happiness : ACharacteristic
     {
-        public Hungry()
+        private int mainPoints = 100;
+        public Happiness() 
         {
             LastConsume = DateTime.Now;
         }
-        private int mainPoints = 100;
-        public override int MainPoints
+        public override int MinusValueInCycle => 3;
+        public override int MainPoints 
         {
-            get => mainPoints;
+            get => mainPoints; 
             set => mainPoints = value > 0 ? value : 0;
         }
-        public override int MinusValueInCycle => 10;
         public override DateTime LastConsume { get; set; }
     }
 }

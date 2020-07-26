@@ -1,5 +1,6 @@
 ﻿using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
 using System;
+using static MinaBot.BotTamagochi.BotPackValues.AItemCollections;
 using static MinaBot.Models.Item;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi
@@ -8,8 +9,9 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi
     {
         private DateTime lastCheckDate = DateTime.Now;
         public int HP { get; private set; } = 100;
-        public Hungry Hungry = new Hungry(DateTime.Now);
-        public Thirsty Thirsty = new Thirsty(DateTime.Now);
+        public Hungry Hungry = new Hungry();
+        public Thirsty Thirsty = new Thirsty();
+        public Happiness Happiness = new Happiness();
         public TimeSpan TickLengthTime { get; } = new TimeSpan(0, 30, 0);
 
         public virtual bool Consume(Food food)
@@ -39,6 +41,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi
                 {
                     Hungry.MainPoints -= Hungry.MinusValueInCycle;
                     Thirsty.MainPoints -= Hungry.MinusValueInCycle;
+
                     if (Hungry.MainPoints + Thirsty.MainPoints < 40)
                         HP -= 20;
                 }

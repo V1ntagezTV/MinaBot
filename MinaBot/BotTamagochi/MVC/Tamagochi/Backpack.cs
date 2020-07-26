@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace MinaBot.Models
 {
-    class Backpack: AClothesType
+    class Backpack: AItemCollections
     {
-        public int SIZE { get; }
+        public int Lenght { get; }
         List<Item> inventory;
 
         public Backpack(int places)
         {
-            this.SIZE = places;
+            this.Lenght = places;
             this.inventory = new List<Item>((int)places);
         }
         public void Add(Item item) => inventory.Add(item);

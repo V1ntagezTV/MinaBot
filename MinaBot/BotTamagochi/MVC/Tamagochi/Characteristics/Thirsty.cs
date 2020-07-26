@@ -6,7 +6,10 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
 {
     class Thirsty : ACharacteristic
     {
-        public Thirsty(DateTime now): base(now) { }
+        public Thirsty()
+        {
+            LastConsume = DateTime.Now;
+        }
         private int mainPoints = 100;
         public override int MainPoints
         {
