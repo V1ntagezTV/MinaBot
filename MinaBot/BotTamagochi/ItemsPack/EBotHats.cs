@@ -6,7 +6,7 @@ namespace MinaBot.BotPackValues
 {
     class EBotHats: AItemCollections
     {
-        public static readonly Hat WOMANS_HAT = new Hat(":womans_hat:", 1000, ERarity.Rare);
+        public static readonly Hat WOMANS_HAT = new Hat(":womans_hat:", 1000, ERarity.Legendary);
         public static readonly Hat TOPHAT = new Hat(":tophat:", 3000, ERarity.Common);
         public static readonly Hat BILLED_CAP = new Hat(":billed_cap:", 1500, ERarity.Common);
         public static readonly Hat MORTAR_BOARD = new Hat(":mortar_board:", 1000, ERarity.Rare);

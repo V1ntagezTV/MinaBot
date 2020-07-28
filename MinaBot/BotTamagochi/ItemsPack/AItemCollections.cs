@@ -19,18 +19,18 @@ namespace MinaBot.BotTamagochi.BotPackValues
 
         public class Jacket : Item
         {
-            public Jacket(string name, int price) : base(name, price) { }
+            public Jacket(string name, int price, ERarity rarity) : base(name, price, rarity) { }
         }
 
         public class Pants : Item
         {
-            public Pants(string name, int price) : base(name, price) { }
+            public Pants(string name, int price, ERarity rarity) : base(name, price, rarity) { }
         }
 
         public class Food : Item
         {
             public int Satiety { get; private set; }
-            public Food(string name, int price, int satiety) : base(name, price)
+            public Food(string name, int price, int satiety, ERarity rarity) : base(name, price, rarity)
             {
                 Satiety = satiety;
             }
