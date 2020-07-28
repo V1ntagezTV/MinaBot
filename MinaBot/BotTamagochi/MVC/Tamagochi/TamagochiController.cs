@@ -4,79 +4,120 @@ using MinaBot.BotTamagochi.MVC.Tamagochi;
 using MinaBot.Main;
 using MinaBot.Models;
 using System;
+using System.Collections.Generic;
 using static MinaBot.BotTamagochi.BotPackValues.AItemCollections;
 
 namespace MinaBot.Controllers
 {
-    class TamagochiController: IController
+    class TamagochiController : IController<TamagochiModel>
     {
-        private StatsController Stats = new StatsController();
         private AuthorModel model;
-
-        public IModel GetModel { get; }
+        public TamagochiModel GetModel { get => model.GetTamagochi; }
 
         public TamagochiController(AuthorModel model)
         {
             this.model = model;
-            GetModel = (IModel)model;
         }
 
-        public Backpack GetBackpack() => model.GetTamagochi.backpack;
-        public string GetName() => model.GetTamagochi.name;
-        public string GetStatus() => model.GetTamagochi.status;
-        public int GetHealth() => Stats.HP;
-        public string GetUrl() => model.GetTamagochi.avatarUrl;
-        public uint GetLevel() => model.GetTamagochi.level;
-        public int GetAge() => model.GetTamagochi.AgeDays;
-        public int GetHappiness()
-        {
-            Stats.UpdateStats(DateTime.Now);
-            return Stats.Happiness.MainPoints;
-        }
-        public int GetHungry()
-        {
-            Stats.UpdateStats(DateTime.Now);
-            return Stats.Hungry.MainPoints;
-        }
-        public int GetThirsty()
-        {
-            Stats.UpdateStats(DateTime.Now);
-            return Stats.Thirsty.MainPoints;
-        }
-        public DateTime GetBirthday() => model.GetTamagochi.Birthday;
-        public Clothes GetClothes() => model.GetTamagochi.clothes;
-        public int GetMoney() => model.GetTamagochi.Money;
         public bool WearClothes(int itemInd)
         {
-            if (GetBackpack().AllClothes().Count < itemInd && itemInd < 0)
+            if (GetModel.Backpack.AllItems().Count < itemInd && itemInd < 0)
                 return false;
 
-            var item = GetBackpack().AllClothes()[itemInd];
+            var item = GetModel.Backpack.AllItems()[itemInd];
 
-            if (item is Hat) GetClothes().Hat = item;
-            else if (item is Jacket) GetClothes().Jacket = item;
-            else if (item is Pants) GetClothes().Pants = item;
-            else GetClothes().Boots = item;
-
+            if (item is Hat) GetModel.Clothes.Hat = item;
+            else if (item is Jacket) GetModel.Clothes.Jacket = item;
+            else if (item is Pants) GetModel.Clothes.Pants = item;
+            else if (item is Boots) GetModel.Clothes.Boots = item;
+            else return false; // item not clothes
             item.Equiped = true;
             return true;
         }
+
+        public Item GetItemFromBackpack(int itemInd)
+        {
+            if (GetModel.Backpack.AllItems().Count < itemInd && itemInd < 0)
+            {
+                throw new Exception("Index was bigger or lower then your backpack size!");
+            }
+            return GetModel.Backpack.AllItems()[itemInd];
+        }
+
         public bool SoldItem(int itemInd)
         {
-            if (GetBackpack().AllClothes().Count < itemInd && itemInd < 0)
-                return false;
-
-            var item = GetBackpack().AllClothes()[itemInd];
-            GetBackpack().Remove(item);
+            var item = GetItemFromBackpack(itemInd);
+            GetModel.Backpack.Remove(item);
             model.GetTamagochi.Money += item.SoldPrice;
             if (item.Equiped)
             {
-                if (item is Hat) GetClothes().Hat = EBotHats.CLEAR;
-                else if (item is Jacket) GetClothes().Jacket = EBotJackets.CLEAR;
-                else if (item is Pants) GetClothes().Pants = EBotPants.CLEAR;
-                else GetClothes().Boots = EBotBoots.CLEAR;
+                if (item is Hat) GetModel.Clothes.Hat = EBotHats.CLEAR;
+                else if (item is Jacket) GetModel.Clothes.Jacket = EBotJackets.CLEAR;
+                else if (item is Pants) GetModel.Clothes.Pants = EBotPants.CLEAR;
+                else GetModel.Clothes.Boots = EBotBoots.CLEAR;
             }
             return true;
+        }
+        public bool SendToHunting(TimeSpan timeLength)
+        {
+            if (GetModel.CurrentStatus == EBotStatus.SLEEPING || GetModel.CurrentStatus == EBotStatus.HUNTING)
+            {
+                return false;
+            }
+            GetModel.CurrentStatus = EBotStatus.HUNTING;
+            GetModel.Hunting = new Hunting();
+            GetModel.Hunting.sendToHunting(timeLength);
+            return true;
+        }
+
+        public bool Consume(int itemInd)
+        {
+            var item = GetItemFromBackpack(itemInd);
+            if (!(item is Food))
+            {
+                return false;
+            }
+            var food = item as Food;
+            var calledTime = DateTime.Now;
+            UpdateStats(calledTime);
+            if (GetModel.HP > 0)
+            {
+                GetModel.Hungry.MainPoints += food.Satiety;
+                GetModel.Thirsty.MainPoints += food.Satiety / 2; 
+                return true;
+            }
+            return false;
+        }
+
+        public void UpdateStats(DateTime updateTime)
+        {
+            //pet stats
+            var lastTime = GetModel.LastCheckDate;
+            while (GetModel.HP > 0)
+            {
+                if (GetModel.HP <= 0) break;
+                lastTime += GetModel.TickLengthTime;
+                if (lastTime > updateTime)
+                {
+                    GetModel.LastCheckDate = updateTime;
+                    break;
+                }
+                else
+                {
+                    GetModel.Hungry.MainPoints -= GetModel.Hungry.MinusValueInCycle;
+                    GetModel.Thirsty.MainPoints -= GetModel.Hungry.MinusValueInCycle;
+
+                    if (GetModel.Hungry.MainPoints + GetModel.Thirsty.MainPoints < 40)
+                    {
+                        GetModel.HP -= 20;
+                    }
+                }
+            }
+            //hunting status
+            if (GetModel.Hunting.savedSendTime + GetModel.Hunting.sendTimeLength < DateTime.Now)
+            {
+                GetModel.CurrentStatus = GetModel.LastStatus;
+            }
         }
     }
 }

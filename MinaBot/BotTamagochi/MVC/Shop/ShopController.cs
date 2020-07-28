@@ -23,26 +23,26 @@ namespace MinaBot.Controllers
             {
                 case "hats":
                 case "h":
-                    item = new EBotHats().AllClothes()[number];
+                    item = new EBotHats().AllItems()[number];
                     break;
                 case "jacket":
                 case "j":
-                    item = new EBotBoots().AllClothes()[number];
+                    item = new EBotBoots().AllItems()[number];
                     break;
                 case "boots":
                 case "b":
-                    item = new EBotJackets().AllClothes()[number];
+                    item = new EBotJackets().AllItems()[number];
                     break;
                 case "pants":
                 case "p":
-                    item = new EBotPants().AllClothes()[number];
+                    item = new EBotPants().AllItems()[number];
                     break;
                 default:
                     throw new ArgumentException();
             }
             if (model.GetTamagochi.Money - item.Price > 0)
             {
-                model.GetTamagochi.backpack.Add(item);
+                model.GetTamagochi.Backpack.Add(item);
                 model.GetTamagochi.Money -= item.Price;
                 return true;
             }

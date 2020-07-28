@@ -20,7 +20,7 @@ namespace MinaBot.BotPackValues
         public static readonly Boots ATHLETIC_SHOE = new Boots(":athletic_shoe:", 5000);
         public static readonly Boots HIKING_BOOT = new Boots(":hiking_boot:", 5000);
 
-        public override List<Item> AllClothes()
+        public override List<Item> AllItems()
         {
             return new List<Item>() 
             { 

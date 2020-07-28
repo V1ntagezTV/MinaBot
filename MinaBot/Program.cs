@@ -12,7 +12,6 @@ namespace MinaBot
     {
         private DiscordSocketClient client;
         private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XwMDMg.BkEtu1TJoXxIRcgGLBEA8YJ9HZo";
-        StatsController hung = new StatsController();
         public static void Main(string[] args)
             => new Program().MainAsync().GetAwaiter().GetResult();
 

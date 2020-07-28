@@ -11,18 +11,20 @@ namespace MinaBot.Views
     class TamagochiView: IView
     {
         private TamagochiController controller;
+        private TamagochiModel tamagochi;
         private AuthorModel authorModel;
         private EmbedBuilder embed = new EmbedBuilder();
         public TamagochiView(AuthorModel model)
         {
-            this.authorModel = model;
+            tamagochi = model.GetTamagochi;
+            authorModel = model;
             controller = new TamagochiController(model);
             embed.Title = "**Nickname**";
             embed.Description =
-                "**Статус:** " + controller.GetStatus() + "\n" +
-                "**Уровень:** " + controller.GetLevel() + "\n" +
-                "**Деньги:** " + controller.GetMoney();
-            embed.ThumbnailUrl = controller.GetUrl();
+                "**Статус:** " + tamagochi.CurrentStatus + "\n" +
+                "**Уровень:** " + tamagochi.Level + "\n" +
+                "**Деньги:** " + tamagochi.Money;
+            embed.ThumbnailUrl = tamagochi.AvatarURL;
         }
 
         public EmbedBuilder ConstructMainEmbed()
@@ -33,99 +35,101 @@ namespace MinaBot.Views
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**ХАРАКТЕРИСТИКА:**",
-                Value = ":heart:  **Здоровье**: " + controller.GetHealth() + " хп\n" +
-                    ":meat_on_bone:  **Голод**: " + controller.GetHungry() + " p\n" +
-                    ":sweat_drops:  **Жажда**: " + controller.GetThirsty() + " p\n" +
-                    ":clock4:  **Счастье**: " + controller.GetAge() + " дней\n",
+                Value = ":heart:  **Здоровье**: " + controller.GetModel.HP + " хп\n" +
+                    ":meat_on_bone:  **Голод**: " + controller.GetModel.Hungry.MainPoints + " p\n" +
+                    ":sweat_drops:  **Жажда**: " + controller.GetModel.Thirsty.MainPoints + " p\n" +
+                    ":partying_face:   **Счастье**: " + controller.GetModel.Happiness.MainPoints + " p\n",
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**ОДЕЖДА:**",
-                Value = "**Шляпа**: " + controller.GetClothes().Hat.Name + "\n" +
-                    "**Куртка**: " + controller.GetClothes().Jacket.Name + "\n" +
-                    "**Штаны**: " + controller.GetClothes().Pants.Name + "\n" +
-                    "**Ботинки**: " + controller.GetClothes().Boots.Name,
+                Value = "**Шляпа**: " + tamagochi.Clothes.Hat.Name + "\n" +
+                    "**Куртка**: " + tamagochi.Clothes.Jacket.Name + "\n" +
+                    "**Штаны**: " + tamagochi.Clothes.Pants.Name + "\n" +
+                    "**Ботинки**: " + tamagochi.Clothes.Boots.Name,
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**ИНВЕНТАРЬ:**",
-                Value = controller.GetBackpack().ToString()
+                Value = tamagochi.Backpack.ToString()
             });
             embed.Footer = new EmbedFooterBuilder()
             {
-                Text = "Дата рождения: " + controller.GetBirthday().ToString()
+                Text = "Дата рождения: " + tamagochi.Birthday.ToString()
             };
             return embed;
         }
         public EmbedBuilder ConstructInfoEmbed()
         {
             var result = new EmbedBuilder();
-            result.Title = authorModel.GetTamagochi.name;
+            result.Title = tamagochi.Name;
             result.Color = new Color(239, 245, 0); //YELLOW RGB
             return result;
         }
         public EmbedBuilder ConstructAvatarEmbed()
         {
             var result = new EmbedBuilder();
-            result.Title = controller.GetName();
+            result.Title = tamagochi.Name;
             result.Author = new EmbedAuthorBuilder()
             {
                 Name = authorModel.GetMessage.Author.Username,
                 IconUrl = authorModel.GetMessage.Author.GetAvatarUrl()
             };
-            result.ImageUrl = authorModel.GetTamagochi.avatarUrl;
+            result.ImageUrl = tamagochi.AvatarURL;
             return result;
         }
         public EmbedBuilder ConstructClothesEmbed()
         {
-            var clothes = controller.GetClothes();
             embed.Color = Color.Green;
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**Clothes**",
-                Value = ">>> " + clothes.ToString(),
+                Value = ">>> " + tamagochi.Clothes.ToString(),
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**Price**",
-                Value = ">>> " + clothes.Hat.Price + "\n" + clothes.Jacket.Price + "\n" +
-                    clothes.Pants.Price + "\n" + clothes.Boots.Price,
+                Value = ">>> " + tamagochi.Clothes.Hat.Price + "\n" + tamagochi.Clothes.Jacket.Price + "\n" +
+                    tamagochi.Clothes.Pants.Price + "\n" + tamagochi.Clothes.Boots.Price,
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**SoldPrice**",
-                Value = ">>> " + clothes.Hat.SoldPrice + "\n" + clothes.Jacket.SoldPrice + "\n" +
-                    clothes.Pants.SoldPrice + "\n" + clothes.Boots.SoldPrice,
+                Value = ">>> " + tamagochi.Clothes.Hat.SoldPrice + "\n" + tamagochi.Clothes.Jacket.SoldPrice + "\n" +
+                    tamagochi.Clothes.Pants.SoldPrice + "\n" + tamagochi.Clothes.Boots.SoldPrice,
                 IsInline = true
             });
             return embed;
         }
         public EmbedBuilder ConstructInventoryEmbed()
         {
-            var inventory = authorModel.GetTamagochi.backpack;
             embed.Color = Color.Green;
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**Inventory:**",
-                Value = ">>> " + inventory.ToString()
+                Value = ">>> " + tamagochi.Backpack.ToString()
             });
             return embed;
         }
         public MessageResult ChooseMessageResult(CommandModel command)
         {
+
             switch (command.GetOptions)
             {
                 case "inventory":
                 case "i":
+                    controller.UpdateStats(DateTime.Now);
                     return new EmbedView<Embed>(ConstructInventoryEmbed().Build());
                 case "clothes":
                 case "c":
+                    controller.UpdateStats(DateTime.Now);
                     return new EmbedView<Embed>(ConstructClothesEmbed().Build());
                 case "info":
+                    controller.UpdateStats(DateTime.Now);
                     return new EmbedView<Embed>(ConstructInfoEmbed().Build());
                 case "wear":
                 case "w":
@@ -136,8 +140,11 @@ namespace MinaBot.Views
                 case "avatar":
                 case "a":
                     return new EmbedView<Embed>(ConstructAvatarEmbed().Build());
+                case "eat":
+                    return new BooleanView(controller.Consume(Convert.ToInt32(command.GetArgs[0])));
 
                 default:
+                    controller.UpdateStats(DateTime.Now);
                     return new EmbedView<Embed>(ConstructMainEmbed().Build());
             }
         }

@@ -4,8 +4,8 @@ using System.Text;
 
 namespace MinaBot.Main
 {
-    interface IController
+    interface IController<out T>
     {
-        public abstract IModel GetModel { get; }
+        public abstract T GetModel { get; }
     }
 }

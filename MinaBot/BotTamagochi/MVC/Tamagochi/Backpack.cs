@@ -17,7 +17,7 @@ namespace MinaBot.Models
         public void Add(Item item) => inventory.Add(item);
         public bool Remove(Item item) => inventory.Remove(item);
         public bool Remove(int ind) => inventory.Remove(inventory[ind]);
-        public override List<Item> AllClothes() => inventory;
+        public override List<Item> AllItems() => inventory;
         public override string ToString()
         {
             if (base.ToString() == "") return "Backpack is empty.";

@@ -23,7 +23,7 @@ namespace MinaBot.BotPackValues
         public static readonly Jacket RUNNING_SHIRT_WITH_SASH = new Jacket(":running_shirt_with_sash:", 1200);
         public static readonly Jacket MARTIAL_ARTS_UNIFORM = new Jacket(":martial_arts_uniform:", 3000);
 
-        public override List<Item> AllClothes()
+        public override List<Item> AllItems()
         {
             return new List<Item>() 
             {

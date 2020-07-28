@@ -15,7 +15,7 @@ namespace MinaBot.BotPackValues
         public static readonly Hat MORTAR_BOARD = new Hat(":mortar_board:", 1000);
         public static readonly Hat HELMET_WITH_CROSS = new Hat(":helmet_with_cross:", 3000);
         public static readonly Hat CROWN = new Hat(":crown:", 5000);
-        public override List<Item> AllClothes()
+        public override List<Item> AllItems()
         {
             return new List<Item>() { WOMANS_HAT, TOPHAT, BILLED_CAP, MORTAR_BOARD, HELMET_WITH_CROSS, CROWN };
         }

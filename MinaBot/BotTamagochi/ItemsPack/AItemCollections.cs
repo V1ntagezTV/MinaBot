@@ -35,15 +35,26 @@ namespace MinaBot.BotTamagochi.BotPackValues
                 Satiety = satiety;
             }
         }
+        public Item GetRandomItemWithChance()
+        {
+            for (int ind = 0; ind < AllItems().Count; ind++)
+            {
+                int randomChance = new Random().Next(0, 100);
+                if (randomChance < AllItems()[ind].DropChance)
+                {
+                    return AllItems()[ind];
+                }
+            }
 
-        public abstract List<Item> AllClothes();
+        }
+        public abstract List<Item> AllItems();
 
         public override string ToString()
         {
             string result = "";
-            for (int ind = 0; ind < AllClothes().Count; ind++)
+            for (int ind = 0; ind < AllItems().Count; ind++)
             {
-                result += AllClothes()[ind].Name + " ";
+                result += AllItems()[ind].Name + " ";
             }
             return result;
         }
@@ -51,9 +62,9 @@ namespace MinaBot.BotTamagochi.BotPackValues
         public string ToStringWithPriceInLine()
         {
             string result = "";
-            for (int ind = 0; ind < AllClothes().Count; ind++)
+            for (int ind = 0; ind < AllItems().Count; ind++)
             {
-                result += AllClothes()[ind].Name + " " + AllClothes()[ind].Price + "\n";
+                result += AllItems()[ind].Name + " " + AllItems()[ind].Price + "\n";
             }
             return result;
         }
@@ -61,18 +72,18 @@ namespace MinaBot.BotTamagochi.BotPackValues
         public string ToStringInLine()
         {
             string result = "";
-            for (int ind = 0; ind < AllClothes().Count; ind++)
+            for (int ind = 0; ind < AllItems().Count; ind++)
             {
-                result += (ind + 1) + " " + AllClothes()[ind].Name + "\n";
+                result += (ind + 1) + " " + AllItems()[ind].Name + "\n";
             }
             return result;
         }
         public string ToStringPricesInLine()
         {
             string result = "";
-            for (int ind = 0; ind < AllClothes().Count; ind++)
+            for (int ind = 0; ind < AllItems().Count; ind++)
             {
-                result += AllClothes()[ind].Price + "\n";
+                result += AllItems()[ind].Price + "\n";
             }
             return result;
         }
