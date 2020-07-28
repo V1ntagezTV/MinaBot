@@ -15,8 +15,14 @@ namespace MinaBot.Models
             this.inventory = new List<Item>((int)places);
         }
         public void Add(Item item) => inventory.Add(item);
+        public void AddRange(IList<Item> items)
+        {
+            for (int ind = 0; ind < items.Count; ind++)
+            {
+                this.Add(items[ind]);
+            }
+        }
         public bool Remove(Item item) => inventory.Remove(item);
-        public bool Remove(int ind) => inventory.Remove(inventory[ind]);
         public override List<Item> AllItems() => inventory;
         public override string ToString()
         {

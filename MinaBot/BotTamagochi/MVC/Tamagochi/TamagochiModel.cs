@@ -20,7 +20,7 @@ namespace MinaBot.Models
                 currentStatus = value;
             }  
         }
-        public string LastStatus { get; private set; } = "Clear!";
+        public string LastStatus { get; private set; }
         public int Money = 200000;
         public uint ToUpLevelScore = 100;
         public int AgeDays { get => (DateTime.Now - Birthday).Days + 1; }
@@ -36,7 +36,6 @@ namespace MinaBot.Models
         public Thirsty Thirsty { get; private set; } = new Thirsty();
         public Happiness Happiness { get; private set; } = new Happiness();
         // HUNTING
-        public Hunting Hunting { get; set; }
-
+        public Hunting Hunting { get; set; } = new Hunting();
     }
 }

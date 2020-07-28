@@ -9,12 +9,12 @@ namespace MinaBot.BotTamagochi.BotPackValues
     {
         public class Hat : Item
         {
-            public Hat(string name, int price) : base(name, price) { }
+            public Hat(string name, int price, ERarity rarity) : base(name, price, rarity) { }
         }
 
         public class Boots : Item
         {
-            public Boots(string name, int price) : base(name, price) { }
+            public Boots(string name, int price, ERarity rarity) : base(name, price, rarity) { }
         }
 
         public class Jacket : Item
@@ -37,15 +37,15 @@ namespace MinaBot.BotTamagochi.BotPackValues
         }
         public Item GetRandomItemWithChance()
         {
+            var random = new Random();
             for (int ind = 0; ind < AllItems().Count; ind++)
             {
-                int randomChance = new Random().Next(0, 100);
-                if (randomChance < AllItems()[ind].DropChance)
+                if (random.Next(0, 101) <= (int)AllItems()[ind].Rarity)
                 {
                     return AllItems()[ind];
                 }
             }
-
+            return Item.defaultCleanItem;
         }
         public abstract List<Item> AllItems();
 

@@ -6,11 +6,8 @@ namespace MinaBot.BotPackValues
 {
     class EBotBoots: AItemCollections
     {
-        //1st default item for all
-        public static readonly Boots CLEAR = new Boots("empty", 0);
-
-        public static readonly Boots SOCKS = new Boots(":socks:", 50);
-        public static readonly Boots ICE_SKATE = new Boots(":ice_skate:", 2000);
+        public static readonly Boots SOCKS = new Boots(":socks:", 50, ERarity.Common);
+        public static readonly Boots ICE_SKATE = new Boots(":ice_skate:", 2000, ERarity.Rare);
         public static readonly Boots WOMANS_FLAT_SHOE = new Boots(":womans_flat_shoe:", 1000);
         public static readonly Boots HIGH_HEEL = new Boots(":high_heel:", 10000);
         public static readonly Boots SANDAL = new Boots(":sandal:", 1500);
@@ -23,7 +20,7 @@ namespace MinaBot.BotPackValues
         public override List<Item> AllItems()
         {
             return new List<Item>() 
-            { 
+            {
                 SOCKS, ICE_SKATE, WOMANS_FLAT_SHOE,
                 HIGH_HEEL, SANDAL, BOOT, BALLET_SHOES,
                 MANS_SHOE, ATHLETIC_SHOE, HIKING_BOOT

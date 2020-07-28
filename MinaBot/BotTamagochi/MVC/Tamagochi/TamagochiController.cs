@@ -51,22 +51,21 @@ namespace MinaBot.Controllers
             model.GetTamagochi.Money += item.SoldPrice;
             if (item.Equiped)
             {
-                if (item is Hat) GetModel.Clothes.Hat = EBotHats.CLEAR;
-                else if (item is Jacket) GetModel.Clothes.Jacket = EBotJackets.CLEAR;
-                else if (item is Pants) GetModel.Clothes.Pants = EBotPants.CLEAR;
-                else GetModel.Clothes.Boots = EBotBoots.CLEAR;
+                if (item is Hat) GetModel.Clothes.Hat = Item.defaultCleanItem;
+                else if (item is Jacket) GetModel.Clothes.Jacket = Item.defaultCleanItem;
+                else if (item is Pants) GetModel.Clothes.Pants = Item.defaultCleanItem;
+                else GetModel.Clothes.Boots = Item.defaultCleanItem;
             }
             return true;
         }
         public bool SendToHunting(TimeSpan timeLength)
         {
-            if (GetModel.CurrentStatus == EBotStatus.SLEEPING || GetModel.CurrentStatus == EBotStatus.HUNTING)
+            if (GetModel.CurrentStatus == EBotStatus.HUNTING)
             {
                 return false;
             }
             GetModel.CurrentStatus = EBotStatus.HUNTING;
-            GetModel.Hunting = new Hunting();
-            GetModel.Hunting.sendToHunting(timeLength);
+            GetModel.Hunting.SendToHunting(timeLength);
             return true;
         }
 
@@ -113,10 +112,16 @@ namespace MinaBot.Controllers
                     }
                 }
             }
-            //hunting status
-            if (GetModel.Hunting.savedSendTime + GetModel.Hunting.sendTimeLength < DateTime.Now)
+            //hunting
+            UpdateHuntingStatus();
+        }
+        private void UpdateHuntingStatus()
+        {
+            if (GetModel.CurrentStatus == EBotStatus.HUNTING &&
+                GetModel.Hunting.SavedSendTime + GetModel.Hunting.SendTimeLength < DateTime.Now)
             {
                 GetModel.CurrentStatus = GetModel.LastStatus;
+                GetModel.Backpack.AddRange(GetModel.Hunting.WaitingItems);
             }
         }
     }

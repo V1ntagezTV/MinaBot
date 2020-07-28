@@ -1,55 +1,52 @@
-﻿using MinaBot.Models;
+﻿using MinaBot.BotPackValues;
+using MinaBot.BotTamagochi.BotPackValues;
+using MinaBot.Models;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi
 {
     class Hunting
     {
-        public DateTime savedSendTime { get; set; }
-        public TimeSpan sendTimeLength { get; set; }
+        public DateTime SavedSendTime { get; set; }
+        public TimeSpan SendTimeLength { get; set; }
+        public List<Item> WaitingItems { get; private set; }
 
-        public List<Item> sendToHunting(TimeSpan timeLength)
+        public void SendToHunting(TimeSpan timeLength)
         {
-            sendTimeLength = timeLength;
-            savedSendTime = DateTime.Now;
-            return findItems();
+            SendTimeLength = timeLength;
+            SavedSendTime = DateTime.Now;
+            WaitingItems = FindItems();
         }
-        private List<Item> findItems()
+        private List<Item> FindItems()
         {
-            int itemCount = new Random().Next(0, 4);
-            int itemTypeCount = 6;
-            var result = new List<Item>(itemCount);
-            for (int ind = 0; ind < itemCount; ind++)
+            const int MAXITEMCOUNT = 4;
+            const int ITEMTYPESCOUNT = 6; // BOOTS, FOODS, HATS, JACKETS, PANTS, BACKPACK
+            List<Item> resultItemList = new List<Item>(MAXITEMCOUNT);
+            var random = new Random();
+            var currentItemCount = random.Next(0, MAXITEMCOUNT);
+            for (int itemInd = 0; itemInd < currentItemCount; itemInd++)
             {
-                int itemTypeChance = new Random().Next(0, 100);
-                if (itemTypeChance < 20)
+                var itemTypeRnd = random.Next(0, ITEMTYPESCOUNT);
+                Item rndItem = itemTypeRnd switch
                 {
-                    //food
-                }
-                else if (itemTypeChance < 40)
+                    0 => new EBotBoots().GetRandomItemWithChance(),
+                    1 => new EBotFoods().GetRandomItemWithChance(),
+                    2 => new EBotHats().GetRandomItemWithChance(),
+                    3 => new EBotJackets().GetRandomItemWithChance(),
+                    4 => new EBotPants().GetRandomItemWithChance(),
+                    5 => new EBotPants().GetRandomItemWithChance(),
+                    //5 => throw new Exception("need create backpack class!"),
+                    _ => Item.defaultCleanItem,
+                };
+                if (rndItem != Item.defaultCleanItem)
                 {
-                    //boots
-                }
-                else if (itemTypeChance < 50)
-                {
-                    //pants
-                }
-                else if (itemTypeChance < 60)
-                {
-                    //jacket
-                }
-                else if (itemTypeChance < 70)
-                {
-                    //hat
-                }
-                else if (itemTypeChance < 50)
-                {
-                    //backpack
+                    resultItemList.Add(rndItem);
                 }
             }
-            return result;
+            return resultItemList;
         }
     }
 }

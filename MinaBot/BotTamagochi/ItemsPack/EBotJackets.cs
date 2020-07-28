@@ -6,9 +6,6 @@ namespace MinaBot.BotPackValues
 {
     class EBotJackets: AItemCollections
     {
-        //1st default item for all
-        public static readonly Jacket CLEAR = new Jacket("empty", 0);
-
         public static readonly Jacket COAT = new Jacket(":coat:", 4000);
         public static readonly Jacket LAB_COAT = new Jacket(":lab_coat:", 1500);
         public static readonly Jacket SAFETY_VEST = new Jacket(":safety_vest:", 4000);

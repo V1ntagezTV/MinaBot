@@ -142,6 +142,8 @@ namespace MinaBot.Views
                     return new EmbedView<Embed>(ConstructAvatarEmbed().Build());
                 case "eat":
                     return new BooleanView(controller.Consume(Convert.ToInt32(command.GetArgs[0])));
+                case "hunting":
+                    return new BooleanView(controller.SendToHunting(new TimeSpan(0, 0, 5)));
 
                 default:
                     controller.UpdateStats(DateTime.Now);

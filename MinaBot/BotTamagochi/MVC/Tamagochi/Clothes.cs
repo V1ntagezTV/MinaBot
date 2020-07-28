@@ -9,10 +9,10 @@ namespace MinaBot.Models
     {
         public Clothes()
         {
-            Hat = EBotHats.CLEAR;
-            Boots = EBotBoots.CLEAR;
-            Jacket = EBotJackets.CLEAR;
-            Pants = EBotPants.CLEAR;
+            Hat = Item.defaultCleanItem;
+            Boots = Item.defaultCleanItem;
+            Jacket = Item.defaultCleanItem;
+            Pants = Item.defaultCleanItem;
         }
 
         public Item Hat { get; set; }
