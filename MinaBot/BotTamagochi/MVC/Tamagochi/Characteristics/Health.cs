@@ -4,13 +4,13 @@ using System.Text;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
 {
-    class Happiness : ACharacteristic
+    class Health : ACharacteristic
     {
-        public Happiness() 
+        public Health()
         {
             this.MainPoints = 100;
         }
-        public override double MinusEveryMinute => 0.3;
+        public override double MinusEveryMinute => 1;
         public override DateTime LastConsume { get; set; } = DateTime.Now;
     }
 }

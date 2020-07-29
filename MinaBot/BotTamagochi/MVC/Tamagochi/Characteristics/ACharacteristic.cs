@@ -5,8 +5,13 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
 {
     abstract class ACharacteristic
     {
-        public abstract int MinusValueInCycle { get; }
-        public abstract int MainPoints { get; set; }
+        public abstract double MinusEveryMinute { get; }
+        private double mainPoints { get; set; }
+        public double MainPoints 
+        { 
+            get => Math.Round(mainPoints, 1);
+            set => mainPoints = Math.Max(value, 0); 
+        }
         public abstract DateTime LastConsume { get; set; }
     }
 }

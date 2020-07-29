@@ -30,8 +30,7 @@ namespace MinaBot.Models
 
         // STATS
         public DateTime LastCheckDate = DateTime.Now;
-        public TimeSpan TickLengthTime { get; private set; } = new TimeSpan(0, 30, 0);
-        public int HP { get; set; } = 100;
+        public Health Health { get; private set; } = new Health();
         public Hungry Hungry { get; private set; } = new Hungry();
         public Thirsty Thirsty { get; private set; } = new Thirsty();
         public Happiness Happiness { get; private set; } = new Happiness();

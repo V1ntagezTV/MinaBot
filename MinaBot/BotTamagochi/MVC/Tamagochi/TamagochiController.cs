@@ -5,6 +5,8 @@ using MinaBot.Main;
 using MinaBot.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Security.Cryptography;
 using static MinaBot.BotTamagochi.BotPackValues.AItemCollections;
 
 namespace MinaBot.Controllers
@@ -79,7 +81,7 @@ namespace MinaBot.Controllers
             var food = item as Food;
             var calledTime = DateTime.Now;
             UpdateStats(calledTime);
-            if (GetModel.HP > 0)
+            if (GetModel.Health.MainPoints > 0)
             {
                 GetModel.Hungry.MainPoints += food.Satiety;
                 GetModel.Thirsty.MainPoints += food.Satiety / 2; 
@@ -91,34 +93,32 @@ namespace MinaBot.Controllers
         public void UpdateStats(DateTime updateTime)
         {
             //pet stats
-            var lastTime = GetModel.LastCheckDate;
-            while (GetModel.HP > 0)
+            var pastTime = updateTime - GetModel.LastCheckDate;
+            if (pastTime.TotalMinutes >= 2)
             {
-                if (GetModel.HP <= 0) break;
-                lastTime += GetModel.TickLengthTime;
-                if (lastTime > updateTime)
+                GetModel.LastCheckDate = updateTime;
+                GetModel.Hungry.MainPoints -= pastTime.TotalMinutes * GetModel.Hungry.MinusEveryMinute;
+                GetModel.Thirsty.MainPoints -= pastTime.TotalMinutes * GetModel.Thirsty.MinusEveryMinute;
+                GetModel.Happiness.MainPoints -= pastTime.TotalMinutes * GetModel.Happiness.MinusEveryMinute;
+                if (GetModel.Hungry.MainPoints + GetModel.Thirsty.MainPoints < 40)
                 {
-                    GetModel.LastCheckDate = updateTime;
-                    break;
-                }
-                else
-                {
-                    GetModel.Hungry.MainPoints -= GetModel.Hungry.MinusValueInCycle;
-                    GetModel.Thirsty.MainPoints -= GetModel.Hungry.MinusValueInCycle;
-
-                    if (GetModel.Hungry.MainPoints + GetModel.Thirsty.MainPoints < 40)
-                    {
-                        GetModel.HP -= 20;
-                    }
+                    var pastPoints = 40 - GetModel.Hungry.MainPoints + GetModel.Thirsty.MainPoints;
+                    GetModel.Health.MainPoints -= pastTime.TotalMinutes * (pastPoints / (GetModel.Hungry.MinusEveryMinute + GetModel.Thirsty.MinusEveryMinute));
                 }
             }
+
+
+            
             //hunting
             UpdateHuntingStatus();
         }
         private void UpdateHuntingStatus()
         {
-            if (GetModel.CurrentStatus == EBotStatus.HUNTING &&
-                GetModel.Hunting.SavedSendTime + GetModel.Hunting.SendTimeLength < DateTime.Now)
+            if (GetModel.CurrentStatus != EBotStatus.HUNTING)
+            {
+                return;
+            }
+            if (GetModel.Hunting.SavedSendTime + GetModel.Hunting.SendTimeLength < DateTime.Now)
             {
                 GetModel.CurrentStatus = GetModel.LastStatus;
                 GetModel.Backpack.AddRange(GetModel.Hunting.WaitingItems);

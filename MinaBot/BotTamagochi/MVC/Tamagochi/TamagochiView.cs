@@ -24,18 +24,15 @@ namespace MinaBot.Views
                 "**Статус:** " + tamagochi.CurrentStatus + "\n" +
                 "**Уровень:** " + tamagochi.Level + "\n" +
                 "**Деньги:** " + tamagochi.Money;
-            embed.ThumbnailUrl = tamagochi.AvatarURL;
         }
 
         public EmbedBuilder ConstructMainEmbed()
         {
             embed.Color = Color.DarkRed;
-
-            embed.ImageUrl = @"https://i.imgur.com/UH85rST.png";
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**ХАРАКТЕРИСТИКА:**",
-                Value = ":heart:  **Здоровье**: " + controller.GetModel.HP + " хп\n" +
+                Value = ":heart:  **Здоровье**: " + controller.GetModel.Health.MainPoints + " хп\n" +
                     ":meat_on_bone:  **Голод**: " + controller.GetModel.Hungry.MainPoints + " p\n" +
                     ":sweat_drops:  **Жажда**: " + controller.GetModel.Thirsty.MainPoints + " p\n" +
                     ":partying_face:   **Счастье**: " + controller.GetModel.Happiness.MainPoints + " p\n",
