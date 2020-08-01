@@ -1,12 +1,8 @@
-﻿using Discord;
-using MinaBot.BotPackValues;
-using MinaBot.BotTamagochi.MVC.Tamagochi;
+﻿using MinaBot.BotTamagochi.DataTamagochi;
 using MinaBot.Main;
 using MinaBot.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Security.Cryptography;
+using System.Threading.Tasks;
 using static MinaBot.BotTamagochi.BotPackValues.AItemCollections;
 
 namespace MinaBot.Controllers
@@ -81,10 +77,11 @@ namespace MinaBot.Controllers
             var food = item as Food;
             var calledTime = DateTime.Now;
             UpdateStats(calledTime);
-            if (GetModel.Health.MainPoints > 0)
+            if (GetModel.Health.Score > 0)
             {
-                GetModel.Hungry.MainPoints += food.Satiety;
-                GetModel.Thirsty.MainPoints += food.Satiety / 2; 
+                GetModel.Hungry.Score += food.Satiety;
+                GetModel.Thirsty.Score += food.Satiety / 2;
+                GetModel.Backpack.Remove(itemInd);
                 return true;
             }
             return false;
@@ -97,21 +94,19 @@ namespace MinaBot.Controllers
             if (pastTime.TotalMinutes >= 2)
             {
                 GetModel.LastCheckDate = updateTime;
-                GetModel.Hungry.MainPoints -= pastTime.TotalMinutes * GetModel.Hungry.MinusEveryMinute;
-                GetModel.Thirsty.MainPoints -= pastTime.TotalMinutes * GetModel.Thirsty.MinusEveryMinute;
-                GetModel.Happiness.MainPoints -= pastTime.TotalMinutes * GetModel.Happiness.MinusEveryMinute;
-                if (GetModel.Hungry.MainPoints + GetModel.Thirsty.MainPoints < 40)
+                GetModel.Hungry.Score -= pastTime.TotalMinutes * GetModel.Hungry.MinusEveryMinute;
+                GetModel.Thirsty.Score -= pastTime.TotalMinutes * GetModel.Thirsty.MinusEveryMinute;
+                GetModel.Happiness.Score -= pastTime.TotalMinutes * GetModel.Happiness.MinusEveryMinute;
+                if (GetModel.Hungry.Score + GetModel.Thirsty.Score < 40)
                 {
-                    var pastPoints = 40 - GetModel.Hungry.MainPoints + GetModel.Thirsty.MainPoints;
-                    GetModel.Health.MainPoints -= pastTime.TotalMinutes * (pastPoints / (GetModel.Hungry.MinusEveryMinute + GetModel.Thirsty.MinusEveryMinute));
+                    var pastHealthPoints = 40 - (GetModel.Hungry.Score + GetModel.Thirsty.Score);
+                    GetModel.Health.Score -= pastHealthPoints / (GetModel.Hungry.MinusEveryMinute + GetModel.Thirsty.MinusEveryMinute);
                 }
             }
-
-
-            
             //hunting
-            UpdateHuntingStatus();
+            //UpdateHuntingStatus();
         }
+
         private void UpdateHuntingStatus()
         {
             if (GetModel.CurrentStatus != EBotStatus.HUNTING)

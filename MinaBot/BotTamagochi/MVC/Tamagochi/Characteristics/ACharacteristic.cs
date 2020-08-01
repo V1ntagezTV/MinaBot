@@ -1,16 +1,15 @@
 ﻿using System;
-using static MinaBot.Models.Item;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
 {
     abstract class ACharacteristic
     {
         public abstract double MinusEveryMinute { get; }
-        private double mainPoints { get; set; }
-        public double MainPoints 
+        private double score { get; set; }
+        public double Score 
         { 
-            get => Math.Round(mainPoints, 1);
-            set => mainPoints = Math.Max(value, 0); 
+            get => Math.Round(score, 1);
+            set => score = Math.Max(value, 0); 
         }
         public abstract DateTime LastConsume { get; set; }
     }

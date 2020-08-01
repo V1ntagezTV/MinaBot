@@ -19,7 +19,7 @@ namespace MinaBot.Models
             this.SoldPrice = price / 100 * 75;
             this.Rarity = rarity;
         }
-
+        public int ID { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
         public int SoldPrice { get; set; }

@@ -1,7 +1,10 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using Microsoft.EntityFrameworkCore;
+using MinaBot.BotTamagochi.DataTamagochi;
 using MinaBot.BotTamagochi.MVC.Tamagochi;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
+using MinaBot.Models;
 using System;
 using System.Threading.Tasks;
 using static MinaBot.MessageResult;
@@ -13,7 +16,10 @@ namespace MinaBot
         private DiscordSocketClient client;
         private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XwMDMg.BkEtu1TJoXxIRcgGLBEA8YJ9HZo";
         public static void Main(string[] args)
-            => new Program().MainAsync().GetAwaiter().GetResult();
+        {
+            new Program().MainAsync().GetAwaiter().GetResult();
+        }
+            
 
         public async Task MainAsync()
         {
@@ -27,8 +33,7 @@ namespace MinaBot
 
         private async Task MessageReceivedFunction(SocketMessage message)
         {
-
-            if (message.Content.ToLower().StartsWith("m!") || message.Content.ToLower().StartsWith("mina!"))
+            if (message.Content.ToLower().StartsWith("m!"))
             {
                 var manager = new CommandManager(message);
                 var view = manager.GetViewResult();
@@ -48,6 +53,7 @@ namespace MinaBot
                 {
                     await message.Channel.SendMessageAsync(text: BoolView.Value.ToString());
                 }
+
             }
         }
 

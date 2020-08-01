@@ -1,5 +1,7 @@
 ﻿using Discord;
 using Discord.WebSocket;
+using Microsoft.EntityFrameworkCore;
+using MinaBot.BotTamagochi.DataTamagochi;
 using MinaBot.Models;
 using System;
 using System.Linq;
@@ -8,18 +10,16 @@ namespace MinaBot
 {
 
     class AuthorModel
-    {   
-        //TODO: тянем из датабейз
-        static TamagochiModel tamagochi = new TamagochiModel();
-
+    {
         public AuthorModel(IMessage message, CommandModel command)
         {
             GetCommand = command;
             GetMessage = message;
-            //TODO: тянем из датабейз
-            GetTamagochi = tamagochi;
+            GetAuthor = message.Author;
         }
-        public TamagochiModel GetTamagochi { get; private set; }
+        public  TamagochiModel GetTamagochi { get; set; }
+        public TamagochiContext GetContext { get; set; }
+        public IUser GetAuthor { get; private set; }
         public CommandModel GetCommand { get; private set; } 
         public IMessage GetMessage { get; private set; } 
     }

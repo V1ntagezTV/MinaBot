@@ -6,13 +6,13 @@ namespace MinaBot.Models
 {
     class Backpack: AItemCollections
     {
-        public int Lenght { get; }
-        List<Item> inventory;
-
-        public Backpack(int places)
+        public int ID { get; set; }
+        public int Lenght { get; set; }
+        List<Item> inventory { get; set; }
+        public Backpack()
         {
-            this.Lenght = places;
-            this.inventory = new List<Item>((int)places);
+            Lenght = 10;
+            inventory = new List<Item>();
         }
         public void Add(Item item) => inventory.Add(item);
         public void AddRange(IList<Item> items)
@@ -23,6 +23,7 @@ namespace MinaBot.Models
             }
         }
         public bool Remove(Item item) => inventory.Remove(item);
+        public bool Remove(int index) => inventory.Remove(inventory[index]);
         public override List<Item> AllItems() => inventory;
         public override string ToString()
         {
