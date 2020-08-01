@@ -18,7 +18,7 @@ namespace MinaBot
             GetAuthor = message.Author;
         }
         public  TamagochiModel GetTamagochi { get; set; }
-        public TamagochiContext GetContext { get; set; }
+        public TamagochiDbFacade GetContext { get; set; }
         public IUser GetAuthor { get; private set; }
         public CommandModel GetCommand { get; private set; } 
         public IMessage GetMessage { get; private set; } 

@@ -55,6 +55,28 @@ namespace MinaBot
                 }
 
             }
+            if (message.Content.ToLower().StartsWith("check"))
+            {
+                var db = new TamagochiDbFacade(new TamagochiContext());
+                var tamagochi = db.FindWithDiscordID(message.Author.Id);
+                await message.Channel.SendMessageAsync(tamagochi.Hungry.Score.ToString());
+            }
+            if (message.Content.ToLower().StartsWith("edit2"))
+            {
+                var db = new TamagochiDbFacade(new TamagochiContext());
+                var GetTamagochi = db.FindWithDiscordID(message.Author.Id);
+                GetTamagochi.Hungry.Score = 20;
+                await message.Channel.SendMessageAsync(GetTamagochi.Hungry.Score.ToString());
+                await db.context.SaveChangesAsync();
+            }
+            if (message.Content.ToLower().StartsWith("edit1"))
+            {
+                var db = new TamagochiDbFacade(new TamagochiContext());
+                var GetTamagochi = db.FindWithDiscordID(message.Author.Id);
+                GetTamagochi.Hungry.Score = 40;
+                await message.Channel.SendMessageAsync(GetTamagochi.Hungry.Score.ToString());
+                await db.context.SaveChangesAsync();
+            }
         }
 
         private Task Logging(LogMessage log)

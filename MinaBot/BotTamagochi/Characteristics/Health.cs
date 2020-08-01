@@ -5,6 +5,12 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
     class Health : ACharacteristic
     {
         public int ID { get; set; }
+        private double score { get; set; }
+        public double Score
+        {
+            get => Math.Round(score, 1);
+            set => score = Math.Max(value, 0);
+        }
         public Health()
         {
             this.Score = 100;

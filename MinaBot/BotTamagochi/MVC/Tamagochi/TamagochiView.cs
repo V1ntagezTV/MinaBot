@@ -16,14 +16,15 @@ namespace MinaBot.Views
         private EmbedBuilder embed = new EmbedBuilder();
         public TamagochiView(AuthorModel model)
         {
-            authorModel = model;
             controller = new TamagochiController(model);
+            authorModel = model;
         }
 
         public EmbedBuilder ConstructMainEmbed()
         {
             var embed = new EmbedBuilder();
             embed.Title = authorModel.GetTamagochi.Name;
+            embed.Description = authorModel.GetTamagochi.CurrentStatus;
             controller.UpdateStats(DateTime.Now);
             embed.Color = Color.DarkRed;
             embed.AddField(new EmbedFieldBuilder()
@@ -114,7 +115,7 @@ namespace MinaBot.Views
             switch (command.GetOptions)
             {
                 case "create":
-                    authorModel.GetContext.Add(new TamagochiModel() { DiscordId = authorModel.GetAuthor.Id });
+                    authorModel.GetContext.CreateTamagochi(authorModel.GetAuthor.Id);
                     return new BooleanView(true);
 
                 case "nickname":

@@ -40,20 +40,10 @@ namespace MinaBot
                     result = new ShopView(model).ChooseMessageResult(model.GetCommand);
                     break;
                 case "bot":
-                    using (var context = new TamagochiContext())
-                    {
-                        context.Data.Include(t => t.Backpack)
-                             .Include(t => t.Clothes)
-                             .Include(t => t.Happiness)
-                             .Include(t => t.Health)
-                             .Include(t => t.Hungry)
-                             .Include(t => t.Thirsty)
-                             .Include(t => t.Hunting);
-                        model.GetTamagochi = context.FindWithDiscordID(model.GetAuthor.Id);
-                        model.GetContext = context;
-                        result = new TamagochiView(model).ChooseMessageResult(model.GetCommand);
-                        context.SaveChanges();
-                    }
+                    var db = new TamagochiDbFacade(new TamagochiContext());
+                    model.GetContext = db;
+                    model.GetTamagochi = db.FindWithDiscordID(model.GetAuthor.Id);
+                    result = new TamagochiView(model).ChooseMessageResult(model.GetCommand);
                     break;
 
                 default:

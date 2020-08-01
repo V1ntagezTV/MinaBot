@@ -11,7 +11,6 @@ namespace MinaBot.Controllers
     {
         private AuthorModel model;
         public TamagochiModel GetModel { get => model.GetTamagochi; }
-
         public TamagochiController(AuthorModel model)
         {
             this.model = model;
@@ -91,6 +90,7 @@ namespace MinaBot.Controllers
         {
             //pet stats
             var pastTime = updateTime - GetModel.LastCheckDate;
+
             if (pastTime.TotalMinutes >= 2)
             {
                 GetModel.LastCheckDate = updateTime;
@@ -103,8 +103,9 @@ namespace MinaBot.Controllers
                     GetModel.Health.Score -= pastHealthPoints / (GetModel.Hungry.MinusEveryMinute + GetModel.Thirsty.MinusEveryMinute);
                 }
             }
+            GetModel.Hungry.ID = 30;
             //hunting
-            //UpdateHuntingStatus();
+            UpdateHuntingStatus();
         }
 
         private void UpdateHuntingStatus()
@@ -116,7 +117,7 @@ namespace MinaBot.Controllers
             if (GetModel.Hunting.SavedSendTime + GetModel.Hunting.SendTimeLength < DateTime.Now)
             {
                 GetModel.CurrentStatus = GetModel.LastStatus;
-                GetModel.Backpack.AddRange(GetModel.Hunting.WaitingItems);
+                //GetModel.Backpack.AddRange(GetModel.Hunting.WaitingItems);
             }
         }
     }
