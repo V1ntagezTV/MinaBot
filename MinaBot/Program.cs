@@ -6,6 +6,7 @@ using MinaBot.BotTamagochi.MVC.Tamagochi;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
 using MinaBot.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using static MinaBot.MessageResult;
 
@@ -57,25 +58,25 @@ namespace MinaBot
             }
             if (message.Content.ToLower().StartsWith("check"))
             {
-                var db = new TamagochiDbFacade(new TamagochiContext());
-                var tamagochi = db.FindWithDiscordID(message.Author.Id);
+                var db = new TamagochiContext();
+                var tamagochi = db.Data.FirstOrDefault(t => t.DiscordId == message.Author.Id);
                 await message.Channel.SendMessageAsync(tamagochi.Hungry.Score.ToString());
             }
             if (message.Content.ToLower().StartsWith("edit2"))
             {
-                var db = new TamagochiDbFacade(new TamagochiContext());
-                var GetTamagochi = db.FindWithDiscordID(message.Author.Id);
+                var db = new TamagochiContext();
+                var GetTamagochi = db.Data.FirstOrDefault(t => t.DiscordId == message.Author.Id);
                 GetTamagochi.Hungry.Score = 20;
                 await message.Channel.SendMessageAsync(GetTamagochi.Hungry.Score.ToString());
-                await db.context.SaveChangesAsync();
+                await db.SaveChangesAsync();
             }
             if (message.Content.ToLower().StartsWith("edit1"))
             {
-                var db = new TamagochiDbFacade(new TamagochiContext());
-                var GetTamagochi = db.FindWithDiscordID(message.Author.Id);
+                var db = new TamagochiContext();
+                var GetTamagochi = db.Data.FirstOrDefault(t => t.DiscordId == message.Author.Id);
                 GetTamagochi.Hungry.Score = 40;
                 await message.Channel.SendMessageAsync(GetTamagochi.Hungry.Score.ToString());
-                await db.context.SaveChangesAsync();
+                await db.SaveChangesAsync();
             }
         }
 
@@ -83,7 +84,7 @@ namespace MinaBot
         {
 			Console.WriteLine(log.Message);
 			return Task.CompletedTask;
-        } 
+        }
 
         async Task SendMessage(IMessageChannel channel)
         {

@@ -15,6 +15,7 @@ namespace MinaBot.Views
         AuthorModel model;
         ShopController controller;
         EmbedBuilder embed = new EmbedBuilder();
+        CommandModel command;
         public ShopView(AuthorModel model)
         {
             this.model = model;
@@ -56,7 +57,7 @@ namespace MinaBot.Views
             });
             return result;
         }
-        public MessageResult ChooseMessageResult(CommandModel command)
+        public MessageResult ChooseMessageResult()
         {
             switch (command.GetOptions)
             {
@@ -104,6 +105,5 @@ namespace MinaBot.Views
             }
             return new EmbedView<Embed>(embed.Build());
         }
-
     }
 }

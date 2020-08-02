@@ -7,6 +7,8 @@ namespace MinaBot.Controllers
     class ShopController
     {
         ShopModel shop = new ShopModel();
+        TamagochiModel tamagochi;
+
         AuthorModel model;
         public ShopController(AuthorModel model)
         {
@@ -40,14 +42,18 @@ namespace MinaBot.Controllers
                 default:
                     throw new ArgumentException();
             }
-            if (model.GetTamagochi.Money - item.Price > 0)
+            if (tamagochi.Money - item.Price > 0)
             {
-                model.GetTamagochi.Backpack.Add(item);
-                model.GetTamagochi.Money -= item.Price;
+                tamagochi.Backpack.Add(item);
+                tamagochi.Money -= item.Price;
                 return true;
             }
             return false;
 
         }
+    }
+
+    public class AuthorModel
+    {
     }
 }

@@ -11,39 +11,34 @@ namespace MinaBot
 {
     class CommandManager
     {
-        AuthorModel model;
+        CommandModel commandModel;
         public CommandManager(IMessage message)
         {
             string[] commandOptions = message.Content.Split(' ');
             string commandType = commandOptions[0].Split('!')[1];
-            CommandModel commandModel;
             switch (commandOptions.Length)
             {
                 case 1:
-                    commandModel = new CommandModel(commandType);
+                    commandModel = new CommandModel(message, commandType);
                     break;
                 case 2:
-                    commandModel = new CommandModel(commandType, commandOptions[1]);
+                    commandModel = new CommandModel(message, commandType, commandOptions[1]);
                     break;
                 default:
-                    commandModel = new CommandModel(commandType, commandOptions[1], commandOptions[2..]);
+                    commandModel = new CommandModel(message, commandType, commandOptions[1], commandOptions[2..]);
                     break;
             }
-            model = new AuthorModel(message, commandModel);
         }
         public MessageResult GetViewResult()
         {
             MessageResult result;
-            switch (model.GetCommand.GetPrefix)
+            switch (commandModel.GetPrefix)
             {
                 case "shop":
-                    result = new ShopView(model).ChooseMessageResult(model.GetCommand);
+                    result = new TamagochiView(commandModel).ChooseMessageResult();//new ShopView().ChooseMessageResult(commandModel);
                     break;
                 case "bot":
-                    var db = new TamagochiDbFacade(new TamagochiContext());
-                    model.GetContext = db;
-                    model.GetTamagochi = db.FindWithDiscordID(model.GetAuthor.Id);
-                    result = new TamagochiView(model).ChooseMessageResult(model.GetCommand);
+                    result = new TamagochiView(commandModel).ChooseMessageResult();
                     break;
 
                 default:

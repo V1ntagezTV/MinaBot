@@ -9,11 +9,11 @@ namespace MinaBot.Controllers
 {
     class TamagochiController : IController<TamagochiModel>
     {
-        private AuthorModel model;
-        public TamagochiModel GetModel { get => model.GetTamagochi; }
-        public TamagochiController(AuthorModel model)
+        private CommandModel command;
+        public TamagochiModel GetModel { get; set; }
+        public TamagochiController(CommandModel commandModel)
         {
-            this.model = model;
+            command = commandModel;
         }
 
         public bool WearClothes(int itemInd)
@@ -45,7 +45,7 @@ namespace MinaBot.Controllers
         {
             var item = GetItemFromBackpack(itemInd);
             GetModel.Backpack.Remove(item);
-            model.GetTamagochi.Money += item.SoldPrice;
+            //model.Money += item.SoldPrice;
             if (item.Equiped)
             {
                 if (item is Hat) GetModel.Clothes.Hat = Item.defaultCleanItem;

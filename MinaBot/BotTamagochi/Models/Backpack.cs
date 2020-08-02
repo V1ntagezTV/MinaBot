@@ -8,7 +8,7 @@ namespace MinaBot.Models
     {
         public int ID { get; set; }
         public int Lenght { get; set; }
-        List<Item> inventory { get; set; }
+        List<Item> inventory { get; set; } = new List<Item>();
         public Backpack()
         {
             Lenght = 10;

@@ -13,7 +13,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi
         public int ID { get; set; }
         public DateTime SavedSendTime { get; set; }
         public TimeSpan SendTimeLength { get; set; }
-        public List<Item> WaitingItems { get; private set; }
+        public List<Item> WaitingItems { get; private set; } = new List<Item>();
 
         public void SendToHunting(TimeSpan timeLength)
         {

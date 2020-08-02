@@ -10,6 +10,6 @@ namespace MinaBot.Main
     {
         EmbedBuilder ConstructMainEmbed();
         EmbedBuilder ConstructInfoEmbed();
-        public MessageResult ChooseMessageResult(CommandModel command);
+        public MessageResult ChooseMessageResult();
     }
 }
