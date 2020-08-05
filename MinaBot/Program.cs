@@ -38,45 +38,23 @@ namespace MinaBot
             {
                 var manager = new CommandManager(message);
                 var view = manager.GetViewResult();
+
                 if (view is EmbedView<Embed> EmbView)
                 {
                     await message.Channel.SendMessageAsync(embed: EmbView.Data);
                 }
-                else if (view is EmbedView<string> EStrView)
+                else if (view is MessageView EStrView)
                 {
                     await message.Channel.SendMessageAsync(text: EStrView.Data);
                 }
                 else if (view is ErrorView EView)
                 {
-                    await message.Channel.SendMessageAsync(text: EView.Exception.Message);
+                    await message.Channel.SendMessageAsync(embed: EView.Exception);
                 } 
                 else if (view is BooleanView BoolView)
                 {
                     await message.Channel.SendMessageAsync(text: BoolView.Value.ToString());
                 }
-
-            }
-            if (message.Content.ToLower().StartsWith("check"))
-            {
-                var db = new TamagochiContext();
-                var tamagochi = db.Data.FirstOrDefault(t => t.DiscordId == message.Author.Id);
-                await message.Channel.SendMessageAsync(tamagochi.Hungry.Score.ToString());
-            }
-            if (message.Content.ToLower().StartsWith("edit2"))
-            {
-                var db = new TamagochiContext();
-                var GetTamagochi = db.Data.FirstOrDefault(t => t.DiscordId == message.Author.Id);
-                GetTamagochi.Hungry.Score = 20;
-                await message.Channel.SendMessageAsync(GetTamagochi.Hungry.Score.ToString());
-                await db.SaveChangesAsync();
-            }
-            if (message.Content.ToLower().StartsWith("edit1"))
-            {
-                var db = new TamagochiContext();
-                var GetTamagochi = db.Data.FirstOrDefault(t => t.DiscordId == message.Author.Id);
-                GetTamagochi.Hungry.Score = 40;
-                await message.Channel.SendMessageAsync(GetTamagochi.Hungry.Score.ToString());
-                await db.SaveChangesAsync();
             }
         }
 

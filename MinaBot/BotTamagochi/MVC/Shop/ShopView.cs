@@ -10,7 +10,7 @@ using SystemColor = System.Drawing.Color;
 
 namespace MinaBot.Views
 {
-    class ShopView: IView
+    class ShopView
     {
         AuthorModel model;
         ShopController controller;

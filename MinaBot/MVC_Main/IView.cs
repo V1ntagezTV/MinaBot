@@ -8,8 +8,6 @@ namespace MinaBot.Main
 {
     interface IView
     {
-        EmbedBuilder ConstructMainEmbed();
-        EmbedBuilder ConstructInfoEmbed();
-        public MessageResult ChooseMessageResult();
+        public MessageResult GetView(TamagochiModel tamagochi, CommandModel message);
     }
 }

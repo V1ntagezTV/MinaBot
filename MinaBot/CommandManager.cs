@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Microsoft.EntityFrameworkCore;
 using MinaBot.BotTamagochi.DataTamagochi;
+using MinaBot.Controllers;
 using MinaBot.Models;
 using MinaBot.Views;
 using System;
@@ -34,11 +35,11 @@ namespace MinaBot
             MessageResult result;
             switch (commandModel.GetPrefix)
             {
-                case "shop":
-                    result = new TamagochiView(commandModel).ChooseMessageResult();//new ShopView().ChooseMessageResult(commandModel);
-                    break;
+                //case "shop":
+                //    result = new TamagochiView(commandModel).ChooseMessageResult();//new ShopView().ChooseMessageResult(commandModel);
+                //    break;
                 case "bot":
-                    result = new TamagochiView(commandModel).ChooseMessageResult();
+                    result = new TamagochiController(commandModel).ChooseMessageResult();
                     break;
 
                 default:

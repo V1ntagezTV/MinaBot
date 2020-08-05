@@ -1,9 +1,17 @@
-﻿using MinaBot.BotTamagochi.DataTamagochi;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
+using Microsoft.VisualBasic;
+using MinaBot.BotTamagochi.BotPackValues;
+using MinaBot.BotTamagochi.DataTamagochi;
+using MinaBot.BotTamagochi.MVC.Tamagochi.View;
 using MinaBot.Main;
 using MinaBot.Models;
+using Newtonsoft.Json.Schema;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using static MinaBot.BotTamagochi.BotPackValues.AItemCollections;
+using static MinaBot.MessageResult;
 
 namespace MinaBot.Controllers
 {
@@ -16,17 +24,67 @@ namespace MinaBot.Controllers
             command = commandModel;
         }
 
-        public bool WearClothes(int itemInd)
+        public MessageResult ChooseMessageResult()
         {
-            if (GetModel.Backpack.AllItems().Count < itemInd && itemInd < 0)
+            using (var context = new TamagochiContext())
+            {
+                TamagochiModel tamagochi = context.Data
+                    .Include(t => t.Clothes).Include(t => t.Happiness)
+                    .Include(t => t.Health).Include(t => t.Hungry)
+                    .Include(t => t.Thirsty).Include(t => t.Backpack).ThenInclude(l => l.inventory)
+                    .Include(t => t.Hunting)
+                    .FirstOrDefault(t => t.DiscordId == command.GetMessage.Author.Id);
+                MessageResult result;
+
+                if (command.GetOptions == "create")
+                {
+                    tamagochi = context.CreateAndAddTamagochi(command.GetMessage.Author.Id).Result;
+                    return new TamagochiView().GetView(tamagochi, command);
+                } 
+                else if (tamagochi == null)
+                {
+                    return new ErrorView("You need create your pet with `m!bot create` command.");
+                }
+
+                switch (command.GetOptions)
+                {
+                    case "inventory":
+                    case "i":
+                        result = new InventoryView().GetView(tamagochi, command);
+                        break;
+
+                    case "clothes":
+                    case "c":
+                        result = new ClothesView().GetView(tamagochi, command);
+                        break;
+
+                    case "test":
+                        tamagochi.Backpack.Add(Item.defaultCleanItem);
+                        result = new TamagochiView().GetView(tamagochi, command);
+                        context.SaveChanges();
+                        break;
+
+                    default:
+                        UpdateStats(DateTime.Now, tamagochi);
+                        result = new TamagochiView().GetView(tamagochi, command);
+                        context.SaveChanges();
+                        break;
+                }
+                return result;
+            }
+        }
+
+        public bool WearClothes(TamagochiModel tamagochi,int itemInd)
+        {
+            if (tamagochi.Backpack.AllItems().Count < itemInd && itemInd < 0)
                 return false;
 
-            var item = GetModel.Backpack.AllItems()[itemInd];
+            var item = tamagochi.Backpack.AllItems()[itemInd];
 
-            if (item is Hat) GetModel.Clothes.Hat = item;
-            else if (item is Jacket) GetModel.Clothes.Jacket = item;
-            else if (item is Pants) GetModel.Clothes.Pants = item;
-            else if (item is Boots) GetModel.Clothes.Boots = item;
+            if (item is Hat) tamagochi.Clothes.Hat = item;
+            else if (item is Jacket) tamagochi.Clothes.Jacket = item;
+            else if (item is Pants) tamagochi.Clothes.Pants = item;
+            else if (item is Boots) tamagochi.Clothes.Boots = item;
             else return false; // item not clothes
             item.Equiped = true;
             return true;
@@ -55,6 +113,7 @@ namespace MinaBot.Controllers
             }
             return true;
         }
+
         public bool SendToHunting(TimeSpan timeLength)
         {
             if (GetModel.CurrentStatus == EBotStatus.HUNTING)
@@ -74,8 +133,7 @@ namespace MinaBot.Controllers
                 return false;
             }
             var food = item as Food;
-            var calledTime = DateTime.Now;
-            UpdateStats(calledTime);
+            //UpdateStats(DateTime.Now);
             if (GetModel.Health.Score > 0)
             {
                 GetModel.Hungry.Score += food.Satiety;
@@ -86,37 +144,36 @@ namespace MinaBot.Controllers
             return false;
         }
 
-        public void UpdateStats(DateTime updateTime)
+        public void UpdateStats(DateTime updateTime, TamagochiModel pet)
         {
             //pet stats
-            var pastTime = updateTime - GetModel.LastCheckDate;
+            var pastTime = updateTime - pet.LastCheckDate;
 
             if (pastTime.TotalMinutes >= 2)
             {
-                GetModel.LastCheckDate = updateTime;
-                GetModel.Hungry.Score -= pastTime.TotalMinutes * GetModel.Hungry.MinusEveryMinute;
-                GetModel.Thirsty.Score -= pastTime.TotalMinutes * GetModel.Thirsty.MinusEveryMinute;
-                GetModel.Happiness.Score -= pastTime.TotalMinutes * GetModel.Happiness.MinusEveryMinute;
-                if (GetModel.Hungry.Score + GetModel.Thirsty.Score < 40)
+                pet.LastCheckDate = updateTime;
+                pet.Hungry.Score -= pastTime.TotalMinutes * pet.Hungry.MinusEveryMinute;
+                pet.Thirsty.Score -= pastTime.TotalMinutes * pet.Thirsty.MinusEveryMinute;
+                pet.Happiness.Score -= pastTime.TotalMinutes * pet.Happiness.MinusEveryMinute;
+                if (pet.Hungry.Score + pet.Thirsty.Score < 40)
                 {
-                    var pastHealthPoints = 40 - (GetModel.Hungry.Score + GetModel.Thirsty.Score);
-                    GetModel.Health.Score -= pastHealthPoints / (GetModel.Hungry.MinusEveryMinute + GetModel.Thirsty.MinusEveryMinute);
+                    var pastHealthPoints = 40 - (pet.Hungry.Score + pet.Thirsty.Score);
+                    pet.Health.Score -= pastHealthPoints / (pet.Hungry.MinusEveryMinute + pet.Thirsty.MinusEveryMinute);
                 }
             }
-            GetModel.Hungry.ID = 30;
             //hunting
-            UpdateHuntingStatus();
+            UpdateHuntingStatus(pet);
         }
 
-        private void UpdateHuntingStatus()
+        private void UpdateHuntingStatus(TamagochiModel pet)
         {
-            if (GetModel.CurrentStatus != EBotStatus.HUNTING)
+            if (pet.CurrentStatus != EBotStatus.HUNTING)
             {
                 return;
             }
-            if (GetModel.Hunting.SavedSendTime + GetModel.Hunting.SendTimeLength < DateTime.Now)
+            if (pet.Hunting.SavedSendTime + pet.Hunting.SendTimeLength < DateTime.Now)
             {
-                GetModel.CurrentStatus = GetModel.LastStatus;
+                pet.CurrentStatus = pet.LastStatus;
                 //GetModel.Backpack.AddRange(GetModel.Hunting.WaitingItems);
             }
         }

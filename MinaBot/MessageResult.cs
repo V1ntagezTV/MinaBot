@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Discord;
+using System;
 
 namespace MinaBot
 {
@@ -25,11 +26,18 @@ namespace MinaBot
 
         public class ErrorView : MessageResult
         {
-            public Exception Exception { get; private set; }
-            public ErrorView(Exception exception) {
-                this.Exception = exception;
+            public Embed Exception { get; private set; }
+            public ErrorView(string exception)
+            {
+                Exception = new EmbedBuilder()
+                {
+                    Description = exception,
+                    Color = Color.Red
+                }
+                .Build();
             }
         }
+
         public class BooleanView: MessageResult
         {
             public bool Value { get; private set; }
@@ -38,5 +46,7 @@ namespace MinaBot
                 Value = value;
             }
         }
+
+        public class EmptyView: MessageResult { }
     }
 }

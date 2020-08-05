@@ -1,4 +1,5 @@
 ﻿using MinaBot.BotTamagochi.BotPackValues;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,12 +9,7 @@ namespace MinaBot.Models
     {
         public int ID { get; set; }
         public int Lenght { get; set; }
-        List<Item> inventory { get; set; } = new List<Item>();
-        public Backpack()
-        {
-            Lenght = 10;
-            inventory = new List<Item>();
-        }
+        public List<Item> inventory { get; set; } = new List<Item>();
         public void Add(Item item) => inventory.Add(item);
         public void AddRange(IList<Item> items)
         {

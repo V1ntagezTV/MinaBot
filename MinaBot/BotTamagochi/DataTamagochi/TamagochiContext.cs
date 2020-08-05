@@ -4,15 +4,12 @@ using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
 using MinaBot.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace MinaBot.BotTamagochi.DataTamagochi
 {
     class TamagochiContext : DbContext
     {
-        public DbSet<TamagochiModel> Data { get; set; }
         public DbSet<Thirsty> Thirsties { get; set; }
         public DbSet<Hungry> Hungries { get; set; }
         public DbSet<Happiness> Happinesses { get; set; }
@@ -21,6 +18,7 @@ namespace MinaBot.BotTamagochi.DataTamagochi
         public DbSet<Hunting> Huntings { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Backpack> Backpacks { get; set; }
+        public DbSet<TamagochiModel> Data { get; set; }
 
         public TamagochiContext()
         {
@@ -30,17 +28,30 @@ namespace MinaBot.BotTamagochi.DataTamagochi
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=TamagochiData;Trusted_Connection=True;");
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public async Task<TamagochiModel> CreateAndAddTamagochi(ulong discordId)
         {
-            modelBuilder.Entity<Thirsty>();
-            modelBuilder.Entity<Hungry>();
-            modelBuilder.Entity<Happiness>();
-            modelBuilder.Entity<Clothes>();
-            modelBuilder.Entity<Health>();
-            modelBuilder.Entity<Hunting>();
-            modelBuilder.Entity<Item>();
-            modelBuilder.Entity<Backpack>();
-            base.OnModelCreating(modelBuilder);
+            var pet = new TamagochiModel()
+            {
+                DiscordId = discordId,
+                Name = "#Pet",
+                Level = 1,
+                AvatarURL = @"https://i.pinimg.com/736x/16/f9/60/16f960c5ba68b8f0b88f1c571e8bf9ce--kim-taehyung-twice-cute.jpg",
+                Money = 150,
+                currentStatus = "Hi!",
+                ToUpLevelScore = 100,
+                Clothes = new Clothes(),
+                Birthday = DateTime.Now,
+                Backpack = new Backpack(),
+                LastCheckDate = DateTime.Now,
+                Health = new Health(),
+                Thirsty = new Thirsty(),
+                Hungry = new Hungry(),
+                Happiness = new Happiness(),
+                Hunting = new Hunting()
+            };
+            await AddAsync(pet);
+            await SaveChangesAsync();
+            return pet;
         }
     }
 }

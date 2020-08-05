@@ -5,6 +5,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
     class Happiness : ACharacteristic
     {
         public int ID { get; set; }
+        public int TamagochiModelId { get; set; }
         private double score { get; set; }
         public double Score
         {

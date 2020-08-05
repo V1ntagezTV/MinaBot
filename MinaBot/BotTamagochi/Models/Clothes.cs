@@ -8,6 +8,7 @@ namespace MinaBot.Models
     class Clothes
     {
         public int ID { get; set; }
+        public int TamagochiModelID { get; set; }
         public Clothes()
         {
             Hat = Item.defaultCleanItem;
