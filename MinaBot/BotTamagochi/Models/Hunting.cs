@@ -1,10 +1,6 @@
-﻿using MinaBot.BotPackValues;
-using MinaBot.BotTamagochi.BotPackValues;
-using MinaBot.Models;
+﻿using MinaBot.Models;
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Text;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi
 {
@@ -33,12 +29,12 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi
                 var itemTypeRnd = random.Next(0, ITEMTYPESCOUNT);
                 Item rndItem = itemTypeRnd switch
                 {
-                    0 => new EBotBoots().GetRandomItemWithChance(),
-                    1 => new EBotFoods().GetRandomItemWithChance(),
-                    2 => new EBotHats().GetRandomItemWithChance(),
-                    3 => new EBotJackets().GetRandomItemWithChance(),
-                    4 => new EBotPants().GetRandomItemWithChance(),
-                    5 => new EBotPants().GetRandomItemWithChance(),
+                    //0 => new EBotBoots().GetRandomItemWithChance(),
+                    //1 => new EBotFoods().GetRandomItemWithChance(),
+                    //2 => new EBotHats().GetRandomItemWithChance(),
+                    //3 => new EBotJackets().GetRandomItemWithChance(),
+                    //4 => new EBotPants().GetRandomItemWithChance(),
+                    //5 => new EBotPants().GetRandomItemWithChance(),
                     //5 => throw new Exception("need create backpack class!"),
                     _ => Item.defaultCleanItem,
                 };

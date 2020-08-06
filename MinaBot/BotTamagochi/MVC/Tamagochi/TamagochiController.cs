@@ -1,16 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
-using Microsoft.VisualBasic;
-using MinaBot.BotTamagochi.BotPackValues;
 using MinaBot.BotTamagochi.DataTamagochi;
+using MinaBot.BotTamagochi.ItemsPack;
 using MinaBot.BotTamagochi.MVC.Tamagochi.View;
 using MinaBot.Main;
 using MinaBot.Models;
-using Newtonsoft.Json.Schema;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
-using static MinaBot.BotTamagochi.BotPackValues.AItemCollections;
+using static MinaBot.BotTamagochi.BotPackValues.ItemTypes;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.Controllers
@@ -60,6 +56,12 @@ namespace MinaBot.Controllers
 
                     case "test":
                         tamagochi.Backpack.Add(Item.defaultCleanItem);
+                        result = new TamagochiView().GetView(tamagochi, command);
+                        context.SaveChanges();
+                        break;
+
+                    case "test1":
+                        tamagochi.Backpack.Add(ItemMocks.BILLED_CAP);
                         result = new TamagochiView().GetView(tamagochi, command);
                         context.SaveChanges();
                         break;

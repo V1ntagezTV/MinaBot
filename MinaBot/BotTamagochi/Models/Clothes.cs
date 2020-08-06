@@ -1,9 +1,4 @@
-﻿using MinaBot.BotPackValues;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MinaBot.Models
+﻿namespace MinaBot.Models
 {
     class Clothes
     {

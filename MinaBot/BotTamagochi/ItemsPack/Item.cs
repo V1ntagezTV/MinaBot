@@ -1,4 +1,4 @@
-﻿using Discord.Commands;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MinaBot.Models
 {
@@ -11,9 +11,12 @@ namespace MinaBot.Models
     }
     class Item
     {
+        private static int itemCounter = 0;
         public static Item defaultCleanItem = new Item("default.", 0, 0);
         public Item(string name, int price, ERarity rarity = ERarity.Common)
         {
+            itemCounter++;
+            this.ID = itemCounter;
             this.Name = name;
             this.Price = price;
             this.SoldPrice = price / 100 * 75;

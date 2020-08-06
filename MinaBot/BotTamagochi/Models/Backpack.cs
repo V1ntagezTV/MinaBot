@@ -1,11 +1,8 @@
-﻿using MinaBot.BotTamagochi.BotPackValues;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace MinaBot.Models
 {
-    class Backpack: AItemCollections
+    class Backpack
     {
         public int ID { get; set; }
         public int Lenght { get; set; }
@@ -20,7 +17,7 @@ namespace MinaBot.Models
         }
         public bool Remove(Item item) => inventory.Remove(item);
         public bool Remove(int index) => inventory.Remove(inventory[index]);
-        public override List<Item> AllItems() => inventory;
+        public List<Item> AllItems() => inventory;
         public override string ToString()
         {
             if (base.ToString() == "") return "Backpack is empty.";

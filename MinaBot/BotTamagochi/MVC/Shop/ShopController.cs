@@ -1,4 +1,4 @@
-﻿using MinaBot.BotPackValues;
+﻿using MinaBot.BotTamagochi.ItemsPack;
 using MinaBot.Models;
 using System;
 
@@ -25,19 +25,19 @@ namespace MinaBot.Controllers
             {
                 case "hats":
                 case "h":
-                    item = new EBotHats().AllItems()[number];
+                    item = ItemMocks.HatsCollection()[number];
                     break;
                 case "jacket":
                 case "j":
-                    item = new EBotBoots().AllItems()[number];
+                    item = ItemMocks.JacketsCollection()[number];
                     break;
                 case "boots":
                 case "b":
-                    item = new EBotJackets().AllItems()[number];
+                    item = ItemMocks.BootsCollection()[number];
                     break;
                 case "pants":
                 case "p":
-                    item = new EBotPants().AllItems()[number];
+                    item = ItemMocks.PantsCollection()[number];
                     break;
                 default:
                     throw new ArgumentException();

@@ -1,10 +1,7 @@
 ﻿using Discord;
-using MinaBot.BotPackValues;
 using MinaBot.Controllers;
-using MinaBot.Main;
 using MinaBot.Models;
 using System;
-using System.Collections.Generic;
 using static MinaBot.MessageResult;
 using SystemColor = System.Drawing.Color;
 
@@ -46,13 +43,13 @@ namespace MinaBot.Views
             result.AddField(new EmbedFieldBuilder()
             {
                 Name = "**Hats:**",
-                Value = new EBotHats().ToStringInLine(),
+                //Value = new EBotHats().ToStringInLine(),
                 IsInline = true
             });
             result.AddField(new EmbedFieldBuilder()
             {
                 Name = "**Prices**",
-                Value = new EBotHats().ToStringPricesInLine(),
+                //Value = new EBotHats().ToStringPricesInLine(),
                 IsInline = true
             });
             return result;
@@ -69,7 +66,7 @@ namespace MinaBot.Views
                     embed.AddField(new EmbedFieldBuilder()
                     {
                         Name = "**`Boots:`**",
-                        Value = new EBotBoots().ToStringWithPriceInLine()
+                       //Value = new EBotBoots().ToStringWithPriceInLine()
                     });
                     break;
 
@@ -84,7 +81,7 @@ namespace MinaBot.Views
                     embed.AddField(new EmbedFieldBuilder()
                     {
                         Name = "**`Jackets:`**",
-                        Value = new EBotJackets().ToStringWithPriceInLine()
+                        //Value = new EBotJackets().ToStringWithPriceInLine()
                     });
                     break;
 
@@ -93,7 +90,7 @@ namespace MinaBot.Views
                     embed.AddField(new EmbedFieldBuilder()
                     {
                         Name = "**`Pants:`**",
-                        Value = new EBotPants().ToStringWithPriceInLine()
+                        //Value = new EBotPants().ToStringWithPriceInLine()
                     });
                     break;
 
