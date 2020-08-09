@@ -2,8 +2,6 @@
 using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
 using MinaBot.Main;
 using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace MinaBot.Models
 {
@@ -27,7 +25,10 @@ namespace MinaBot.Models
         public int Money { get; set; }
         public uint ToUpLevelScore { get; set; }
         public int AgeDays { get => (DateTime.Now - Birthday).Days + 1; }
-        public Clothes Clothes { get; set; }
+        public int HatID { get; set; }
+        public int JacketID { get; set; }
+        public int PantsID { get; set; }
+        public int BootsID { get; set; }
         public Backpack Backpack { get; set; }
         public DateTime Birthday { get; set; }
         // STATS

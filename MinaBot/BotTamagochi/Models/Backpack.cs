@@ -1,27 +1,58 @@
-﻿using System.Collections.Generic;
+﻿using MinaBot.BotTamagochi.BotPackValues;
+using MinaBot.BotTamagochi.ItemsPack;
+using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using static MinaBot.BotTamagochi.BotPackValues.ItemTypes;
 
 namespace MinaBot.Models
 {
     class Backpack
     {
         public int ID { get; set; }
-        public int Lenght { get; set; }
-        public List<Item> inventory { get; set; } = new List<Item>();
-        public void Add(Item item) => inventory.Add(item);
-        public void AddRange(IList<Item> items)
+        public int Lenght { get; set; } = 10;
+        public int ItemCount { get; set; } = 0;
+        public string itemCollectionStringWithID { get; set; } = "";
+        public bool Add(int itemID)
         {
-            for (int ind = 0; ind < items.Count; ind++)
-            {
-                this.Add(items[ind]);
+            var idList = itemCollectionStringWithID.Split(",");
+            if (idList.Length >= 10) 
+            { 
+                return false; 
             }
+            itemCollectionStringWithID += itemID.ToString() + ",";
+            ItemCount++;
+            return true;
         }
-        public bool Remove(Item item) => inventory.Remove(item);
-        public bool Remove(int index) => inventory.Remove(inventory[index]);
-        public List<Item> AllItems() => inventory;
-        public override string ToString()
+        public bool Remove(int itemID)
         {
-            if (base.ToString() == "") return "Backpack is empty.";
-            return base.ToString();
+            var idList = itemCollectionStringWithID.Split(",").ToList();
+            for (int ind = 0; ind < idList.Count; ind++)
+            {
+                if (idList[ind] == itemID.ToString())
+                {
+                    idList.Remove(idList[ind]);
+                    ItemCount--;
+                    return true;
+                }
+            }
+            return false;
+        }   
+        public ItemCollection<Item> ItemList 
+        {
+            get
+            {
+                var result = new ItemCollection<Item>(new List<Item>());
+                var idList = itemCollectionStringWithID.Split(",");
+                for (int ind = 0; ind < idList.Length; ind++)
+                {
+                    var item = ItemMocks.AllItems[Convert.ToInt32(idList[ind])];
+                    result.itemList.Add(item);
+                }
+                return result;
+            }
         }
     }
 }

@@ -7,8 +7,14 @@ using static MinaBot.BotTamagochi.BotPackValues.ItemTypes;
 
 namespace MinaBot.BotTamagochi.ItemsPack
 {
-    class ItemMocks
+    static class ItemMocks
     {
+        public static ItemCollection<Item> AllItems { get; private set; }
+        static ItemMocks()
+        {
+            AllItems = ToCollection();
+        }
+
         public static readonly Boots SOCKS = new Boots(":socks:", 50, ERarity.Common);
         public static readonly Boots ICE_SKATE = new Boots(":ice_skate:", 2000, ERarity.Rare);
         public static readonly Boots WOMANS_FLAT_SHOE = new Boots(":womans_flat_shoe:", 1000, ERarity.Common);
@@ -116,14 +122,18 @@ namespace MinaBot.BotTamagochi.ItemsPack
         {
             return new ItemCollection<Pants>(PantsList());
         }
-        static public ItemCollection<Item> AllItems()
+        static private ItemCollection<Item> ToCollection()
         {
+            /* 
+             * ID по возрастанию!
+             * 0 = default item
+            */
             var result = new List<Item>();
+            result.AddRange(BootsList());
             result.AddRange(FoodsList());
             result.AddRange(HatsList());
             result.AddRange(JacketsList());
             result.AddRange(PantsList());
-            result.AddRange(BootsList());
             return new ItemCollection<Item>(result);
         }
     }

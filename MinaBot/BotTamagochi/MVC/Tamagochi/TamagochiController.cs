@@ -25,9 +25,9 @@ namespace MinaBot.Controllers
             using (var context = new TamagochiContext())
             {
                 TamagochiModel tamagochi = context.Data
-                    .Include(t => t.Clothes).Include(t => t.Happiness)
+                    .Include(t => t.Happiness)
                     .Include(t => t.Health).Include(t => t.Hungry)
-                    .Include(t => t.Thirsty).Include(t => t.Backpack).ThenInclude(l => l.inventory)
+                    .Include(t => t.Thirsty).Include(t => t.Backpack)
                     .Include(t => t.Hunting)
                     .FirstOrDefault(t => t.DiscordId == command.GetMessage.Author.Id);
                 MessageResult result;
@@ -44,25 +44,13 @@ namespace MinaBot.Controllers
 
                 switch (command.GetOptions)
                 {
-                    case "inventory":
-                    case "i":
-                        result = new InventoryView().GetView(tamagochi, command);
-                        break;
-
                     case "clothes":
                     case "c":
                         result = new ClothesView().GetView(tamagochi, command);
                         break;
 
-                    case "test":
-                        tamagochi.Backpack.Add(Item.defaultCleanItem);
-                        result = new TamagochiView().GetView(tamagochi, command);
-                        context.SaveChanges();
-                        break;
-
-                    case "test1":
-                        tamagochi.Backpack.Add(ItemMocks.BILLED_CAP);
-                        result = new TamagochiView().GetView(tamagochi, command);
+                    case "wear":
+                        result = new BooleanView(WearClothes(tamagochi, Convert.ToInt32(command.GetArgs[0])));
                         context.SaveChanges();
                         break;
 
@@ -76,43 +64,18 @@ namespace MinaBot.Controllers
             }
         }
 
-        public bool WearClothes(TamagochiModel tamagochi,int itemInd)
+        public bool WearClothes(TamagochiModel tamagochi, int itemInd)
         {
-            if (tamagochi.Backpack.AllItems().Count < itemInd && itemInd < 0)
+            if (tamagochi.Backpack.ItemList.itemList.Count < itemInd && itemInd < 0)
                 return false;
 
-            var item = tamagochi.Backpack.AllItems()[itemInd];
-
-            if (item is Hat) tamagochi.Clothes.Hat = item;
-            else if (item is Jacket) tamagochi.Clothes.Jacket = item;
-            else if (item is Pants) tamagochi.Clothes.Pants = item;
-            else if (item is Boots) tamagochi.Clothes.Boots = item;
+            var item = tamagochi.Backpack.ItemList[itemInd];
+            if (item is Hat) tamagochi.HatID = item.ID;
+            else if (item is Jacket) tamagochi.JacketID = item.ID;
+            else if (item is Pants) tamagochi.PantsID = item.ID;
+            else if (item is Boots) tamagochi.BootsID = item.ID;
             else return false; // item not clothes
             item.Equiped = true;
-            return true;
-        }
-
-        public Item GetItemFromBackpack(int itemInd)
-        {
-            if (GetModel.Backpack.AllItems().Count < itemInd && itemInd < 0)
-            {
-                throw new Exception("Index was bigger or lower then your backpack size!");
-            }
-            return GetModel.Backpack.AllItems()[itemInd];
-        }
-
-        public bool SoldItem(int itemInd)
-        {
-            var item = GetItemFromBackpack(itemInd);
-            GetModel.Backpack.Remove(item);
-            //model.Money += item.SoldPrice;
-            if (item.Equiped)
-            {
-                if (item is Hat) GetModel.Clothes.Hat = Item.defaultCleanItem;
-                else if (item is Jacket) GetModel.Clothes.Jacket = Item.defaultCleanItem;
-                else if (item is Pants) GetModel.Clothes.Pants = Item.defaultCleanItem;
-                else GetModel.Clothes.Boots = Item.defaultCleanItem;
-            }
             return true;
         }
 
@@ -125,25 +88,6 @@ namespace MinaBot.Controllers
             GetModel.CurrentStatus = EBotStatus.HUNTING;
             GetModel.Hunting.SendToHunting(timeLength);
             return true;
-        }
-
-        public bool Consume(int itemInd)
-        {
-            var item = GetItemFromBackpack(itemInd);
-            if (!(item is Food))
-            {
-                return false;
-            }
-            var food = item as Food;
-            //UpdateStats(DateTime.Now);
-            if (GetModel.Health.Score > 0)
-            {
-                GetModel.Hungry.Score += food.Satiety;
-                GetModel.Thirsty.Score += food.Satiety / 2;
-                GetModel.Backpack.Remove(itemInd);
-                return true;
-            }
-            return false;
         }
 
         public void UpdateStats(DateTime updateTime, TamagochiModel pet)

@@ -1,12 +1,7 @@
 ﻿using Discord;
-using Microsoft.EntityFrameworkCore;
-using MinaBot.BotTamagochi.DataTamagochi;
 using MinaBot.Controllers;
 using MinaBot.Models;
-using MinaBot.Views;
 using System;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 namespace MinaBot
 {

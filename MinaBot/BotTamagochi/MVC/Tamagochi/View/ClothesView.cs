@@ -1,4 +1,5 @@
 ﻿using Discord;
+using MinaBot.BotTamagochi.ItemsPack;
 using MinaBot.Main;
 using MinaBot.Models;
 using System;
@@ -17,26 +18,31 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
 
         private Embed ConstructMainEmbed(TamagochiModel tamagochi, CommandModel message)
         {
+            var hat = ItemMocks.AllItems[tamagochi.HatID];
+            var jacket = ItemMocks.AllItems[tamagochi.JacketID];
+            var pants = ItemMocks.AllItems[tamagochi.PantsID];
+            var boots = ItemMocks.AllItems[tamagochi.BootsID];
             var embed = new EmbedBuilder();
             embed.Color = Color.Green;
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**Clothes**",
-                Value = ">>> " + tamagochi.Clothes.ToString(),
+                Value = ">>> " + hat.Name +"\n"+ jacket.Name + "\n"
+                + pants.Name + "\n" + boots.Name,
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**Price**",
-                Value = ">>> " + tamagochi.Clothes.Hat.Price + "\n" + tamagochi.Clothes.Jacket.Price + "\n" +
-                    tamagochi.Clothes.Pants.Price + "\n" + tamagochi.Clothes.Boots.Price,
+                Value = ">>> " + hat.Price + "\n" + jacket.Price + "\n" +
+                    pants.Price + "\n" + boots.Price,
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**SoldPrice**",
-                Value = ">>> " + tamagochi.Clothes.Hat.SoldPrice + "\n" + tamagochi.Clothes.Jacket.SoldPrice + "\n" +
-                    tamagochi.Clothes.Pants.SoldPrice + "\n" + tamagochi.Clothes.Boots.SoldPrice,
+                Value = ">>> " + hat.SoldPrice + "\n" + jacket.SoldPrice + "\n" +
+                    pants.SoldPrice + "\n" + boots.SoldPrice,
                 IsInline = true
             });
             return embed.Build();

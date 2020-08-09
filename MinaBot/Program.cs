@@ -5,6 +5,7 @@ using MinaBot.BotTamagochi.DataTamagochi;
 using MinaBot.BotTamagochi.ItemsPack;
 using MinaBot.BotTamagochi.MVC.Tamagochi;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
+using MinaBot.BotTamagochi.MVC.Tamagochi.View;
 using MinaBot.Models;
 using System;
 using System.Linq;
@@ -57,18 +58,27 @@ namespace MinaBot
                     await message.Channel.SendMessageAsync(text: BoolView.Value.ToString());
                 }
             }
+            if (message.Content.ToLower().StartsWith("test"))
+            {
+                using (var context = new TamagochiContext())
+                {
+                    TamagochiModel tamagochi = context.Data.Include(t => t.Happiness)
+                        .Include(t => t.Health).Include(t => t.Hungry)
+                        .Include(t => t.Thirsty).Include(t => t.Backpack)
+                        .Include(t => t.Hunting)
+                        .FirstOrDefault(t => t.DiscordId == message.Author.Id);
+                    tamagochi.Backpack.Add(1);
+                    context.SaveChanges();
+                    await message.Channel.SendMessageAsync(embed: ((EmbedView<Embed>)new TamagochiView().GetView(tamagochi)).Data);
+                }
+                
+            }
         }
 
         private Task Logging(LogMessage log)
         {
 			Console.WriteLine(log.Message);
 			return Task.CompletedTask;
-        }
-
-        async Task SendMessage(IMessageChannel channel)
-        {
-            string text = Console.ReadLine();
-            await channel.SendMessageAsync(text);
         }
 	}
 }

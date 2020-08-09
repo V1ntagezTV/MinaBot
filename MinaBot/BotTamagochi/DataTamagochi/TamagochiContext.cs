@@ -13,16 +13,16 @@ namespace MinaBot.BotTamagochi.DataTamagochi
         public DbSet<Thirsty> Thirsties { get; set; }
         public DbSet<Hungry> Hungries { get; set; }
         public DbSet<Happiness> Happinesses { get; set; }
-        public DbSet<Clothes> Clothes { get; set; }
         public DbSet<Health> Healths { get; set; }
         public DbSet<Hunting> Huntings { get; set; }
-        public DbSet<Item> Items { get; set; }
         public DbSet<Backpack> Backpacks { get; set; }
         public DbSet<TamagochiModel> Data { get; set; }
 
         public TamagochiContext()
         {
+            Console.WriteLine("createdata");
             Database.EnsureCreated();
+            Console.WriteLine("createdata");
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -30,6 +30,7 @@ namespace MinaBot.BotTamagochi.DataTamagochi
         }
         public async Task<TamagochiModel> CreateAndAddTamagochi(ulong discordId)
         {
+            Console.WriteLine("createFunc");
             var pet = new TamagochiModel()
             {
                 DiscordId = discordId,
@@ -39,7 +40,6 @@ namespace MinaBot.BotTamagochi.DataTamagochi
                 Money = 150,
                 currentStatus = "Hi!",
                 ToUpLevelScore = 100,
-                Clothes = new Clothes(),
                 Birthday = DateTime.Now,
                 Backpack = new Backpack(),
                 LastCheckDate = DateTime.Now,
@@ -49,8 +49,10 @@ namespace MinaBot.BotTamagochi.DataTamagochi
                 Happiness = new Happiness(),
                 Hunting = new Hunting()
             };
+            Console.WriteLine("pet created");
             await AddAsync(pet);
             await SaveChangesAsync();
+            Console.WriteLine("pet added");
             return pet;
         }
     }

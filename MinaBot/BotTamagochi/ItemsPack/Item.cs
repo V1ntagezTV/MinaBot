@@ -15,8 +15,8 @@ namespace MinaBot.Models
         public static Item defaultCleanItem = new Item("default.", 0, 0);
         public Item(string name, int price, ERarity rarity = ERarity.Common)
         {
-            itemCounter++;
             this.ID = itemCounter;
+            itemCounter++;
             this.Name = name;
             this.Price = price;
             this.SoldPrice = price / 100 * 75;
