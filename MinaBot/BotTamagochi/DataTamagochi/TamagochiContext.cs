@@ -38,7 +38,7 @@ namespace MinaBot.BotTamagochi.DataTamagochi
                 Level = 1,
                 AvatarURL = @"https://i.pinimg.com/736x/16/f9/60/16f960c5ba68b8f0b88f1c571e8bf9ce--kim-taehyung-twice-cute.jpg",
                 Money = 150,
-                currentStatus = "Hi!",
+                CurrentStatus = "Hi!",
                 ToUpLevelScore = 100,
                 Birthday = DateTime.Now,
                 Backpack = new Backpack(),
@@ -50,7 +50,7 @@ namespace MinaBot.BotTamagochi.DataTamagochi
                 Hunting = new Hunting()
             };
             Console.WriteLine("pet created");
-            await AddAsync(pet);
+            this.Add(pet);
             await SaveChangesAsync();
             Console.WriteLine("pet added");
             return pet;

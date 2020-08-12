@@ -22,6 +22,7 @@ namespace MinaBot.Controllers
 
         public MessageResult ChooseMessageResult()
         {
+            MessageResult result;
             using (var context = new TamagochiContext())
             {
                 TamagochiModel tamagochi = context.Data
@@ -30,7 +31,6 @@ namespace MinaBot.Controllers
                     .Include(t => t.Thirsty).Include(t => t.Backpack)
                     .Include(t => t.Hunting)
                     .FirstOrDefault(t => t.DiscordId == command.GetMessage.Author.Id);
-                MessageResult result;
 
                 if (command.GetOptions == "create")
                 {
@@ -54,6 +54,11 @@ namespace MinaBot.Controllers
                         context.SaveChanges();
                         break;
 
+                    case "hunting":
+                        result = new BooleanView(SendToHunting(tamagochi, new TimeSpan(0, 0, 20)));
+                        context.SaveChanges();
+                        break;
+
                     default:
                         UpdateStats(DateTime.Now, tamagochi);
                         result = new TamagochiView().GetView(tamagochi, command);
@@ -64,30 +69,42 @@ namespace MinaBot.Controllers
             }
         }
 
-        public bool WearClothes(TamagochiModel tamagochi, int itemInd)
+        public bool WearClothes(TamagochiModel pet, int itemInd)
         {
-            if (tamagochi.Backpack.ItemList.itemList.Count < itemInd && itemInd < 0)
+            if (pet.Backpack.Items.Data.Count < itemInd && itemInd < 0)
                 return false;
 
-            var item = tamagochi.Backpack.ItemList[itemInd];
-            if (item is Hat) tamagochi.HatID = item.ID;
-            else if (item is Jacket) tamagochi.JacketID = item.ID;
-            else if (item is Pants) tamagochi.PantsID = item.ID;
-            else if (item is Boots) tamagochi.BootsID = item.ID;
+            var item = pet.Backpack.Items[itemInd];
+            if (item is Hat) pet.HatID = item.ID;
+            else if (item is Jacket) pet.JacketID = item.ID;
+            else if (item is Pants) pet.PantsID = item.ID;
+            else if (item is Boots) pet.BootsID = item.ID;
             else return false; // item not clothes
-            item.Equiped = true;
             return true;
         }
 
-        public bool SendToHunting(TimeSpan timeLength)
+        public bool SendToHunting(TamagochiModel pet, TimeSpan timeLength)
         {
-            if (GetModel.CurrentStatus == EBotStatus.HUNTING)
+            UpdateHuntingStatus(pet);
+            if (pet.CurrentStatus == EBotStatus.HUNTING)
             {
                 return false;
             }
-            GetModel.CurrentStatus = EBotStatus.HUNTING;
-            GetModel.Hunting.SendToHunting(timeLength);
+            pet.CurrentStatus = EBotStatus.HUNTING;
+            pet.Hunting.SavedSendTime = DateTime.Now;
+            pet.Hunting.SendTimeLength = timeLength;
             return true;
+        }
+
+        private void UpdateHuntingStatus(TamagochiModel pet)
+        {
+            if (pet.CurrentStatus == EBotStatus.HUNTING) 
+            {
+                if (pet.Hunting.SavedSendTime + pet.Hunting.SendTimeLength < DateTime.Now)
+                {
+                    pet.CurrentStatus = pet.LastStatus;
+                }
+            }
         }
 
         public void UpdateStats(DateTime updateTime, TamagochiModel pet)
@@ -109,19 +126,6 @@ namespace MinaBot.Controllers
             }
             //hunting
             UpdateHuntingStatus(pet);
-        }
-
-        private void UpdateHuntingStatus(TamagochiModel pet)
-        {
-            if (pet.CurrentStatus != EBotStatus.HUNTING)
-            {
-                return;
-            }
-            if (pet.Hunting.SavedSendTime + pet.Hunting.SendTimeLength < DateTime.Now)
-            {
-                pet.CurrentStatus = pet.LastStatus;
-                //GetModel.Backpack.AddRange(GetModel.Hunting.WaitingItems);
-            }
         }
     }
 }

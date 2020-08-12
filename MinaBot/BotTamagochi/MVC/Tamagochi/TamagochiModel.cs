@@ -1,4 +1,5 @@
-﻿using MinaBot.BotTamagochi.MVC.Tamagochi;
+﻿using MinaBot.BotTamagochi.ItemsPack;
+using MinaBot.BotTamagochi.MVC.Tamagochi;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
 using MinaBot.Main;
 using System;
@@ -13,7 +14,7 @@ namespace MinaBot.Models
         public string AvatarURL { get; set; }
         public string Color { get; set; }
         public uint Level { get; set; }
-        public string currentStatus;
+        private string currentStatus;
         public string CurrentStatus { 
             get => currentStatus;
             set {
@@ -26,9 +27,37 @@ namespace MinaBot.Models
         public uint ToUpLevelScore { get; set; }
         public int AgeDays { get => (DateTime.Now - Birthday).Days + 1; }
         public int HatID { get; set; }
+        public Item Hat 
+        { 
+            get
+            {
+                return ItemMocks.AllItems[HatID];
+            }
+        }
         public int JacketID { get; set; }
+        public Item Jacket
+        {
+            get
+            {
+                return ItemMocks.AllItems[JacketID];
+            }
+        }
         public int PantsID { get; set; }
+        public Item Pants
+        {
+            get
+            {
+                return ItemMocks.AllItems[PantsID];
+            }
+        }
         public int BootsID { get; set; }
+        public Item Boots
+        {
+            get
+            {
+                return ItemMocks.AllItems[BootsID];
+            }
+        }
         public Backpack Backpack { get; set; }
         public DateTime Birthday { get; set; }
         // STATS

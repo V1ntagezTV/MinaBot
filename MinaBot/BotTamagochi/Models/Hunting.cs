@@ -1,4 +1,5 @@
-﻿using MinaBot.Models;
+﻿using MinaBot.BotTamagochi.ItemsPack;
+using MinaBot.Models;
 using System;
 using System.Collections.Generic;
 
@@ -20,28 +21,13 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi
         private List<Item> FindItems()
         {
             const int MAXITEMCOUNT = 4;
-            const int ITEMTYPESCOUNT = 6; // BOOTS, FOODS, HATS, JACKETS, PANTS, BACKPACK
             List<Item> resultItemList = new List<Item>(MAXITEMCOUNT);
             var random = new Random();
             var currentItemCount = random.Next(0, MAXITEMCOUNT);
             for (int itemInd = 0; itemInd < currentItemCount; itemInd++)
             {
-                var itemTypeRnd = random.Next(0, ITEMTYPESCOUNT);
-                Item rndItem = itemTypeRnd switch
-                {
-                    //0 => new EBotBoots().GetRandomItemWithChance(),
-                    //1 => new EBotFoods().GetRandomItemWithChance(),
-                    //2 => new EBotHats().GetRandomItemWithChance(),
-                    //3 => new EBotJackets().GetRandomItemWithChance(),
-                    //4 => new EBotPants().GetRandomItemWithChance(),
-                    //5 => new EBotPants().GetRandomItemWithChance(),
-                    //5 => throw new Exception("need create backpack class!"),
-                    _ => Item.defaultCleanItem,
-                };
-                if (rndItem != Item.defaultCleanItem)
-                {
-                    resultItemList.Add(rndItem);
-                }
+                var item = ItemMocks.AllItems.GetRandomItemWithChance();
+                resultItemList.Add(item);
             }
             return resultItemList;
         }

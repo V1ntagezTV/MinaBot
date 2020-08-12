@@ -30,9 +30,6 @@ namespace MinaBot
             MessageResult result;
             switch (commandModel.GetPrefix)
             {
-                //case "shop":
-                //    result = new TamagochiView(commandModel).ChooseMessageResult();//new ShopView().ChooseMessageResult(commandModel);
-                //    break;
                 case "bot":
                     result = new TamagochiController(commandModel).ChooseMessageResult();
                     break;

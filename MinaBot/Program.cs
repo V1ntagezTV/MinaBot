@@ -55,29 +55,32 @@ namespace MinaBot
                 } 
                 else if (view is BooleanView BoolView)
                 {
-                    await message.Channel.SendMessageAsync(text: BoolView.Value.ToString());
+                    if (BoolView.Value)
+                    {
+                        await message.AddReactionAsync(new Emoji("✅"));
+                        return;
+                    }
+                    await message.AddReactionAsync(new Emoji("❌"));
                 }
             }
             if (message.Content.ToLower().StartsWith("test"))
             {
-                using (var context = new TamagochiContext())
+                using (var tam = new TamagochiContext())
                 {
-                    TamagochiModel tamagochi = context.Data.Include(t => t.Happiness)
-                        .Include(t => t.Health).Include(t => t.Hungry)
-                        .Include(t => t.Thirsty).Include(t => t.Backpack)
-                        .Include(t => t.Hunting)
-                        .FirstOrDefault(t => t.DiscordId == message.Author.Id);
-                    tamagochi.Backpack.Add(1);
-                    context.SaveChanges();
-                    await message.Channel.SendMessageAsync(embed: ((EmbedView<Embed>)new TamagochiView().GetView(tamagochi)).Data);
+                    var tm = tam.Data.Include(t => t.Backpack).FirstOrDefault(t => t.DiscordId == message.Author.Id);
+                    var item = tm.Backpack.Items[1];
+                    await message.Channel.SendMessageAsync(item.ID.ToString() + ": " + tm.Backpack.itemCollectionStringWithID);
                 }
-                
             }
         }
 
         private Task Logging(LogMessage log)
         {
 			Console.WriteLine(log.Message);
+            if (log.Exception != null)
+            {
+                Console.WriteLine(log.Exception.Message);
+            }
 			return Task.CompletedTask;
         }
 	}

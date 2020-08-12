@@ -7,25 +7,25 @@ namespace MinaBot.BotTamagochi.BotPackValues
 {
     class ItemCollection<T> where T: Item 
     {
-        public IList<T> itemList;
+        public IList<T> Data;
         public ItemCollection(IList<T> list)
         {
-            itemList = list;
+            Data = list;
         }
 
         public IEnumerable<Item> ShopList()
         {
-            return itemList.Where(i => i.Rarity <= ERarity.Legendary);
+            return Data.Where(i => i.Rarity <= ERarity.Legendary);
         }
 
         public Item GetRandomItemWithChance()
         {
             var random = new Random();
-            for (int ind = 0; ind < itemList.Count(); ind++)
+            for (int ind = 0; ind < Data.Count(); ind++)
             {
-                if (random.Next(0, 101) <= (int)itemList[ind].Rarity)
+                if (random.Next(0, 101) <= (int)Data[ind].Rarity)
                 {
-                    return itemList[ind];
+                    return Data[ind];
                 }
             }
             return Item.defaultCleanItem;
@@ -33,40 +33,40 @@ namespace MinaBot.BotTamagochi.BotPackValues
         public string ToStringWithPriceInLine()
         {
             string result = "";
-            for (int ind = 0; ind < itemList.Count; ind++)
+            for (int ind = 0; ind < Data.Count; ind++)
             {
-                result += itemList[ind].Name + " " + itemList[ind].Price + "\n";
+                result += Data[ind].Name + " " + Data[ind].Price + "\n";
             }
             return result;
         }
         public string ToStringInLine()
         {
             string result = "";
-            for (int ind = 0; ind < itemList.Count; ind++)
+            for (int ind = 0; ind < Data.Count; ind++)
             {
-                result += itemList[ind].ID + " " + itemList[ind].Name + "\n";
+                result += Data[ind].ID + " " + Data[ind].Name + "\n";
             }
             return result;
         }
         public string ToStringPricesInLine()
         {
             string result = "";
-            for (int ind = 0; ind < itemList.Count; ind++)
+            for (int ind = 0; ind < Data.Count; ind++)
             {
-                result += itemList[ind].Price + "\n";
+                result += Data[ind].Price + "\n";
             }
             return result;
         }
         public Item this[int index]
         {
-            get { return itemList[index]; }
+            get { return Data[index]; }
         }
         public override string ToString()
         {
             string result = "";
-            for (int ind = 0; ind < itemList.Count; ind++)
+            for (int ind = 0; ind < Data.Count; ind++)
             {
-                result += itemList[ind].Name + " ";
+                result += Data[ind].Name + " ";
             }
             return result;
         }

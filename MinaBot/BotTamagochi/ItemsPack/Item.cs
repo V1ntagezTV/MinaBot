@@ -11,7 +11,7 @@ namespace MinaBot.Models
     }
     class Item
     {
-        private static int itemCounter = 0;
+        private static int itemCounter = -1;
         public static Item defaultCleanItem = new Item("default.", 0, 0);
         public Item(string name, int price, ERarity rarity = ERarity.Common)
         {
@@ -31,7 +31,6 @@ namespace MinaBot.Models
          * Example: if generated random was bigger then drop chance you didn't get this item. 
          */
         public ERarity Rarity { get; set; }
-        public bool Equiped { get; set; } = false;
         public override string ToString() => Name;
     }
 }

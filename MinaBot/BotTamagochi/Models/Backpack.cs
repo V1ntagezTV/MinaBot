@@ -15,6 +15,7 @@ namespace MinaBot.Models
         public int Lenght { get; set; } = 10;
         public int ItemCount { get; set; } = 0;
         public string itemCollectionStringWithID { get; set; } = "";
+
         public bool Add(int itemID)
         {
             var idList = itemCollectionStringWithID.Split(",");
@@ -22,10 +23,16 @@ namespace MinaBot.Models
             { 
                 return false; 
             }
-            itemCollectionStringWithID += itemID.ToString() + ",";
+            if (itemCollectionStringWithID == "")
+            {
+                itemCollectionStringWithID += itemID.ToString();
+                return true;
+            }
+            itemCollectionStringWithID += "," + itemID.ToString();
             ItemCount++;
             return true;
         }
+
         public bool Remove(int itemID)
         {
             var idList = itemCollectionStringWithID.Split(",").ToList();
@@ -39,20 +46,30 @@ namespace MinaBot.Models
                 }
             }
             return false;
-        }   
-        public ItemCollection<Item> ItemList 
+        }
+
+        public ItemCollection<Item> Items 
         {
             get
             {
-                var result = new ItemCollection<Item>(new List<Item>());
+                var items = new ItemCollection<Item>(new List<Item>());
                 var idList = itemCollectionStringWithID.Split(",");
                 for (int ind = 0; ind < idList.Length; ind++)
                 {
                     var item = ItemMocks.AllItems[Convert.ToInt32(idList[ind])];
-                    result.itemList.Add(item);
+                    items.Data.Add(item);
                 }
-                return result;
+                return items;
             }
+        }
+
+        public override string ToString()
+        {
+            if (itemCollectionStringWithID == "") 
+            {
+                return "Пусто!";
+            }
+            return Items.ToString();
         }
     }
 }
