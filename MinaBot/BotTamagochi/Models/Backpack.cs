@@ -34,7 +34,7 @@ namespace MinaBot.Models
         }
         public bool AddIdString(string idString)
         {
-            if (itemCollectionStringWithID == "")
+            if (itemCollectionStringWithID == "" || idString == "")
             {
                 itemCollectionStringWithID += idString;
                 return true;

@@ -22,11 +22,10 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi
         {
             const int MAXITEMCOUNT = 4;
             string resultItemList = "";
-            var random = new Random();
-            var currentItemCount = random.Next(0, MAXITEMCOUNT);
-            for (int itemInd = 0; itemInd < currentItemCount; itemInd++)
+            for (int itemInd = 0; itemInd < MAXITEMCOUNT; itemInd++)
             {
                 var item = ItemMocks.AllItems.GetRandomItemWithChance();
+                if (item.ID == -1) { continue; } // You get nothing.
                 if (resultItemList == "")
                 {
                     resultItemList += item.ID;

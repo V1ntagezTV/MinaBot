@@ -9,6 +9,7 @@ namespace MinaBot.BotTamagochi.ItemsPack
 {
     static class ItemMocks
     {
+        public static Item defaultCleanItem = new Item("Empty", 0, 0);
         public static ItemCollection<Item> AllItems { get; private set; }
         public static ItemCollection<Item> CommonItems { get; private set; }
         public static ItemCollection<Item> RareItems { get; private set; }
