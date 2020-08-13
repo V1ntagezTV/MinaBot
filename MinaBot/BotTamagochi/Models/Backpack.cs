@@ -32,6 +32,16 @@ namespace MinaBot.Models
             ItemCount++;
             return true;
         }
+        public bool AddIdString(string idString)
+        {
+            if (itemCollectionStringWithID == "")
+            {
+                itemCollectionStringWithID += idString;
+                return true;
+            }
+            itemCollectionStringWithID += "," + idString;
+            return true;
+        }
 
         public bool Remove(int itemID)
         {
