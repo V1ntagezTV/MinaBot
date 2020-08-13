@@ -30,6 +30,7 @@ namespace MinaBot.BotTamagochi.BotPackValues
             }
             return Item.defaultCleanItem;
         }
+
         public string ToStringWithPriceInLine()
         {
             string result = "";
@@ -39,6 +40,7 @@ namespace MinaBot.BotTamagochi.BotPackValues
             }
             return result;
         }
+
         public string ToStringInLine()
         {
             string result = "";
@@ -48,6 +50,7 @@ namespace MinaBot.BotTamagochi.BotPackValues
             }
             return result;
         }
+
         public string ToStringPricesInLine()
         {
             string result = "";
@@ -57,10 +60,12 @@ namespace MinaBot.BotTamagochi.BotPackValues
             }
             return result;
         }
+
         public Item this[int index]
         {
             get { return Data[index]; }
         }
+
         public override string ToString()
         {
             string result = "";
