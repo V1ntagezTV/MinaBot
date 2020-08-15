@@ -59,13 +59,6 @@ namespace MinaBot.Controllers
                         context.SaveChanges();
                         break;
 
-                    case "sold":
-                        var item = ItemMocks.AllItems[Convert.ToInt32(command.GetArgs[0])];
-                        result = new BooleanView(tamagochi.Backpack.Remove(item.ID));
-                        tamagochi.Money += item.SoldPrice;
-                        context.SaveChanges();
-                        break;
-
                     default:
                         UpdateStats(DateTime.Now, tamagochi);
                         result = new TamagochiView().GetView(tamagochi, command);
