@@ -41,6 +41,7 @@ namespace MinaBot.Models
                 if (idList[ind] == itemID.ToString())
                 {
                     idList.Remove(idList[ind]);
+                    itemCollectionStringWithID = string.Join(',', idList);
                     ItemCount--;
                     return true;
                 }
