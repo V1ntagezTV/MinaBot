@@ -100,6 +100,7 @@ namespace MinaBot.Controllers
             pet.CurrentStatus = EBotStatus.HUNTING;
             pet.Hunting.SavedSendTime = DateTime.Now;
             pet.Hunting.SendTimeLength = timeLength;
+            pet.Hunting.SendToHunting(timeLength);
             return true;
         }
 
@@ -110,6 +111,7 @@ namespace MinaBot.Controllers
                 if (pet.Hunting.SavedSendTime + pet.Hunting.SendTimeLength < DateTime.Now)
                 {
                     pet.CurrentStatus = pet.LastStatus;
+                    pet.Backpack.AddIdString(pet.Hunting.WaitingItems);
                 }
             }
         }

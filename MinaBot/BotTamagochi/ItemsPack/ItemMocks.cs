@@ -9,10 +9,30 @@ namespace MinaBot.BotTamagochi.ItemsPack
 {
     static class ItemMocks
     {
+        public static Item defaultCleanItem = new Item("Empty", 0, 0);
         public static ItemCollection<Item> AllItems { get; private set; }
+        public static ItemCollection<Item> CommonItems { get; private set; }
+        public static ItemCollection<Item> RareItems { get; private set; }
+        public static ItemCollection<Item> LegendaryItems { get; private set; }
+        public static ItemCollection<Item> ImmortalItems { get; private set; }
+        public static ItemCollection<Boots> Boots { get; private set; }
+        public static ItemCollection<Hat> Hats { get; private set; }
+        public static ItemCollection<Jacket> Jackets { get; private set; }
+        public static ItemCollection<Pants> Pants { get; private set; }
+        public static ItemCollection<Food> Foods { get; private set; }
+
         static ItemMocks()
         {
             AllItems = ToCollection();
+            CommonItems = new ItemCollection<Item>(AllItems.Data.Where(it => it.Rarity == ERarity.Common).ToList());
+            RareItems = new ItemCollection<Item>(AllItems.Data.Where(it => it.Rarity == ERarity.Rare).ToList());
+            LegendaryItems = new ItemCollection<Item>(AllItems.Data.Where(it => it.Rarity == ERarity.Legendary).ToList());
+            ImmortalItems = new ItemCollection<Item>(AllItems.Data.Where(it => it.Rarity == ERarity.Immortal).ToList());
+            Boots = new ItemCollection<Boots>(BootsList());
+            Hats = new ItemCollection<Hat>(HatsList());
+            Jackets = new ItemCollection<Jacket>(JacketsList());
+            Pants = new ItemCollection<Pants>(PantsList());
+            Foods = new ItemCollection<Food>(FoodsList());
         }
 
         public static readonly Boots SOCKS = new Boots(":socks:", 50, ERarity.Common);
@@ -33,10 +53,6 @@ namespace MinaBot.BotTamagochi.ItemsPack
                 HIGH_HEEL, SANDAL, BOOT, BALLET_SHOES,
                 MANS_SHOE, ATHLETIC_SHOE, HIKING_BOOT
             };
-        }
-        static public ItemCollection<Boots> BootsCollection()
-        {
-            return new ItemCollection<Boots>(BootsList());
         }
 
         //-
@@ -63,10 +79,6 @@ namespace MinaBot.BotTamagochi.ItemsPack
                 BREAD, CRAB, BEER, RAMEN, CHICKEN, PIZZA
             };
         }
-        static public ItemCollection<Food> FoodsCollection()
-        {
-            return new ItemCollection<Food>(FoodsList());
-        }
 
 
         public static readonly Hat WOMANS_HAT = new Hat(":womans_hat:", 1000, ERarity.Legendary);
@@ -78,10 +90,6 @@ namespace MinaBot.BotTamagochi.ItemsPack
         static private IList<Hat> HatsList()
         {
             return new List<Hat> { WOMANS_HAT, TOPHAT, BILLED_CAP, MORTAR_BOARD, HELMET_WITH_CROSS, CROWN };
-        }
-        static public ItemCollection<Hat> HatsCollection()
-        {
-            return new ItemCollection<Hat>(HatsList());
         }
 
         public static readonly Jacket COAT = new Jacket(":coat:", 4000, ERarity.Common);
@@ -99,16 +107,12 @@ namespace MinaBot.BotTamagochi.ItemsPack
         public static readonly Jacket MARTIAL_ARTS_UNIFORM = new Jacket(":martial_arts_uniform:", 3000, ERarity.Immortal);
         static private IList<Jacket> JacketsList()
         {
-            return new List<Jacket>() 
+            return new List<Jacket>()
             {
                 COAT, LAB_COAT, SAFETY_VEST, WOMANS_CLOTHES,
                 SHIRT, NECKTIE, DRESS, BIKINI, ONE_PIECE_SWIMSUIT,
                 KIMONO, SARI, RUNNING_SHIRT_WITH_SASH, MARTIAL_ARTS_UNIFORM
             };
-        }
-        static public ItemCollection<Jacket> JacketsCollection()
-        {
-            return new ItemCollection<Jacket>(JacketsList());
         }
 
         public static readonly Pants BRIEFS = new Pants(":briefs:", 300, ERarity.Common);
@@ -117,10 +121,6 @@ namespace MinaBot.BotTamagochi.ItemsPack
         static private IList<Pants> PantsList()
         {
             return new List<Pants>() { BRIEFS, SHORTS, JEANS };
-        }
-        static public ItemCollection<Pants> PantsCollection()
-        {
-            return new ItemCollection<Pants>(PantsList());
         }
         static private ItemCollection<Item> ToCollection()
         {

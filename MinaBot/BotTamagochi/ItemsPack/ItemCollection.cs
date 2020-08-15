@@ -1,4 +1,5 @@
-﻿using MinaBot.Models;
+﻿using MinaBot.BotTamagochi.ItemsPack;
+using MinaBot.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,15 +22,35 @@ namespace MinaBot.BotTamagochi.BotPackValues
         public Item GetRandomItemWithChance()
         {
             var random = new Random();
-            for (int ind = 0; ind < Data.Count(); ind++)
+            var itemRarity = random.Next(0, 101);
+            if (itemRarity <= (int)ERarity.Common)
             {
-                if (random.Next(0, 101) <= (int)Data[ind].Rarity)
-                {
-                    return Data[ind];
-                }
+                return ItemMocks.CommonItems[random.Next(ItemMocks.CommonItems.Data.Count())];
             }
-            return Item.defaultCleanItem;
+            else if (itemRarity <= (int)ERarity.Rare)
+            {
+                return ItemMocks.RareItems[random.Next(ItemMocks.RareItems.Data.Count())];
+            }
+            else if (itemRarity <= (int)ERarity.Legendary)
+            {
+                return ItemMocks.LegendaryItems[random.Next(ItemMocks.LegendaryItems.Data.Count())];
+            }
+            else if (itemRarity <= (int)ERarity.Immortal)
+            {
+                return ItemMocks.ImmortalItems[random.Next(ItemMocks.ImmortalItems.Data.Count())];
+            }
+            else return ItemMocks.defaultCleanItem;
+
+            //for (int ind = 0; ind < Data.Count(); ind++)
+            //{
+            //    if (random.Next(0, 101) <= (int)Data[ind].Rarity)
+            //    {
+            //        return Data[ind];
+            //    }
+            //}
+            //return Item.defaultCleanItem;
         }
+
         public string ToStringWithPriceInLine()
         {
             string result = "";
@@ -39,6 +60,7 @@ namespace MinaBot.BotTamagochi.BotPackValues
             }
             return result;
         }
+
         public string ToStringInLine()
         {
             string result = "";
@@ -48,6 +70,7 @@ namespace MinaBot.BotTamagochi.BotPackValues
             }
             return result;
         }
+
         public string ToStringPricesInLine()
         {
             string result = "";
@@ -57,10 +80,12 @@ namespace MinaBot.BotTamagochi.BotPackValues
             }
             return result;
         }
+
         public Item this[int index]
         {
             get { return Data[index]; }
         }
+
         public override string ToString()
         {
             string result = "";

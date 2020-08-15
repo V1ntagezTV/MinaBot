@@ -10,7 +10,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi
         public int ID { get; set; }
         public DateTime SavedSendTime { get; set; }
         public TimeSpan SendTimeLength { get; set; }
-        public List<Item> WaitingItems { get; private set; } = new List<Item>();
+        public string WaitingItems { get; private set; } = "";
 
         public void SendToHunting(TimeSpan timeLength)
         {
@@ -18,16 +18,20 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi
             SavedSendTime = DateTime.Now;
             WaitingItems = FindItems();
         }
-        private List<Item> FindItems()
+        private string FindItems()
         {
             const int MAXITEMCOUNT = 4;
-            List<Item> resultItemList = new List<Item>(MAXITEMCOUNT);
-            var random = new Random();
-            var currentItemCount = random.Next(0, MAXITEMCOUNT);
-            for (int itemInd = 0; itemInd < currentItemCount; itemInd++)
+            string resultItemList = "";
+            for (int itemInd = 0; itemInd < MAXITEMCOUNT; itemInd++)
             {
                 var item = ItemMocks.AllItems.GetRandomItemWithChance();
-                resultItemList.Add(item);
+                if (item.ID == -1) { continue; } // You get nothing.
+                if (resultItemList == "")
+                {
+                    resultItemList += item.ID;
+                    continue;
+                }
+                resultItemList += "," + item.ID;
             }
             return resultItemList;
         }
