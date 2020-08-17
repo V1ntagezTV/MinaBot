@@ -44,23 +44,28 @@ namespace MinaBot.Controllers
 
                 switch (command.GetOptions)
                 {
+                    case "name":
+                        result = ChangeName(tamagochi, command.GetArgs[0]);
+                        context.SaveChanges();
+                        break;
+
                     case "clothes":
                     case "c":
                         result = new ClothesView().GetView(tamagochi, command);
                         break;
 
                     case "wear":
-                        result = new BooleanView(WearClothes(tamagochi, Convert.ToInt32(command.GetArgs[0])));
+                        result = WearClothes(tamagochi, Convert.ToInt32(command.GetArgs[0]));
                         context.SaveChanges();
                         break;
 
                     case "hunting":
-                        result = new BooleanView(SendToHunting(tamagochi, new TimeSpan(0, 0, 20)));
+                        result = SendToHunting(tamagochi, new TimeSpan(0, 0, 20));
                         context.SaveChanges();
                         break;
 
                     case "sold":
-                        result = new BooleanView(SoldItem(tamagochi, Convert.ToInt32(command.GetArgs[0])));
+                        result = SoldItem(tamagochi, Convert.ToInt32(command.GetArgs[0]));
                         context.SaveChanges();
                         break;
 
@@ -74,52 +79,68 @@ namespace MinaBot.Controllers
             }
         }
 
-        public bool WearClothes(TamagochiModel pet, int itemInd)
+        public MessageResult ChangeName(TamagochiModel pet, string newName)
         {
-            if (pet.Backpack.Items.Data.Count < itemInd && itemInd < 0)
-                return false;
+            if (newName.Length <= 10)
+            {
+                pet.Name = newName;
+                return new BooleanView(true);
+            }
+            return new ErrorView("Max name length is 10!");
+        }
+
+        public MessageResult WearClothes(TamagochiModel pet, int itemInd)
+        {
+            if (pet.Backpack.Lenght < itemInd || itemInd < 0)
+                return new ErrorView("Item index was wrong!");
 
             var item = pet.Backpack.Items[itemInd];
             if (item is Hat) pet.HatID = item.ID;
             else if (item is Jacket) pet.JacketID = item.ID;
             else if (item is Pants) pet.PantsID = item.ID;
             else if (item is Boots) pet.BootsID = item.ID;
-            else return false; // item not clothes
-            return true;
+            else return new ErrorView($"You can't wear this item!\nIndex{itemInd}");// item not clothes
+            return new BooleanView(true);
         }
 
-        public bool SoldItem(TamagochiModel pet, int itemInd)
+        public MessageResult SoldItem(TamagochiModel pet, int itemInd)
         {
+            if (pet.Backpack.Lenght < itemInd || itemInd < 0)
+                return new ErrorView("Item index was wrong!");
+
             var item = pet.Backpack.Items[itemInd];
             pet.Backpack.Remove(itemInd);
             pet.Money += item.SoldPrice;
-            return true;
+            return new BooleanView(true);
         }
         
-        public bool EatItem(TamagochiModel pet, int itemInd)
+        public MessageResult EatItem(TamagochiModel pet, int itemInd)
         {
+            if (pet.Backpack.Lenght < itemInd || itemInd < 0)
+                return new ErrorView("Item index was wrong!");
+
             var item = pet.Backpack.Items[itemInd];
             if (item is Food food)
             {
                 pet.Hungry.Score += food.Satiety;
-                return true;
+                return new BooleanView(true);
             }
-            return false;
+            return new ErrorView("This item is not Food!");
 
         }
 
-        public bool SendToHunting(TamagochiModel pet, TimeSpan timeLength)
+        public MessageResult SendToHunting(TamagochiModel pet, TimeSpan timeLength)
         {
             UpdateHuntingStatus(pet);
             if (pet.CurrentStatus == EBotStatus.HUNTING)
             {
-                return false;
+                return new BooleanView(false);
             }
             pet.CurrentStatus = EBotStatus.HUNTING;
             pet.Hunting.SavedSendTime = DateTime.Now;
             pet.Hunting.SendTimeLength = timeLength;
             pet.Hunting.SendToHunting(timeLength);
-            return true;
+            return new BooleanView(true);
         }
 
         private void UpdateHuntingStatus(TamagochiModel pet)
