@@ -11,52 +11,55 @@ namespace MinaBot.Models
 {
     class Backpack
     {
+        public static int MAXITEMSCOUNT = 10;
         public int ID { get; set; }
         public int Lenght { get; set; } = 10;
         public int ItemCount { get; set; } = 0;
         public string itemCollectionStringWithID { get; set; } = "";
 
-        public bool Add(int itemID)
+        public bool Add(string itemID)
         {
+
             var idList = itemCollectionStringWithID.Split(",");
-            if (idList.Length >= 10) 
+            if (idList.Length >= MAXITEMSCOUNT) 
             { 
-                return false; 
+                return false;
             }
             if (itemCollectionStringWithID == "")
             {
-                itemCollectionStringWithID += itemID.ToString();
+                itemCollectionStringWithID += itemID;
+                ItemCount++;
                 return true;
             }
-            itemCollectionStringWithID += "," + itemID.ToString();
+            itemCollectionStringWithID += "," + itemID;
             ItemCount++;
             return true;
         }
         public bool AddIdString(string idString)
         {
-            if (itemCollectionStringWithID == "" || idString == "")
+            var items = idString.Split(',');
+            for (int ind = 0; ind < items.Length; ind++)
             {
-                itemCollectionStringWithID += idString;
-                return true;
+                if (ItemCount > MAXITEMSCOUNT)
+                {
+                    return false;
+                }
+                this.Add(items[ind]);
             }
-            itemCollectionStringWithID += "," + idString;
             return true;
         }
 
         public bool Remove(int itemID)
         {
             var idList = itemCollectionStringWithID.Split(",").ToList();
-            for (int ind = 0; ind < idList.Count; ind++)
+            if (idList.Count < itemID || itemCollectionStringWithID == "")
             {
-                if (idList[ind] == itemID.ToString())
-                {
-                    idList.Remove(idList[ind]);
-                    itemCollectionStringWithID = string.Join(',', idList);
-                    ItemCount--;
-                    return true;
-                }
+                return false;
             }
-            return false;
+            idList.Remove(idList[itemID]);
+            itemCollectionStringWithID = string.Join(',', idList);
+            ItemCount--;
+            return true;
         }
 
         public ItemCollection<Item> Items 

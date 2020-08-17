@@ -129,6 +129,7 @@ namespace MinaBot.BotTamagochi.ItemsPack
              * 0 = default item
             */
             var result = new List<Item>();
+            result.Add(defaultCleanItem);
             result.AddRange(BootsList());
             result.AddRange(FoodsList());
             result.AddRange(HatsList());

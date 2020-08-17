@@ -60,9 +60,7 @@ namespace MinaBot.Controllers
                         break;
 
                     case "sold":
-                        var item = ItemMocks.AllItems[Convert.ToInt32(command.GetArgs[0])];
-                        result = new BooleanView(tamagochi.Backpack.Remove(item.ID));
-                        tamagochi.Money += item.SoldPrice;
+                        result = new BooleanView(SoldItem(tamagochi, Convert.ToInt32(command.GetArgs[0])));
                         context.SaveChanges();
                         break;
 
@@ -88,6 +86,26 @@ namespace MinaBot.Controllers
             else if (item is Boots) pet.BootsID = item.ID;
             else return false; // item not clothes
             return true;
+        }
+
+        public bool SoldItem(TamagochiModel pet, int itemInd)
+        {
+            var item = pet.Backpack.Items[itemInd];
+            pet.Backpack.Remove(itemInd);
+            pet.Money += item.SoldPrice;
+            return true;
+        }
+        
+        public bool EatItem(TamagochiModel pet, int itemInd)
+        {
+            var item = pet.Backpack.Items[itemInd];
+            if (item is Food food)
+            {
+                pet.Hungry.Score += food.Satiety;
+                return true;
+            }
+            return false;
+
         }
 
         public bool SendToHunting(TamagochiModel pet, TimeSpan timeLength)

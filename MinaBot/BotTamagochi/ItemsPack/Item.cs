@@ -9,14 +9,14 @@
     }
     class Item
     {
-        private static int itemCounter = -1;
+        private static int itemCounter = 0;
         public Item(string name, int price, ERarity rarity = ERarity.Common)
         {
             this.ID = itemCounter;
             itemCounter++;
             this.Name = name;
             this.Price = price;
-            this.SoldPrice = price / 100 * 75;
+            this.SoldPrice = (int)((double)price / 100 * 75);
             this.Rarity = rarity;
         }
         public int ID { get; set; }
