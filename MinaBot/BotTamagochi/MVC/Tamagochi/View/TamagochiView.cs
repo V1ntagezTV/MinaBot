@@ -2,6 +2,8 @@
 using MinaBot.BotTamagochi.ItemsPack;
 using MinaBot.Main;
 using MinaBot.Models;
+using System;
+using System.Linq;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
@@ -15,10 +17,11 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
 
         private Embed ConstructMainEmbed(TamagochiModel pet, CommandModel message)
         {
+            var rgb = pet.Color.Split(':').Select(s => Convert.ToInt32(s)).ToList();
             var embed = new EmbedBuilder();
             embed.Title = pet.Name;
             embed.Description = pet.CurrentStatus;
-            embed.Color = Color.DarkRed;
+            embed.Color = new Discord.Color(rgb[0], rgb[1], rgb[2]);
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "Статы",

@@ -63,15 +63,6 @@ namespace MinaBot
                     await message.AddReactionAsync(new Emoji("❌"));
                 }
             }
-            if (message.Content.ToLower().StartsWith("test"))
-            {
-                using (var tam = new TamagochiContext())
-                {
-                    var tm = tam.Data.Include(t => t.Backpack).FirstOrDefault(t => t.DiscordId == message.Author.Id);
-                    var item = tm.Backpack.Items[1];
-                    await message.Channel.SendMessageAsync(item.ID.ToString() + ": " + tm.Backpack.itemCollectionStringWithID);
-                }
-            }
         }
 
         private Task Logging(LogMessage log)
