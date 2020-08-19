@@ -3,6 +3,7 @@ using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
 using MinaBot.BotTamagochi.DataTamagochi;
 using MinaBot.BotTamagochi.ItemsPack;
+using MinaBot.BotTamagochi.Models;
 using MinaBot.BotTamagochi.MVC.Tamagochi;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
 using MinaBot.BotTamagochi.MVC.Tamagochi.View;
@@ -18,6 +19,7 @@ namespace MinaBot
     {
         private DiscordSocketClient client;
         private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XwMDMg.BkEtu1TJoXxIRcgGLBEA8YJ9HZo";
+        private LevelModel level = new LevelModel() { Level=1, ExpToNextLevel=100, CurrentExp=0 };
         public static void Main(string[] args)
         {
             new Program().MainAsync().GetAwaiter().GetResult();
@@ -62,6 +64,14 @@ namespace MinaBot
                     }
                     await message.AddReactionAsync(new Emoji("❌"));
                 }
+            }
+            if (message.Content.ToLower().StartsWith("test"))
+            {
+                await message.Channel.SendMessageAsync($"level:level={level.Level} exp={level.CurrentExp}:toNext{level.ExpToNextLevel}");
+            }
+            if (message.Content.ToLower().StartsWith("up"))
+            {
+                level.CurrentExp = 101;
             }
         }
 

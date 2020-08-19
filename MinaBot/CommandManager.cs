@@ -27,17 +27,17 @@ namespace MinaBot
         }
         public MessageResult GetViewResult()
         {
-            MessageResult result;
             switch (commandModel.GetPrefix)
             {
                 case "bot":
-                    result = new TamagochiController(commandModel).ChooseMessageResult();
-                    break;
+                    return new TamagochiController(commandModel).ChooseMessageResult();
+
+                //case "shop":
+                //    return new ShopController()
 
                 default:
                     throw new Exception("unvalueble message");
             }
-            return result;
         }
     }
 }

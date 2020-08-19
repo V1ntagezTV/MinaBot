@@ -1,4 +1,5 @@
 ﻿using MinaBot.BotTamagochi.ItemsPack;
+using MinaBot.BotTamagochi.Models;
 using MinaBot.BotTamagochi.MVC.Tamagochi;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
 using MinaBot.Main;
@@ -13,7 +14,7 @@ namespace MinaBot.Models
         public string Name { get; set; }
         public string AvatarURL { get; set; }
         public string Color { get; set; }
-        public uint Level { get; set; }
+        public LevelModel Level { get; set; }
         private string currentStatus;
         public string CurrentStatus { 
             get => currentStatus;

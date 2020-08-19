@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MinaBot.BotTamagochi.Models;
 using MinaBot.BotTamagochi.MVC.Tamagochi;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
 using MinaBot.Models;
@@ -35,7 +36,8 @@ namespace MinaBot.BotTamagochi.DataTamagochi
             {
                 DiscordId = discordId,
                 Name = "#Pet",
-                Level = 1,
+                Color = "255:187:250",
+                Level = new LevelModel() { Level = 1, ExpToNextLevel = 100 },
                 AvatarURL = @"https://i.pinimg.com/736x/16/f9/60/16f960c5ba68b8f0b88f1c571e8bf9ce--kim-taehyung-twice-cute.jpg",
                 Money = 150,
                 CurrentStatus = "Hi!",

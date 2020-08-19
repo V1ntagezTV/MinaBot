@@ -25,7 +25,8 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "Статы",
-                Value = $"Money: {pet.Money}\n"
+                Value = $"Money: {pet.Money}\n" +
+                $"Level: {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})"
             });
             embed.AddField(new EmbedFieldBuilder()
             {

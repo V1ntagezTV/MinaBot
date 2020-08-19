@@ -30,11 +30,16 @@ namespace MinaBot.Controllers
 					.Include(t => t.Happiness)
 					.Include(t => t.Health).Include(t => t.Hungry)
 					.Include(t => t.Thirsty).Include(t => t.Backpack)
-					.Include(t => t.Hunting)
+					.Include(t => t.Hunting).Include(t => t.Level)
 					.FirstOrDefault(t => t.DiscordId == command.GetMessage.Author.Id);
 
 				if (command.GetOptions == "create")
 				{
+					if (tamagochi != null)
+                    {
+						context.Remove(tamagochi);
+						context.SaveChanges();
+                    }
 					tamagochi = context.CreateAndAddTamagochi(command.GetMessage.Author.Id).Result;
 					return new TamagochiView().GetView(tamagochi, command);
 				}
@@ -42,6 +47,12 @@ namespace MinaBot.Controllers
 				{
 					return new ErrorView("You need create your pet with `m!bot create` command.");
 				}
+				UpdateStats(DateTime.Now, tamagochi);
+				if (tamagochi.Health.Score == 0)
+                {
+					return new ErrorView($"I'm sorry, but your pet: {tamagochi.ID}#{tamagochi.Name} is dead.\n" +
+						$" You need to recreate your tamagochi.");
+                }
 
 				switch (command.GetOptions)
 				{
@@ -81,7 +92,6 @@ namespace MinaBot.Controllers
 						break;
 
 					default:
-						UpdateStats(DateTime.Now, tamagochi);
 						result = new TamagochiView().GetView(tamagochi, command);
 						context.SaveChanges();
 						break;
@@ -124,6 +134,7 @@ namespace MinaBot.Controllers
 			else if (item is Pants) pet.PantsID = item.ID;
 			else if (item is Boots) pet.BootsID = item.ID;
 			else return new ErrorView($"You can't wear this item!\nIndex{itemInd}");// item not clothes
+			pet.Level.CurrentExp += 10;
 			return new BooleanView(true);
 		}
 
@@ -148,6 +159,7 @@ namespace MinaBot.Controllers
 			{
 				pet.Hungry.Score += food.Satiety;
 				pet.Backpack.Remove(itemInd);
+				pet.Level.CurrentExp += 10;
 				return new BooleanView(true);
 			}
 			return new ErrorView("This item is not Food!");
@@ -176,6 +188,8 @@ namespace MinaBot.Controllers
 				{
 					pet.CurrentStatus = pet.LastStatus;
 					pet.Backpack.AddIdString(pet.Hunting.WaitingItems);
+					Console.WriteLine(5 * pet.Hunting.WaitingItems.Split(',').Length);
+					pet.Level.CurrentExp += 5 * pet.Hunting.WaitingItems.Split(',').Length;
 				}
 			}
 		}
