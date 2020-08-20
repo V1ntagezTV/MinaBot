@@ -4,6 +4,7 @@ using MinaBot.Main;
 using MinaBot.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using static MinaBot.MessageResult;
 
@@ -16,32 +17,41 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             return new EmbedView<Embed>(ConstructMainEmbed(tamagochi, message));
         }
 
-        private Embed ConstructMainEmbed(TamagochiModel tamagochi, CommandModel message)
+        private Embed ConstructMainEmbed(TamagochiModel pet, CommandModel message)
         {
-            var hat = ItemMocks.AllItems[tamagochi.HatID];
-            var jacket = ItemMocks.AllItems[tamagochi.JacketID];
-            var pants = ItemMocks.AllItems[tamagochi.PantsID];
-            var boots = ItemMocks.AllItems[tamagochi.BootsID];
+            var hat = ItemMocks.AllItems[pet.HatID];
+            var jacket = ItemMocks.AllItems[pet.JacketID];
+            var pants = ItemMocks.AllItems[pet.PantsID];
+            var boots = ItemMocks.AllItems[pet.BootsID];
+
             var embed = new EmbedBuilder();
-            embed.Color = Color.Green;
+            embed.Title = pet.Name;
+            embed.Description = pet.CurrentStatus;
+            embed.Color = new Discord.Color((uint)Convert.ToInt32(pet.Color, 16));
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = "**Clothes**",
-                Value = ">>> " + hat.Name +"\n"+ jacket.Name + "\n"
+                Name = "Статы",
+                Value = $"Coins: {pet.Money}\n" +
+                $"Level: {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})"
+            });
+            embed.AddField(new EmbedFieldBuilder()
+            {
+                Name = "**ОДЕЖДА**",
+                Value = hat.Name +"\n"+ jacket.Name + "\n"
                 + pants.Name + "\n" + boots.Name,
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = "**Price**",
-                Value = ">>> " + hat.Price + "\n" + jacket.Price + "\n" +
+                Name = "**ЦЕНА**",
+                Value = hat.Price + "\n" + jacket.Price + "\n" +
                     pants.Price + "\n" + boots.Price,
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = "**SoldPrice**",
-                Value = ">>> " + hat.SoldPrice + "\n" + jacket.SoldPrice + "\n" +
+                Name = "**ПРОДАЖА**",
+                Value = hat.SoldPrice + "\n" + jacket.SoldPrice + "\n" +
                     pants.SoldPrice + "\n" + boots.SoldPrice,
                 IsInline = true
             });

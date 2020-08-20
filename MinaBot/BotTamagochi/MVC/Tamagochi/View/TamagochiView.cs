@@ -17,24 +17,23 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
 
         private Embed ConstructMainEmbed(TamagochiModel pet, CommandModel message)
         {
-            var rgb = pet.Color.Split(':').Select(s => Convert.ToInt32(s)).ToList();
             var embed = new EmbedBuilder();
             embed.Title = pet.Name;
             embed.Description = pet.CurrentStatus;
-            embed.Color = new Discord.Color(rgb[0], rgb[1], rgb[2]);
+            embed.Color = new Discord.Color((uint)Convert.ToInt32(pet.Color, 16));
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "Статы",
-                Value = $"Money: {pet.Money}\n" +
+                Value = $"Coins: {pet.Money}\n" +
                 $"Level: {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})"
             });
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**ХАРАКТЕРИСТИКА:**",
-                Value = ":heart:  **Здоровье**: " + pet.Health.Score + " хп\n" +
-                    ":meat_on_bone:  **Голод**: " + pet.Hungry.Score + " p\n" +
-                    ":sweat_drops:  **Жажда**: " + pet.Thirsty.Score + " p\n" +
-                    ":partying_face:   **Счастье**: " + pet.Happiness.Score + " p\n",
+                Value = ":heart:  **Здоровье**: " + pet.Health.Score + "\n" +
+                    ":meat_on_bone:  **Голод**: " + pet.Hungry.Score + "\n" +
+                    ":sweat_drops:  **Жажда**: " + pet.Thirsty.Score + "\n" +
+                    ":partying_face:   **Счастье**: " + pet.Happiness.Score,
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
@@ -48,7 +47,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             });
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = "**ИНВЕНТАРЬ:**",
+                Name = $"**ИНВЕНТАРЬ ({pet.Backpack.ItemCount}/{Backpack.MAXITEMSCOUNT}):**",
                 Value = pet.Backpack.ToString()
             });
             embed.Footer = new EmbedFooterBuilder()

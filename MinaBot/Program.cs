@@ -65,14 +65,6 @@ namespace MinaBot
                     await message.AddReactionAsync(new Emoji("❌"));
                 }
             }
-            if (message.Content.ToLower().StartsWith("test"))
-            {
-                await message.Channel.SendMessageAsync($"level:level={level.Level} exp={level.CurrentExp}:toNext{level.ExpToNextLevel}");
-            }
-            if (message.Content.ToLower().StartsWith("up"))
-            {
-                level.CurrentExp = 101;
-            }
         }
 
         private Task Logging(LogMessage log)

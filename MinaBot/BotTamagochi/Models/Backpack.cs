@@ -19,7 +19,6 @@ namespace MinaBot.Models
 
         public bool Add(string itemID)
         {
-
             var idList = itemCollectionStringWithID.Split(",");
             if (idList.Length >= MAXITEMSCOUNT) 
             { 
@@ -37,6 +36,10 @@ namespace MinaBot.Models
         }
         public bool AddIdString(string idString)
         {
+            if (idString == "")
+            {
+                return false;
+            }
             var items = idString.Split(',');
             for (int ind = 0; ind < items.Length; ind++)
             {

@@ -102,14 +102,7 @@ namespace MinaBot.Controllers
 
 		public MessageResult ChangeColor(TamagochiModel pet, string hex)
 		{
-            try
-            {
-				pet.Color = ConvertHexToRGB(hex);
-			}
-			catch (Exception)
-            {
-				return new BooleanView(false);
-            }
+			pet.Color = "0x" + hex;
 			return new BooleanView(true);
 		}
 
@@ -213,33 +206,6 @@ namespace MinaBot.Controllers
 			}
 			//hunting
 			UpdateHuntingStatus(pet);
-		}
-		/*
-		 RETURN RGB STRING IN "R:G:B" FORMAT
-		 */
-		private string ConvertHexToRGB(string hex)
-        {
-			if (hex.StartsWith("#"))
-            {
-				hex = hex[1..hex.Length];
-            }
-			if (hex.Length == 3)
-            {
-				var newHex = "";
-				for (int ind = 0; ind < hex.Length; ind++)
-                {
-					newHex += "" + hex[ind] + hex[ind];
-                }
-				hex = newHex;
-            }
-			if (hex.Length == 6)
-            {
-				int r = Convert.ToInt32(new string(new char[] { hex[0], hex[1] }), 16);
-				int g = Convert.ToInt32(new string(new char[] { hex[2], hex[3] }), 16);
-				int b = Convert.ToInt32(new string(new char[] { hex[4], hex[5] }), 16);
-				return $"{r}:{g}:{b}";
-			}
-			throw new Exception($"Hex string exception {hex}.");
 		}
 	}
 }

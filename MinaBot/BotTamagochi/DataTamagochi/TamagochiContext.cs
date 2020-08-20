@@ -21,9 +21,7 @@ namespace MinaBot.BotTamagochi.DataTamagochi
 
         public TamagochiContext()
         {
-            Console.WriteLine("createdata");
             Database.EnsureCreated();
-            Console.WriteLine("createdata");
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -35,8 +33,8 @@ namespace MinaBot.BotTamagochi.DataTamagochi
             var pet = new TamagochiModel()
             {
                 DiscordId = discordId,
-                Name = "#Pet",
-                Color = "255:187:250",
+                Name = "#Tamagochi",
+                Color = "0x89ED61",
                 Level = new LevelModel() { Level = 1, ExpToNextLevel = 100 },
                 AvatarURL = @"https://i.pinimg.com/736x/16/f9/60/16f960c5ba68b8f0b88f1c571e8bf9ce--kim-taehyung-twice-cute.jpg",
                 Money = 150,
