@@ -15,15 +15,38 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             return new EmbedView<Embed>(ConstructMainEmbed(tamagochi, message));
         }
 
-        private Embed ConstructMainEmbed(TamagochiModel tamagochi, CommandModel message)
+        private Embed ConstructMainEmbed(TamagochiModel pet, CommandModel message)
         {
+            var items = pet.Backpack.Items;
+            var rarityField = new EmbedFieldBuilder() { IsInline = true };
+            var priceField = new EmbedFieldBuilder() { IsInline = true };
+
+            rarityField.Name = "**RARITY**";
+            priceField.Name = "**PRICE/SALE**";
+            for (int ind = 0; ind < pet.Backpack.ItemCount; ind++)
+            {
+                rarityField.Value += Enum.GetName(typeof(ERarity), items[ind].Rarity) + "\n";
+                priceField.Value += $"{items[ind].Price}/{items[ind].SoldPrice}\n";
+            }
+
             var embed = new EmbedBuilder();
-            embed.Color = Color.Green;
+            embed.Title = pet.Name;
+            embed.Description = pet.CurrentStatus;
+            embed.Color = new Discord.Color((uint)Convert.ToInt32(pet.Color, 16));
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = "**Inventory:**",
-                Value = ">>> " + tamagochi.Backpack.ToString()
+                Name = "Статы",
+                Value = $"**Coins:** {pet.Money}\n" +
+                        $"**Level:** {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})"
             });
+            embed.AddField(new EmbedFieldBuilder()
+            {
+                Name = "**ITEMS**",
+                Value = pet.Backpack.Items.ToStringInLine(),
+                IsInline = true
+            });
+            embed.AddField(rarityField);
+            embed.AddField(priceField);
             return embed.Build();
         }
     }

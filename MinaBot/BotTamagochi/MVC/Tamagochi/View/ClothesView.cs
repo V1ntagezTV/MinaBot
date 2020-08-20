@@ -31,30 +31,33 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "Статы",
-                Value = $"Coins: {pet.Money}\n" +
-                $"Level: {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})"
+                Value = $"**Coins:** {pet.Money}\n" +
+                        $"**Level:** {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})"
             });
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**ОДЕЖДА**",
-                Value = hat.Name +"\n"+ jacket.Name + "\n"
-                + pants.Name + "\n" + boots.Name,
+                Value = $"{ hat.Name }\n{ jacket.Name }\n" +
+                        $"{ pants.Name }\n{ boots.Name }",
+                IsInline = true
+            });
+            embed.AddField(new EmbedFieldBuilder()
+            {
+                Name = "**РЕДКОСТЬ**",
+                Value = $"**{ Enum.GetName(typeof(ERarity), (int)hat.Rarity) }\n" +
+                        $"{ Enum.GetName(typeof(ERarity), (int)jacket.Rarity) }\n" +
+                        $"{ Enum.GetName(typeof(ERarity), (int)pants.Rarity) }\n" +
+                        $"{ Enum.GetName(typeof(ERarity), (int)boots.Rarity) }**",
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**ЦЕНА**",
-                Value = hat.Price + "\n" + jacket.Price + "\n" +
-                    pants.Price + "\n" + boots.Price,
+                Value = $"**{ hat.Price }\n{ jacket.Price }\n" +
+                        $"{ pants.Price }\n{ boots.Price }**",
                 IsInline = true
             });
-            embed.AddField(new EmbedFieldBuilder()
-            {
-                Name = "**ПРОДАЖА**",
-                Value = hat.SoldPrice + "\n" + jacket.SoldPrice + "\n" +
-                    pants.SoldPrice + "\n" + boots.SoldPrice,
-                IsInline = true
-            });
+            Console.WriteLine(Enum.GetName(typeof(ERarity), hat.Rarity));
             return embed.Build();
         }
     }

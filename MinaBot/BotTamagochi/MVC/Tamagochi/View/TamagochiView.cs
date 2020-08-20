@@ -25,34 +25,34 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             {
                 Name = "Статы",
                 Value = $"Coins: {pet.Money}\n" +
-                $"Level: {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})"
+                        $"Level: {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})"
             });
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**ХАРАКТЕРИСТИКА:**",
-                Value = ":heart:  **Здоровье**: " + pet.Health.Score + "\n" +
-                    ":meat_on_bone:  **Голод**: " + pet.Hungry.Score + "\n" +
-                    ":sweat_drops:  **Жажда**: " + pet.Thirsty.Score + "\n" +
-                    ":partying_face:   **Счастье**: " + pet.Happiness.Score,
+                Value = $":heart:  **Здоровье**: { pet.Health.Score }\n" +
+                        $":meat_on_bone:  **Голод**: { pet.Hungry.Score }\n" +
+                        $":sweat_drops:  **Жажда**: { pet.Thirsty.Score }\n" +
+                        $":partying_face:   **Счастье**: { pet.Happiness.Score }",
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**ОДЕЖДА:**",
-                Value = "**Шляпа**: " + pet.Hat.Name + "\n" +
-                    "**Куртка**: " + pet.Jacket.Name + "\n" +
-                    "**Штаны**: " + pet.Pants.Name + "\n" +
-                    "**Ботинки**: " + pet.Boots.Name,
+                Value = $"**Шляпа**: { pet.Hat.Name }\n" +
+                        $"**Куртка**: { pet.Jacket.Name }\n" +
+                        $"**Штаны**: { pet.Pants.Name }\n" +
+                        $"**Ботинки**: { pet.Boots.Name }",
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = $"**ИНВЕНТАРЬ ({pet.Backpack.ItemCount}/{Backpack.MAXITEMSCOUNT}):**",
+                Name = $"**ИНВЕНТАРЬ ({ pet.Backpack.ItemCount }/{ Backpack.MAXITEMSCOUNT }):**",
                 Value = pet.Backpack.ToString()
             });
             embed.Footer = new EmbedFooterBuilder()
             {
-                Text = "Дата рождения: " + pet.Birthday.ToString()
+                Text = $"Дата рождения: { pet.Birthday }"
             };
             return embed.Build();
         }

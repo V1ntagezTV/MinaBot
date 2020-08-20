@@ -9,7 +9,7 @@ namespace MinaBot.BotTamagochi.ItemsPack
 {
     static class ItemMocks
     {
-        public static Item defaultCleanItem = new Item("Empty", 0, 0);
+f        public static Item defaultCleanItem = new Item("Empty", 0, ERarity.Common);
         public static ItemCollection<Item> AllItems { get; private set; }
         public static ItemCollection<Item> CommonItems { get; private set; }
         public static ItemCollection<Item> RareItems { get; private set; }
@@ -62,13 +62,13 @@ namespace MinaBot.BotTamagochi.ItemsPack
         //+
         public static readonly Food EGG = new Food(":egg:", 5, 10, ERarity.Common);
         public static readonly Food CHOCOLATE_BAR = new Food(":chocolate_bar:", 10, 20, ERarity.Common);
-        public static readonly Food APPLE = new Food(":apple:", 15, 30, ERarity.Rare);
-        public static readonly Food WATERMELON = new Food(":watermelon:", 20, 40, ERarity.Rare);
-        public static readonly Food BREAD = new Food(":bread:", 25, 50, ERarity.Rare);
-        public static readonly Food CRAB = new Food(":crab:", 30, 60, ERarity.Rare);
-        public static readonly Food BEER = new Food(":beer:", 35, 70, ERarity.Legendary);
+        public static readonly Food APPLE = new Food(":apple:", 15, 30, ERarity.Common);
+        public static readonly Food WATERMELON = new Food(":watermelon:", 20, 40, ERarity.Common);
+        public static readonly Food BREAD = new Food(":bread:", 25, 50, ERarity.Common);
+        public static readonly Food CRAB = new Food(":crab:", 30, 60, ERarity.Common);
+        public static readonly Food BEER = new Food(":beer:", 35, 70, ERarity.Rare);
         public static readonly Food RAMEN = new Food(":ramen:", 40, 80, ERarity.Legendary);
-        public static readonly Food CHICKEN = new Food(":chicken:", 45, 90, ERarity.Immortal);
+        public static readonly Food CHICKEN = new Food(":chicken:", 45, 90, ERarity.Legendary);
         public static readonly Food PIZZA = new Food(":pizza:", 50, 100, ERarity.Immortal);
         static private IList<Food> FoodsList()
         {

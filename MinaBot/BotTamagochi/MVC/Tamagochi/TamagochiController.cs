@@ -81,6 +81,10 @@ namespace MinaBot.Controllers
 						context.SaveChanges();
 						break;
 
+                    case "inventory":
+						result = new InventoryView().GetView(tamagochi, command);
+						break;
+
 					case "color":
 						result = ChangeColor(tamagochi, command.GetArgs[0]);
 						context.SaveChanges();

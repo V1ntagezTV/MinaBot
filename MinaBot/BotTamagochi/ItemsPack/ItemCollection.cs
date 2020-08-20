@@ -23,32 +23,23 @@ namespace MinaBot.BotTamagochi.BotPackValues
         {
             var random = new Random();
             var itemRarity = random.Next(0, 101);
-            if (itemRarity <= (int)ERarity.Common)
+            if (itemRarity <= (int)ERarity.Immortal)
             {
-                return ItemMocks.CommonItems[random.Next(ItemMocks.CommonItems.Data.Count())];
-            }
-            else if (itemRarity <= (int)ERarity.Rare)
-            {
-                return ItemMocks.RareItems[random.Next(ItemMocks.RareItems.Data.Count())];
+                return ItemMocks.ImmortalItems[random.Next(ItemMocks.ImmortalItems.Data.Count())];
             }
             else if (itemRarity <= (int)ERarity.Legendary)
             {
                 return ItemMocks.LegendaryItems[random.Next(ItemMocks.LegendaryItems.Data.Count())];
             }
-            else if (itemRarity <= (int)ERarity.Immortal)
+            else if (itemRarity <= (int)ERarity.Rare)
             {
-                return ItemMocks.ImmortalItems[random.Next(ItemMocks.ImmortalItems.Data.Count())];
+                return ItemMocks.RareItems[random.Next(ItemMocks.RareItems.Data.Count())];
+            }
+            else if (itemRarity <= (int)ERarity.Common)
+            {
+                return ItemMocks.CommonItems[random.Next(ItemMocks.CommonItems.Data.Count())];
             }
             else return ItemMocks.defaultCleanItem;
-
-            //for (int ind = 0; ind < Data.Count(); ind++)
-            //{
-            //    if (random.Next(0, 101) <= (int)Data[ind].Rarity)
-            //    {
-            //        return Data[ind];
-            //    }
-            //}
-            //return Item.defaultCleanItem;
         }
 
         public string ToStringWithPriceInLine()
@@ -66,7 +57,7 @@ namespace MinaBot.BotTamagochi.BotPackValues
             string result = "";
             for (int ind = 0; ind < Data.Count; ind++)
             {
-                result += Data[ind].ID + " " + Data[ind].Name + "\n";
+                result += Data[ind].Name + "\n";
             }
             return result;
         }
