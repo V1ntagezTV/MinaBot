@@ -19,7 +19,6 @@ namespace MinaBot
     {
         private DiscordSocketClient client;
         private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XwMDMg.BkEtu1TJoXxIRcgGLBEA8YJ9HZo";
-        private LevelModel level = new LevelModel() { Level=1, ExpToNextLevel=100, CurrentExp=0 };
         public static void Main(string[] args)
         {
             new Program().MainAsync().GetAwaiter().GetResult();

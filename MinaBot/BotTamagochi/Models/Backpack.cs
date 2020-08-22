@@ -11,11 +11,17 @@ namespace MinaBot.Models
 {
     class Backpack
     {
-        public static int MAXITEMSCOUNT = 10;
+        public const int MAXITEMSCOUNT = 10;
         public int ID { get; set; }
         public int Lenght { get; set; } = 10;
         public int ItemCount { get; set; } = 0;
         public string itemCollectionStringWithID { get; set; } = "";
+
+        public bool isIndexInBackpackRange(int index)
+        {
+            var itemList = itemCollectionStringWithID.Split(',');
+            return index >= 0 && index < itemList.Length;
+        }
 
         public bool Add(string itemID)
         {
@@ -65,6 +71,18 @@ namespace MinaBot.Models
             return true;
         }
 
+        public bool RemoveRange(int start, int end)
+        {
+            var idList = itemCollectionStringWithID.Split(",").ToList();
+            for ( ; start != end; end--)
+            {
+                idList.Remove(idList[start]);
+                ItemCount--;
+            }
+            itemCollectionStringWithID = string.Join(',', idList);
+            return true;
+        }
+
         public ItemCollection<Item> Items 
         {
             get
@@ -79,7 +97,6 @@ namespace MinaBot.Models
                 return items;
             }
         }
-
         public override string ToString()
         {
             if (itemCollectionStringWithID == "") 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using MinaBot.BotTamagochi.DataTamagochi;
 using MinaBot.BotTamagochi.ItemsPack;
 using MinaBot.BotTamagochi.MVC.Tamagochi.View;
@@ -91,7 +92,7 @@ namespace MinaBot.Controllers
 						break;
 
 					case "sold":
-						result = SoldItem(tamagochi, Convert.ToInt32(command.GetArgs[0]));
+						result = SoldItem(tamagochi, command.GetArgs[0]);
 						context.SaveChanges();
 						break;
 
@@ -135,15 +136,39 @@ namespace MinaBot.Controllers
 			return new BooleanView(true);
 		}
 
-		public MessageResult SoldItem(TamagochiModel pet, int itemInd)
+		public MessageResult SoldItem(TamagochiModel pet, string itemsInd)
 		{
-			if (pet.Backpack.Lenght < itemInd || itemInd < 0)
-				return new ErrorView("Item index was wrong!");
-
-			var item = pet.Backpack.Items[itemInd];
-			pet.Backpack.Remove(itemInd);
-			pet.Money += item.SoldPrice;
-			return new BooleanView(true);
+			var itemsRange = itemsInd.Split('-').Select(num => Convert.ToInt32(num));
+			if (itemsRange.Count() == 1)
+            {
+				var itemIndex = itemsRange.ElementAt(0) - 1;
+				if (!pet.Backpack.isIndexInBackpackRange(itemIndex))
+                {
+					return new BooleanView(false);
+				}
+				var item = pet.Backpack.Items[itemIndex];
+				pet.Backpack.Remove(itemIndex);
+				pet.Money += item.SoldPrice;
+				return new BooleanView(true);
+			}
+			else if (itemsRange.Count() == 2)
+            {
+				var start = itemsRange.ElementAt(0) - 1;
+				var end = itemsRange.ElementAt(1) - 1;
+				if (!pet.Backpack.isIndexInBackpackRange(start) || !pet.Backpack.isIndexInBackpackRange(end))
+				{
+					return new BooleanView(false);
+				}
+				for (int ind = start; ind < end; ind++)
+                {
+					pet.Money += pet.Backpack.Items[ind].SoldPrice;
+                }
+				return new BooleanView(pet.Backpack.RemoveRange(start, end + 1));
+			}
+			else
+            {
+				return new BooleanView(false);
+			}
 		}
 		
 		public MessageResult EatItem(TamagochiModel pet, int itemInd)
