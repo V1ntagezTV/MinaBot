@@ -220,18 +220,39 @@ namespace MinaBot.Controllers
 			var pastTime = updateTime - pet.LastCheckDate;
 			if (pastTime.TotalMinutes >= 2)
 			{
+
 				pet.LastCheckDate = updateTime;
+				double timeTo40 = NeedTimeToHungryAndThristyScore(pet, 40);
 				pet.Hungry.Score -= pastTime.TotalMinutes * pet.Hungry.MinusEveryMinute;
 				pet.Thirsty.Score -= pastTime.TotalMinutes * pet.Thirsty.MinusEveryMinute;
 				pet.Happiness.Score -= pastTime.TotalMinutes * pet.Happiness.MinusEveryMinute;
-
-				if (pet.Hungry.Score + pet.Thirsty.Score < 40)
+				if (timeTo40 < pastTime.TotalMinutes)
 				{
-					var pastHealthPoints = 40 - (pet.Hungry.Score + pet.Thirsty.Score);
-					pet.Health.Score -= pastHealthPoints / (pet.Hungry.MinusEveryMinute + pet.Thirsty.MinusEveryMinute);
+					pet.Health.Score -= (pastTime.TotalMinutes - timeTo40) * pet.Health.MinusEveryMinute;
 				}
 			}
 			UpdateHuntingStatus(pet);
+		}
+
+		double NeedTimeToHungryAndThristyScore(TamagochiModel pet, double score)
+		{
+			double currentScore = pet.Hungry.Score + pet.Thirsty.Score;
+			if (currentScore < score)
+			{
+				return 0.0;
+			}
+			double timeToScoreHungry = pet.Hungry.Score / pet.Hungry.MinusEveryMinute;
+			double timeToScoreThristy = pet.Thirsty.Score / pet.Thirsty.MinusEveryMinute;
+			double expectedTimeToScore = (currentScore - score) / (pet.Hungry.MinusEveryMinute + pet.Thirsty.MinusEveryMinute);
+			if (expectedTimeToScore < timeToScoreHungry && expectedTimeToScore < timeToScoreThristy)
+			{
+				return expectedTimeToScore;
+			}
+			expectedTimeToScore = Math.Min(timeToScoreHungry, timeToScoreThristy);
+			double tempScore = currentScore - (pet.Hungry.MinusEveryMinute + pet.Thirsty.MinusEveryMinute) * expectedTimeToScore;
+			bool existHungry = (timeToScoreHungry > timeToScoreThristy);
+			double existVelocity = existHungry ? pet.Hungry.MinusEveryMinute : pet.Thirsty.MinusEveryMinute;
+			return expectedTimeToScore + (tempScore - score) / existVelocity;
 		}
 	}
 }
