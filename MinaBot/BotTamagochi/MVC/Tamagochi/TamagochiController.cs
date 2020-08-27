@@ -191,11 +191,11 @@ namespace MinaBot.Controllers
 		public MessageResult SendToHunting(TamagochiModel pet, TimeSpan timeLength)
 		{
 			UpdateHuntingStatus(pet);
-			if (pet.CurrentStatus == EBotStatus.HUNTING)
+			if (pet.CurrentStatus == EStatus.HUNT)
 			{
 				return new BooleanView(false);
 			}
-			pet.CurrentStatus = EBotStatus.HUNTING;
+			pet.CurrentStatus = EStatus.HUNT;
 			pet.Hunting.SavedSendTime = DateTime.Now;
 			pet.Hunting.SendTimeLength = timeLength;
 			pet.Hunting.SendToHunting(timeLength);
@@ -204,13 +204,12 @@ namespace MinaBot.Controllers
 
 		private void UpdateHuntingStatus(TamagochiModel pet)
 		{
-			if (pet.CurrentStatus == EBotStatus.HUNTING) 
+			if (pet.CurrentStatus == EStatus.HUNT) 
 			{
 				if (pet.Hunting.SavedSendTime + pet.Hunting.SendTimeLength < DateTime.Now)
 				{
 					pet.CurrentStatus = pet.LastStatus;
 					pet.Backpack.AddIdString(pet.Hunting.WaitingItems);
-					Console.WriteLine(5 * pet.Hunting.WaitingItems.Split(',').Length);
 					pet.Level.CurrentExp += 5 * pet.Hunting.WaitingItems.Split(',').Length;
 				}
 			}
@@ -218,22 +217,20 @@ namespace MinaBot.Controllers
 
 		public void UpdateStats(DateTime updateTime, TamagochiModel pet)
 		{
-			//pet stats
 			var pastTime = updateTime - pet.LastCheckDate;
-
 			if (pastTime.TotalMinutes >= 2)
 			{
 				pet.LastCheckDate = updateTime;
 				pet.Hungry.Score -= pastTime.TotalMinutes * pet.Hungry.MinusEveryMinute;
 				pet.Thirsty.Score -= pastTime.TotalMinutes * pet.Thirsty.MinusEveryMinute;
 				pet.Happiness.Score -= pastTime.TotalMinutes * pet.Happiness.MinusEveryMinute;
+
 				if (pet.Hungry.Score + pet.Thirsty.Score < 40)
 				{
 					var pastHealthPoints = 40 - (pet.Hungry.Score + pet.Thirsty.Score);
 					pet.Health.Score -= pastHealthPoints / (pet.Hungry.MinusEveryMinute + pet.Thirsty.MinusEveryMinute);
 				}
 			}
-			//hunting
 			UpdateHuntingStatus(pet);
 		}
 	}

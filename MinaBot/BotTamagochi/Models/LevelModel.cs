@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MinaBot.BotTamagochi.Models
 {
-    class LevelModel
+    public class LevelModel
     {
         public int ID { get; set; }
         public int Level { get; set; }
