@@ -15,7 +15,7 @@ namespace MinaBot
         private DiscordSocketClient client;
         private CommandService commands;
         private IServiceProvider services;
-        private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XwMDMg.BkEtu1TJoXxIRcgGLBEA8YJ9HZo";
+        private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XLLpfA.iVhl7I2dZiuO8HLGrV1cwYQJN60";
 
         public static void Main(string[] args)
         {
@@ -56,6 +56,7 @@ namespace MinaBot
         {
             if (!(message is SocketUserMessage msg)) return;
             if (msg.Author.IsBot) return;
+
             var context = new SocketCommandContext(client, msg);
             await commands.ExecuteAsync(context, 0, services);
             if (message.Content.ToLower().StartsWith("m!"))

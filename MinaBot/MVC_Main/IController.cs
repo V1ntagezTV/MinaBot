@@ -1,11 +1,13 @@
-﻿using System;
+﻿using MinaBot.BotTamagochi.MVC.Tamagochi.Actions;
+using MinaBot.MVC_Main;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MinaBot.Main
 {
-    interface IController<out T>
+    interface IController<T>
     {
-        public abstract T GetModel { get; }
+        public  ActionCommand[] commands { get; }
     }
 }

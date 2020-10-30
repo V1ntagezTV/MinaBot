@@ -4,7 +4,7 @@ using Discord;
 
 namespace MinaBot.Models
 {
-    class CommandModel
+    public class CommandModel
     {
         public CommandModel(IMessage message, string prefix, string? options = null, string[]? args = null)
         {
