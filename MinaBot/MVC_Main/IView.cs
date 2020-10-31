@@ -1,8 +1,4 @@
-﻿using Discord;
-using MinaBot.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MinaBot.Models;
 
 namespace MinaBot.Main
 {

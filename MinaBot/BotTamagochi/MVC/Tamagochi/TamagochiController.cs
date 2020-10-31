@@ -220,9 +220,8 @@ namespace MinaBot.Controllers
 			var pastTime = updateTime - pet.LastCheckDate;
 			if (pastTime.TotalMinutes >= 2)
 			{
-
 				pet.LastCheckDate = updateTime;
-				double timeTo40 = NeedTimeToHungryAndThristyScore(pet, 40);
+				double timeTo40 = NeedTimeToHungryAndThristyScore(pet, 100);
 				pet.Hungry.Score -= pastTime.TotalMinutes * pet.Hungry.MinusEveryMinute;
 				pet.Thirsty.Score -= pastTime.TotalMinutes * pet.Thirsty.MinusEveryMinute;
 				pet.Happiness.Score -= pastTime.TotalMinutes * pet.Happiness.MinusEveryMinute;
@@ -234,7 +233,7 @@ namespace MinaBot.Controllers
 			UpdateHuntingStatus(pet);
 		}
 
-		double NeedTimeToHungryAndThristyScore(TamagochiModel pet, double score)
+		public static double NeedTimeToHungryAndThristyScore(TamagochiModel pet, double score)
 		{
 			double currentScore = pet.Hungry.Score + pet.Thirsty.Score;
 			if (currentScore < score)

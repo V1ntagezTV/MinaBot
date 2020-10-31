@@ -1,5 +1,6 @@
 ﻿using Discord;
 using MinaBot.BotTamagochi.ItemsPack;
+using MinaBot.Controllers;
 using MinaBot.Main;
 using MinaBot.Models;
 using System;
@@ -25,7 +26,8 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             {
                 Name = "Статы",
                 Value = $"Coins: {pet.Money}\n" +
-                        $"Level: {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})"
+                        $"Level: {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})\n" +
+                        $"LiveTime: {TamagochiController.NeedTimeToHungryAndThristyScore(pet, 40) + (pet.Health.Score / pet.Health.MinusEveryMinute)}min."
             });
             embed.AddField(new EmbedFieldBuilder()
             {

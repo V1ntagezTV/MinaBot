@@ -5,6 +5,7 @@ using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using static MinaBot.MessageResult;
 
@@ -19,7 +20,7 @@ namespace MinaBot
 
         public static void Main(string[] args)
         {
-            new Program().TestMainAsync().GetAwaiter().GetResult();
+            new Program().MainAsync().GetAwaiter().GetResult();
         }
 
         public async Task TestMainAsync()
@@ -56,8 +57,8 @@ namespace MinaBot
         {
             if (!(message is SocketUserMessage msg)) return;
             if (msg.Author.IsBot) return;
-            var context = new SocketCommandContext(client, msg);
-            await commands.ExecuteAsync(context, 0, services);
+            //var context = new SocketCommandContext(client, msg);
+            //await commands.ExecuteAsync(context, 0, services);
             if (message.Content.ToLower().StartsWith("m!"))
             {
                 var manager = new CommandManager(message);
@@ -68,9 +69,10 @@ namespace MinaBot
                     MessageView messView => message.Channel.SendMessageAsync(text: messView.Data),
                     ErrorView errorView => message.Channel.SendMessageAsync(embed: errorView.Exception),
                     BooleanView boolView => boolView.Value ? message.AddReactionAsync(new Emoji("✅")) : message.AddReactionAsync(new Emoji("❌")),
-                    _ => throw new NotImplementedException()
+                    _ => throw new Exception()
                 };
             }
+            await Task.CompletedTask;
         }
 
         private Task Logging(LogMessage log)

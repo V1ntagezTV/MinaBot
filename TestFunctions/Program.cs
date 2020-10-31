@@ -28,13 +28,13 @@ namespace MinaBot
             await client.LoginAsync(TokenType.Bot, token);
             await client.StartAsync();
 
-            services = new ServiceCollection()
-                .AddSingleton(client)
-                .AddSingleton<InteractiveService>()
-                .BuildServiceProvider();
+            //services = new ServiceCollection()
+                //.AddSingleton(client)
+                //.AddSingleton<InteractiveService>()
+                //.BuildServiceProvider();
 
             commands = new CommandService();
-            await commands.AddModulesAsync(Assembly.GetEntryAssembly(), services);
+            await commands.AddModulesAsync(Assembly.GetEntryAssembly(), null);
 
             client.MessageReceived += MessageReceivedFunction;
             client.Log += Logging;
@@ -55,11 +55,12 @@ namespace MinaBot
         {
             if (!(message is SocketUserMessage msg)) return;
             if (msg.Author.IsBot) return;
-            var context = new SocketCommandContext(client, msg);
-            await commands.ExecuteAsync(context, 0, services);
-            if (message.Content.ToLower().StartsWith("m!"))
-            {
 
+            int commArg = 0;
+            if (msg.HasStringPrefix("m!", ref commArg))
+            {
+                var context = new SocketCommandContext(client, msg);
+                await commands.ExecuteAsync(context, 0, null);
             }
         }
 
