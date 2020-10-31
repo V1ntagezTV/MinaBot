@@ -3,7 +3,7 @@ using System;
 
 namespace MinaBot
 {
-    class MessageResult
+    public class MessageResult
     {
         private MessageResult() { }
         public class EmbedView<T>: MessageResult

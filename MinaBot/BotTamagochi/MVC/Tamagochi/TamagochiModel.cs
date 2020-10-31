@@ -7,7 +7,7 @@ using System;
 
 namespace MinaBot.Models
 {
-    class TamagochiModel: IModel
+    public class TamagochiModel: IModel
     {
         public int ID { get; set; }
         public ulong DiscordId { get; set; }
@@ -28,7 +28,7 @@ namespace MinaBot.Models
         public uint ToUpLevelScore { get; set; }
         public int AgeDays { get => (DateTime.Now - Birthday).Days + 1; }
         public int HatID { get; set; }
-        public Item Hat 
+        public Item Hat
         { 
             get
             {

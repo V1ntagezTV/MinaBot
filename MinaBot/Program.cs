@@ -5,7 +5,6 @@ using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using static MinaBot.MessageResult;
 
@@ -16,11 +15,11 @@ namespace MinaBot
         private DiscordSocketClient client;
         private CommandService commands;
         private IServiceProvider services;
-        private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XwMDMg.BkEtu1TJoXxIRcgGLBEA8YJ9HZo";
+        private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XLLpfA.iVhl7I2dZiuO8HLGrV1cwYQJN60";
 
         public static void Main(string[] args)
         {
-            new Program().MainAsync().GetAwaiter().GetResult();
+            new Program().TestMainAsync().GetAwaiter().GetResult();
         }
 
         public async Task TestMainAsync()
@@ -57,8 +56,9 @@ namespace MinaBot
         {
             if (!(message is SocketUserMessage msg)) return;
             if (msg.Author.IsBot) return;
-            //var context = new SocketCommandContext(client, msg);
-            //await commands.ExecuteAsync(context, 0, services);
+
+            var context = new SocketCommandContext(client, msg);
+            await commands.ExecuteAsync(context, 0, services);
             if (message.Content.ToLower().StartsWith("m!"))
             {
                 var manager = new CommandManager(message);
@@ -69,10 +69,9 @@ namespace MinaBot
                     MessageView messView => message.Channel.SendMessageAsync(text: messView.Data),
                     ErrorView errorView => message.Channel.SendMessageAsync(embed: errorView.Exception),
                     BooleanView boolView => boolView.Value ? message.AddReactionAsync(new Emoji("✅")) : message.AddReactionAsync(new Emoji("❌")),
-                    _ => throw new Exception()
+                    _ => throw new NotImplementedException()
                 };
             }
-            await Task.CompletedTask;
         }
 
         private Task Logging(LogMessage log)

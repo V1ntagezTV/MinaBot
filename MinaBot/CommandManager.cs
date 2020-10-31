@@ -29,11 +29,11 @@ namespace MinaBot
         {
             switch (commandModel.GetPrefix)
             {
-                case "bot":
+                case "bot": 
                     return new TamagochiController(commandModel).ChooseMessageResult();
 
                 //case "shop":
-                //    return new ShopController()
+                //    return new ShopController();
 
                 default:
                     throw new Exception("unvalueble message");
