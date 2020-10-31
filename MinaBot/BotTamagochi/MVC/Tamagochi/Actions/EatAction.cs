@@ -15,7 +15,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
         }
         public override MessageResult Invoke()
         {
-            
+            throw new Exception("vgbhnjk");
         }
     }
 }

@@ -9,7 +9,7 @@ using static MinaBot.BotTamagochi.BotPackValues.ItemTypes;
 
 namespace MinaBot.Models
 {
-    class Backpack
+    public class Backpack
     {
         public const int MAXITEMSCOUNT = 10;
         public int ID { get; set; }

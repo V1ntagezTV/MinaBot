@@ -161,6 +161,19 @@ namespace MinaBot.Controllers
 			}
 			UpdateHuntingStatus(pet);
 		}
+		
+		public static void UpdateHuntingStatus(TamagochiModel pet)
+		{
+			if (pet.CurrentStatus == EStatus.HUNT)
+			{
+				if (pet.Hunting.SavedSendTime + pet.Hunting.SendTimeLength < DateTime.Now)
+				{
+					pet.CurrentStatus = pet.LastStatus;
+					pet.Backpack.AddIdString(pet.Hunting.WaitingItems);
+					pet.Level.CurrentExp += 5 * pet.Hunting.WaitingItems.Split(',').Length;
+				}
+			}
+		}
 
 		public static double NeedTimeToHungryAndThristyScore(TamagochiModel pet, double score)
 		{

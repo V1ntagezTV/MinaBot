@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi
 {
-    class Hunting
+    public class Hunting
     {
         public int ID { get; set; }
         public DateTime SavedSendTime { get; set; }

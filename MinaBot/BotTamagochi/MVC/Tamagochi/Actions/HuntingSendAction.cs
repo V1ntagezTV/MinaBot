@@ -1,5 +1,6 @@
 ﻿using MinaBot.Models;
 using System;
+using MinaBot.Controllers;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
@@ -15,7 +16,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
         public override MessageResult Invoke()
         {
 			var timeLength = new TimeSpan(0, 0, 20);
-			UpdateHuntingStatus(Pet);
+			TamagochiController.UpdateHuntingStatus(Pet);
 			if (Pet.CurrentStatus == EStatus.HUNT)
 			{
 				return new BooleanView(false);
@@ -26,18 +27,5 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 			Pet.Hunting.SendToHunting(timeLength);
 			return new BooleanView(true);
 		}
-
-		private void UpdateHuntingStatus(TamagochiModel pet)
-		{
-			if (pet.CurrentStatus == EStatus.HUNT)
-			{
-				if (pet.Hunting.SavedSendTime + pet.Hunting.SendTimeLength < DateTime.Now)
-				{
-					pet.CurrentStatus = pet.LastStatus;
-					pet.Backpack.AddIdString(pet.Hunting.WaitingItems);
-					pet.Level.CurrentExp += 5 * pet.Hunting.WaitingItems.Split(',').Length;
-				}
-			}
-		}
-	}
+    }
 }

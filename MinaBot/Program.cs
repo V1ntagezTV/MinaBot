@@ -15,7 +15,7 @@ namespace MinaBot
         private DiscordSocketClient client;
         private CommandService commands;
         private IServiceProvider services;
-        private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XLLpfA.iVhl7I2dZiuO8HLGrV1cwYQJN60";
+        private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XLLpfA.jCkCse4rLDSYmLhvKs-0armG9Qo";
 
         public static void Main(string[] args)
         {
@@ -72,6 +72,7 @@ namespace MinaBot
                     _ => throw new NotImplementedException()
                 };
             }
+            await Task.CompletedTask;
         }
 
         private Task Logging(LogMessage log)

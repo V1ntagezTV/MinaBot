@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MinaBot.BotTamagochi.BotPackValues
 {
-    class ItemCollection<T> where T: Item 
+    public class ItemCollection<T> where T: Item 
     {
         public IList<T> Data;
         public ItemCollection(IList<T> list)

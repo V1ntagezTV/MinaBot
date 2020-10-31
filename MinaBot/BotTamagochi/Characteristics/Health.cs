@@ -2,7 +2,7 @@
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
 {
-    class Health : ACharacteristic
+    public class Health : ACharacteristic
     {
         public int ID { get; set; }
         public int TamagochiModelId { get; set; }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
 {
-    class Thirsty : ACharacteristic
+    public class Thirsty : ACharacteristic
     {
         public int ID { get; set; }
         private double score { get; set; }

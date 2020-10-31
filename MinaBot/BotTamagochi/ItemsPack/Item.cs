@@ -1,13 +1,14 @@
 ﻿namespace MinaBot.Models
 {
-    enum ERarity
+    public enum ERarity
     {
         Common = 50,
         Rare = 25,
         Legendary = 5,
         Immortal = 1
     }
-    class Item
+
+    public class Item
     {
         private static int itemCounter = 0;
         public Item(string name, int price, ERarity rarity = ERarity.Common)

@@ -7,7 +7,7 @@ using static MinaBot.Models.Item;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
 {
-    class Hungry: ACharacteristic
+    public class Hungry: ACharacteristic
     {
         public Hungry()
         {
