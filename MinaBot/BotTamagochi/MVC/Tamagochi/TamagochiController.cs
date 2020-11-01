@@ -1,13 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MinaBot.BotTamagochi.DataTamagochi;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions;
-using MinaBot.BotTamagochi.MVC.Tamagochi.View;
 using MinaBot.Main;
 using MinaBot.Models;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
-using static MinaBot.BotTamagochi.BotPackValues.ItemTypes;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.Controllers
@@ -15,7 +12,7 @@ namespace MinaBot.Controllers
     class TamagochiController : IController<TamagochiModel>
 	{
 		private CommandModel command;
-		public AActionCommand[] commands { get; }
+		public AActionCommand[] Actions { get; set; }
 		public TamagochiModel Pet;
 		private TamagochiContext Context;
 
@@ -35,21 +32,24 @@ namespace MinaBot.Controllers
 				new InventoryViewAction(pet, cmd),
 				new RenameAction(pet, cmd),
 				new SoldItemAction(pet, cmd),
-				new WearAction(pet, cmd) 
+				new WearAction(pet, cmd)
 	        };
         }
 
-		public async Task<MessageResult> ChooseMessageResult()
+		public MessageResult ChooseMessageResult()
 		{
 			Pet = Context.GetPetOrDefault(command.GetMessage.Author.Id);
+
 			if (command.GetOptions == "create")
 			{
-				await Context.CreateAndAddTamagochi(command.GetMessage.Author.Id);
-				await Context.SaveChangesAsync();
+				Context.CreateAndGetTamagochi(command.GetMessage.Author.Id);
+				Context.SaveChanges();
 				return new BooleanView(true);
 			}
+			Console.WriteLine($"{Pet.Name}");
 			if (Pet == null)
 			{
+				Console.WriteLine($"{Pet.Name}");
 				return new ErrorView("You need create your pet with `m!bot create` command.");
 			}
 			UpdateStats(DateTime.Now, Pet);
@@ -58,12 +58,14 @@ namespace MinaBot.Controllers
 				return new ErrorView($"I'm sorry, but your pet: {Pet.ID}{Pet.Name} is dead.\n" +
 					$" You need to recreate your tamagochi.");
             }
+
 			// TODO: Не забыдь после выполнения команд нужно ли сохранить изменения.
 			// TODO: Проверка на наличие Pet'a в базе должна быть выше.
-			
-			for (int ind = 0; ind < commands.Length; ind++)
+			Actions = _GetAllPetCommands(Pet, command);
+
+			for (int ind = 0; ind < Actions.Length; ind++)
 			{
-				var cmd = commands[ind] as APetActionCommand;
+				var cmd = Actions[ind] as APetActionCommand;
 				if (cmd.Options.Contains(command.GetOptions))
 				{
 					var resultMessage = cmd.Invoke();
@@ -71,6 +73,7 @@ namespace MinaBot.Controllers
 					{
 						Context.SaveChanges();
 					}
+					return resultMessage;
 				}
 			}
 			return new EmptyView();

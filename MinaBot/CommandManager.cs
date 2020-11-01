@@ -33,9 +33,8 @@ namespace MinaBot
                 case "bot":
                     using (var context = new TamagochiContext())
                     {
-                        return new TamagochiController(commandModel, context).ChooseMessageResult().Result;
+                        return new TamagochiController(commandModel, context).ChooseMessageResult();
                     }
-                    break;
 
                 //case "shop":
                 //    return new ShopController();

@@ -7,6 +7,6 @@ namespace MinaBot.Main
 {
     interface IController<T>
     {
-        public AActionCommand[] commands { get; }
+        public AActionCommand[] Actions { get; }
     }
 }

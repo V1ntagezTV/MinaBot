@@ -22,14 +22,13 @@ namespace MinaBot.BotTamagochi.DataTamagochi
 
         public TamagochiContext()
         {
-            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=TamagochiData;Trusted_Connection=True;");
         }
-        public async Task<TamagochiModel> CreateAndAddTamagochi(ulong discordId)
+        public TamagochiModel CreateAndGetTamagochi(ulong discordId)
         {
             var pet = new TamagochiModel()
             {
@@ -50,8 +49,8 @@ namespace MinaBot.BotTamagochi.DataTamagochi
                 Happiness = new Happiness(),
                 Hunting = new Hunting()
             };
-            this.Add(pet);
-            await SaveChangesAsync();
+            this.Data.Add(pet);
+            SaveChanges();
             Console.WriteLine("new pet added");
             return pet;
         }
