@@ -5,13 +5,12 @@ using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
-    class HuntingSendAction : ActionCommand
+    class HuntingSendAction : APetActionCommand
     {
-        private TamagochiModel Pet;
-        public HuntingSendAction(TamagochiModel pet, CommandModel cmd) : base(cmd)
+	    public HuntingSendAction(TamagochiModel pet, CommandModel cmd)
+		    : base(pet, cmd, true)
         {
-            this.Pet = pet;
-            this.Options = new[] { "hunting", "hunt" };
+	        this.Options = new[] { "hunting", "hunt" };
         }
         public override MessageResult Invoke()
         {

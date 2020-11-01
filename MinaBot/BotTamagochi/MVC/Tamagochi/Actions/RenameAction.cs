@@ -6,12 +6,11 @@ using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
-    public class RenameAction : ActionCommand
+    class RenameAction : APetActionCommand
     {
-        private TamagochiModel Pet;
-        public RenameAction(TamagochiModel pet, CommandModel command) : base(command) 
+        public RenameAction(TamagochiModel pet, CommandModel command)
+            : base(pet, command, true) 
         {
-            this.Pet = pet;
             this.Options = new[] { "name", "rename" };
         }
 

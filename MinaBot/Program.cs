@@ -15,8 +15,8 @@ namespace MinaBot
         private DiscordSocketClient client;
         private CommandService commands;
         private IServiceProvider services;
-        private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XLLpfA.jCkCse4rLDSYmLhvKs-0armG9Qo";
-
+        private const string TOKEN = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XLLpfA.BYrUKF03yrwDw4xq2kVQhzLOhoo";
+        private const string BOT_PREFIX = "m!";
         public static void Main(string[] args)
         {
             new Program().TestMainAsync().GetAwaiter().GetResult();
@@ -26,7 +26,7 @@ namespace MinaBot
         {
             client = new DiscordSocketClient();
 
-            await client.LoginAsync(TokenType.Bot, token);
+            await client.LoginAsync(TokenType.Bot, TOKEN);
             await client.StartAsync();
 
             services = new ServiceCollection()
@@ -47,7 +47,7 @@ namespace MinaBot
             client = new DiscordSocketClient();
             client.Log += Logging;
             client.MessageReceived += MessageReceivedFunction;
-            await client.LoginAsync(TokenType.Bot, token);
+            await client.LoginAsync(TokenType.Bot, TOKEN);
             await client.StartAsync();
             await Task.Delay(-1);
         }
@@ -59,7 +59,7 @@ namespace MinaBot
 
             var context = new SocketCommandContext(client, msg);
             await commands.ExecuteAsync(context, 0, services);
-            if (message.Content.ToLower().StartsWith("m!"))
+            if (message.Content.ToLower().StartsWith(BOT_PREFIX))
             {
                 var manager = new CommandManager(message);
                 var view = manager.GetViewResult();

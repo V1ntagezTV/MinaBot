@@ -6,14 +6,14 @@ using System.Text;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
-    class ClothesViewAction : ActionCommand
+    class ClothesViewAction : APetActionCommand
     {
-        private TamagochiModel Pet;
-        public ClothesViewAction(TamagochiModel pet, CommandModel command) : base(command)
+        public ClothesViewAction(TamagochiModel pet, CommandModel command)
+            : base(pet, command)
         {
-            this.Pet = pet;
             this.Options = new[] { "clothes", "c" };
         }
+
         public override MessageResult Invoke()
         {
             return new ClothesView().GetView(Pet, Command);

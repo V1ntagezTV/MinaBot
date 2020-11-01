@@ -2,6 +2,7 @@
 using MinaBot.Controllers;
 using MinaBot.Models;
 using System;
+using MinaBot.BotTamagochi.DataTamagochi;
 
 namespace MinaBot
 {
@@ -29,8 +30,12 @@ namespace MinaBot
         {
             switch (commandModel.GetPrefix)
             {
-                case "bot": 
-                    return new TamagochiController(commandModel).ChooseMessageResult();
+                case "bot":
+                    using (var context = new TamagochiContext())
+                    {
+                        return new TamagochiController(commandModel, context).ChooseMessageResult().Result;
+                    }
+                    break;
 
                 //case "shop":
                 //    return new ShopController();

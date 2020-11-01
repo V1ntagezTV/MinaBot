@@ -5,11 +5,12 @@ using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
 using MinaBot.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MinaBot.BotTamagochi.DataTamagochi
 {
-    class TamagochiContext : DbContext
+    public class TamagochiContext : DbContext
     {
         public DbSet<Thirsty> Thirsties { get; set; }
         public DbSet<Hungry> Hungries { get; set; }
@@ -21,6 +22,7 @@ namespace MinaBot.BotTamagochi.DataTamagochi
 
         public TamagochiContext()
         {
+            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -29,7 +31,6 @@ namespace MinaBot.BotTamagochi.DataTamagochi
         }
         public async Task<TamagochiModel> CreateAndAddTamagochi(ulong discordId)
         {
-            Console.WriteLine("createFunc");
             var pet = new TamagochiModel()
             {
                 DiscordId = discordId,
@@ -49,11 +50,23 @@ namespace MinaBot.BotTamagochi.DataTamagochi
                 Happiness = new Happiness(),
                 Hunting = new Hunting()
             };
-            Console.WriteLine("pet created");
             this.Add(pet);
             await SaveChangesAsync();
-            Console.WriteLine("pet added");
+            Console.WriteLine("new pet added");
             return pet;
+        }
+
+        public TamagochiModel? GetPetOrDefault(ulong discordId)
+        {
+            return this.Data
+                .Include(t => t.Happiness)
+                .Include(t => t.Health)
+                .Include(t => t.Hungry)
+                .Include(t => t.Thirsty)
+                .Include(t => t.Backpack)
+                .Include(t => t.Hunting)
+                .Include(t => t.Level)
+                .FirstOrDefault(t => t.DiscordId == discordId);
         }
     }
 }

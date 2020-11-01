@@ -7,12 +7,11 @@ using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
-    class WearAction : ActionCommand
+    class WearAction : APetActionCommand
     {
-        private TamagochiModel Pet;
-        public WearAction(TamagochiModel pet, CommandModel cmd) : base(cmd)
+        public WearAction(TamagochiModel pet, CommandModel cmd) 
+            : base(pet, cmd, true)
         {
-            this.Pet = pet;
             this.Options = new[] { "wear", "w" };
         }
 
