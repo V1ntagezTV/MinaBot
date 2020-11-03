@@ -6,10 +6,11 @@ namespace MinaBot
     public class MessageResult
     {
         private MessageResult() { }
-        public class EmbedView<T>: MessageResult
+
+        public class EmbedView: MessageResult
         {
-            public T Data { get; private set; }
-            public EmbedView(T data): base()
+            public Embed Data { get; private set; }
+            public EmbedView(Embed data): base()
             {
                 this.Data = data;
             }

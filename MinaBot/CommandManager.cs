@@ -11,7 +11,7 @@ namespace MinaBot
         CommandModel commandModel;
         public CommandManager(IMessage message)
         {
-            string[] commandOptions = message.Content.Split(' ');
+            string[] commandOptions = message.Content.ToLower().Split(' ');
             string commandType = commandOptions[0].Split('!')[1];
             switch (commandOptions.Length)
             {
@@ -33,7 +33,7 @@ namespace MinaBot
                 case "bot":
                     using (var context = new TamagochiContext())
                     {
-                        return new TamagochiController(commandModel, context).ChooseMessageResult();
+                        return new TamagochiController(commandModel, context).GetResult();
                     }
 
                 //case "shop":

@@ -5,8 +5,13 @@ using System.Text;
 
 namespace MinaBot.Main
 {
-    interface IController<T>
+    public interface IController
     {
         public AActionCommand[] Actions { get; }
+        public MessageResult GetResult();
+
+        // TODO: Сделать helper страницы для каждого контроллера.
+        //      public MessageResult GetLongHelper();
+        //      public MessageResult GetShortHelper();
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+﻿using Discord;
 using MinaBot.Models;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
@@ -14,8 +14,11 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
         }
 
         public abstract MessageResult Invoke();
-        
-        // TODO: Create for every action his help view.
-        //abstract public MessageResult HelpInvoke();
+
+        // TODO: Сделать help команды для контроллеров и Action'ов.
+        // m!bot help   /// m!bot eat help
+        // ShortHelp для добавления каждой команды в общий список команд контроллера.
+        //public abstract EmbedFieldBuilder GetShortHelp();
+        //public abstract EmbedFieldBuilder GetLongHelp();
     }
 }

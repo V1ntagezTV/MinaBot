@@ -15,7 +15,7 @@ namespace MinaBot
         private DiscordSocketClient client;
         private CommandService commands;
         private IServiceProvider services;
-        private const string TOKEN = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XLLpfA.BYrUKF03yrwDw4xq2kVQhzLOhoo";
+        private const string TOKEN = @"";
         private const string BOT_PREFIX = "m!";
         public static void Main(string[] args)
         {
@@ -65,7 +65,7 @@ namespace MinaBot
                 var view = manager.GetViewResult();
                 _ = view switch
                 {
-                    EmbedView<Embed> embView => message.Channel.SendMessageAsync(embed: embView.Data),
+                    EmbedView embView => message.Channel.SendMessageAsync(embed: embView.Data),
                     MessageView messView => message.Channel.SendMessageAsync(text: messView.Data),
                     ErrorView errorView => message.Channel.SendMessageAsync(embed: errorView.Exception),
                     BooleanView boolView => boolView.Value ? message.AddReactionAsync(new Emoji("✅")) : message.AddReactionAsync(new Emoji("❌")),

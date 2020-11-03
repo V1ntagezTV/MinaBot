@@ -28,37 +28,13 @@ namespace MinaBot.Models
         public uint ToUpLevelScore { get; set; }
         public int AgeDays { get => (DateTime.Now - Birthday).Days + 1; }
         public int HatID { get; set; }
-        public Item Hat
-        { 
-            get
-            {
-                return ItemMocks.AllItems[HatID];
-            }
-        }
+        public Item Hat { get => ItemMocks.AllItems[HatID]; }
         public int JacketID { get; set; }
-        public Item Jacket
-        {
-            get
-            {
-                return ItemMocks.AllItems[JacketID];
-            }
-        }
+        public Item Jacket { get => ItemMocks.AllItems[JacketID]; }
         public int PantsID { get; set; }
-        public Item Pants
-        {
-            get
-            {
-                return ItemMocks.AllItems[PantsID];
-            }
-        }
+        public Item Pants{ get => ItemMocks.AllItems[PantsID]; }
         public int BootsID { get; set; }
-        public Item Boots
-        {
-            get
-            {
-                return ItemMocks.AllItems[BootsID];
-            }
-        }
+        public Item Boots { get => ItemMocks.AllItems[BootsID]; }
         public Backpack Backpack { get; set; }
         public DateTime Birthday { get; set; }
         // STATS

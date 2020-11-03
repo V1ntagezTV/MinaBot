@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MinaBot.BotTamagochi.DataTamagochi;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions;
+using MinaBot.BotTamagochi.MVC.Tamagochi.View;
 using MinaBot.Main;
 using MinaBot.Models;
 using System;
@@ -9,23 +10,23 @@ using static MinaBot.MessageResult;
 
 namespace MinaBot.Controllers
 {
-    class TamagochiController : IController<TamagochiModel>
+    class TamagochiController : IController
 	{
-		private CommandModel command;
 		public AActionCommand[] Actions { get; set; }
 		public TamagochiModel Pet;
 		private TamagochiContext Context;
+		private CommandModel Command;
 
-        public TamagochiController(CommandModel commandModel, TamagochiContext context)
+		public TamagochiController(CommandModel commandModel, TamagochiContext context)
 		{
-			command = commandModel;
+			Command = commandModel;
 			Context = context;
 		}
         private APetActionCommand[] _GetAllPetCommands(TamagochiModel pet, CommandModel cmd)
         {
-	        return new APetActionCommand[]
-	        {
-		        new ChangeColorAction(pet, cmd),
+			return new APetActionCommand[]
+			{
+				new ChangeColorAction(pet, cmd),
 				new ClothesViewAction(pet, cmd),
 				new EatAction(pet, cmd),
 				new HuntingSendAction(pet, cmd),
@@ -36,37 +37,41 @@ namespace MinaBot.Controllers
 	        };
         }
 
-		public MessageResult ChooseMessageResult()
+		public MessageResult GetResult()
 		{
-			Pet = Context.GetPetOrDefault(command.GetMessage.Author.Id);
-
-			if (command.GetOptions == "create")
+			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
+			if (Command.GetOptions == "create")
 			{
-				Context.CreateAndGetTamagochi(command.GetMessage.Author.Id);
-				Context.SaveChanges();
-				return new BooleanView(true);
-			}
-			Console.WriteLine($"{Pet.Name}");
+				return new CreateAction(Pet, Command, Context).Invoke();
+			} 
+			else if (Command.GetOptions == "delete")
+            {
+				return new DeleteAction(Pet, Command, Context).Invoke();
+            }
 			if (Pet == null)
 			{
-				Console.WriteLine($"{Pet.Name}");
 				return new ErrorView("You need create your pet with `m!bot create` command.");
 			}
 			UpdateStats(DateTime.Now, Pet);
 			if (Pet.Health.Score == 0)
-            {
+			{
 				return new ErrorView($"I'm sorry, but your pet: {Pet.ID}{Pet.Name} is dead.\n" +
 					$" You need to recreate your tamagochi.");
             }
-
 			// TODO: Не забыдь после выполнения команд нужно ли сохранить изменения.
 			// TODO: Проверка на наличие Pet'a в базе должна быть выше.
-			Actions = _GetAllPetCommands(Pet, command);
+			Actions = _GetAllPetCommands(Pet, Command);
+			return ChooseActionType(Command.GetOptions);
+		}
+
+		private MessageResult ChooseActionType(string? messageOptions)
+        {
+			if (messageOptions == null) return new TamagochiView().GetView(Pet, Command);
 
 			for (int ind = 0; ind < Actions.Length; ind++)
 			{
 				var cmd = Actions[ind] as APetActionCommand;
-				if (cmd.Options.Contains(command.GetOptions))
+				if (cmd.Options.Contains(messageOptions))
 				{
 					var resultMessage = cmd.Invoke();
 					if (cmd.NeedToSaveInData)

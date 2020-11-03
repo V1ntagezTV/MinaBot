@@ -14,7 +14,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
     {
         public MessageResult GetView(TamagochiModel tamagochi, CommandModel message = null)
         {
-            return new EmbedView<Embed>(ConstructMainEmbed(tamagochi, message));
+            return new EmbedView(ConstructMainEmbed(tamagochi, message));
         }
 
         private Embed ConstructMainEmbed(TamagochiModel pet, CommandModel message)
