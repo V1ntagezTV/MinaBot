@@ -13,19 +13,19 @@ namespace MinaBot.DefaultActions
     public class DefaultActionsController : IController
     {
         public CommandModel Command { get; }
+        public AActionCommand[] Actions { get; set; }
         public DefaultActionsController(CommandModel cmd)
         {
             Command = cmd;
         }
-
-        public AActionCommand[] Actions { get; set; }
 
         private AActionCommand[] _GetAllDefaultActions()
         {
             return new AActionCommand[]
             {
                 new RoleNameChange(Command),
-                new RoleColorChange(Command)
+                new RoleColorChange(Command),
+                new AvatarViewAction(Command),
             };
         }
 
