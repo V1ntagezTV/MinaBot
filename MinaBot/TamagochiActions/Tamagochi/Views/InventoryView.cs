@@ -23,36 +23,79 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
         private Embed ConstructMainEmbed(TamagochiModel pet, CommandModel message)
         {
             var items = pet.Backpack.Items;
-            var rarityField = new EmbedFieldBuilder() { IsInline = true };
-            var priceField = new EmbedFieldBuilder() { IsInline = true };
-
-            rarityField.Name = "**RARITY**";
-            priceField.Name = "**PRICE/SALE**";
-            for (int ind = 0; ind < pet.Backpack.ItemCount; ind++)
+            var rarities = "";
+            var prices = "";
+            for (var ind = 0; ind < pet.Backpack.ItemCount; ind++)
             {
-                rarityField.Value += Enum.GetName(typeof(ERarity), items[ind].Rarity) + "\n";
-                priceField.Value += $"{items[ind].Price}/{items[ind].SoldPrice}\n";
+                rarities += Enum.GetName(typeof(ERarity), items[ind].Rarity) + "\n";
+                prices += $"{items[ind].Price}/{items[ind].SoldPrice}\n";
             }
-
             var embed = new EmbedBuilder();
             embed.Title = pet.Name;
             embed.Description = pet.CurrentStatus;
             embed.Color = new Discord.Color((uint)Convert.ToInt32(pet.Color, 16));
-            embed.AddField(new EmbedFieldBuilder()
+            if (items.Data.Count == 0)
+            {
+                embed.AddField(_GetMainStatsField(pet));
+                embed.AddField(_GetEmptyBackpackField());
+                return embed.Build();
+            }
+            embed.AddField(_GetMainStatsField(pet));
+            embed.AddField(_GetItemsField(items.ToStringInLine()));
+            embed.AddField(_GetPricesField(prices));
+            embed.AddField(_GetRarityField(rarities));
+            return embed.Build();
+        }
+
+        private EmbedFieldBuilder _GetMainStatsField(TamagochiModel pet)
+        {
+            return new EmbedFieldBuilder()
             {
                 Name = "Статы",
                 Value = $"**Coins:** {pet.Money}\n" +
                         $"**Level:** {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})"
-            });
-            embed.AddField(new EmbedFieldBuilder()
+            };
+        }
+        
+        private EmbedFieldBuilder _GetItemsField(string itemsEveryInLive)
+        {
+            return new EmbedFieldBuilder()
             {
                 Name = "**ITEMS**",
-                Value = "",
+                Value = itemsEveryInLive,
                 IsInline = true
-            });
-            embed.AddField(rarityField);
-            embed.AddField(priceField);
-            return embed.Build();
+            };
+        }
+        
+        private EmbedFieldBuilder _GetRarityField(string raritiesEveryInLine)
+        {
+            return new EmbedFieldBuilder()
+            {
+                Name = "**Rarity:**", 
+                IsInline = true,
+                Value = raritiesEveryInLine
+            };
+        }
+
+        private EmbedFieldBuilder _GetPricesField(string pricesEveryInLine)
+        {
+            return new EmbedFieldBuilder()
+            {
+                Name = "**Price/Sold Price:**", 
+                IsInline = true,
+                Value = pricesEveryInLine
+            };
+        }
+        
+        private EmbedFieldBuilder _GetEmptyBackpackField()
+        {
+            var value = "Send your pet for hunting and get some items!";
+            return new EmbedFieldBuilder()
+            {
+                Name = "Sorry! But your inventory is empty!",
+                IsInline = true,
+                Value = value
+            };
         }
     }
 }

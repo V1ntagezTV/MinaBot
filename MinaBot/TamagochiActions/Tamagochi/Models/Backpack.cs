@@ -40,6 +40,7 @@ namespace MinaBot.Models
             ItemCount++;
             return true;
         }
+        
         public bool AddIdString(string idString)
         {
             if (idString == "")
@@ -88,6 +89,7 @@ namespace MinaBot.Models
             get
             {
                 var items = new ItemCollection<Item>(new List<Item>());
+                if (itemCollectionStringWithID == "") return items;
                 var idList = itemCollectionStringWithID.Split(",");
                 for (int ind = 0; ind < idList.Length; ind++)
                 {

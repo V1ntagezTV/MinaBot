@@ -8,6 +8,7 @@ namespace MinaBot.BotTamagochi.BotPackValues
 {
     public class ItemCollection<T> where T: Item 
     {
+        public const string DEFAULT_VALUE = "Пусто!";
         public IList<T> Data;
         public ItemCollection(IList<T> list)
         {
@@ -49,6 +50,10 @@ namespace MinaBot.BotTamagochi.BotPackValues
             {
                 result += Data[ind].Name + " " + Data[ind].Price + "\n";
             }
+            if (result == "")
+            {
+                return DEFAULT_VALUE;
+            }
             return result;
         }
 
@@ -58,6 +63,10 @@ namespace MinaBot.BotTamagochi.BotPackValues
             for (int ind = 0; ind < Data.Count; ind++)
             {
                 result += Data[ind].Name + "\n";
+            }
+            if (result == "")
+            {
+                return DEFAULT_VALUE;
             }
             return result;
         }
@@ -69,13 +78,14 @@ namespace MinaBot.BotTamagochi.BotPackValues
             {
                 result += Data[ind].Price + "\n";
             }
+            if (result == "")
+            {
+                return DEFAULT_VALUE;
+            }
             return result;
         }
 
-        public Item this[int index]
-        {
-            get { return Data[index]; }
-        }
+        public Item this[int index] => Data[index];
 
         public override string ToString()
         {
@@ -83,6 +93,10 @@ namespace MinaBot.BotTamagochi.BotPackValues
             for (int ind = 0; ind < Data.Count; ind++)
             {
                 result += Data[ind].Name + " ";
+            }
+            if (result == "")
+            {
+                return DEFAULT_VALUE;
             }
             return result;
         }
