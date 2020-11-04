@@ -6,7 +6,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
     public abstract class AActionCommand
     {
         protected CommandModel Command;
-        public string[] Options { get; set; }
+        public abstract string[] Options { get; }
 
         public AActionCommand(CommandModel command)
         {

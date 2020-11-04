@@ -9,10 +9,9 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
     class RenameAction : APetActionCommand
     {
         public RenameAction(TamagochiModel pet, CommandModel command)
-            : base(pet, command, true) 
-        {
-            this.Options = new[] { "name", "rename" };
-        }
+            : base(pet, command, true) { }
+
+        public override string[] Options => new[] { "name", "rename" };
 
         public override MessageResult Invoke()
         {

@@ -9,10 +9,9 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
     class ClothesViewAction : APetActionCommand
     {
         public ClothesViewAction(TamagochiModel pet, CommandModel command)
-            : base(pet, command)
-        {
-            this.Options = new[] { "clothes", "c" };
-        }
+            : base(pet, command) { }
+
+        public override string[] Options => new[] { "clothes", "c" };
 
         public override MessageResult Invoke()
         {

@@ -12,28 +12,28 @@ namespace MinaBot.Controllers
 {
     class TamagochiController : IController
 	{
+		public CommandModel Command { get; }
 		public AActionCommand[] Actions { get; set; }
 		public TamagochiModel Pet;
 		private TamagochiContext Context;
-		private CommandModel Command;
 
 		public TamagochiController(CommandModel commandModel, TamagochiContext context)
 		{
 			Command = commandModel;
 			Context = context;
 		}
-        private APetActionCommand[] _GetAllPetCommands(TamagochiModel pet, CommandModel cmd)
+        private APetActionCommand[] _GetAllPetActions()
         {
 			return new APetActionCommand[]
 			{
-				new ChangeColorAction(pet, cmd),
-				new ClothesViewAction(pet, cmd),
-				new EatAction(pet, cmd),
-				new HuntingSendAction(pet, cmd),
-				new InventoryViewAction(pet, cmd),
-				new RenameAction(pet, cmd),
-				new SoldItemAction(pet, cmd),
-				new WearAction(pet, cmd)
+				new ChangeColorAction(Pet, Command),
+				new ClothesViewAction(Pet, Command),
+				new EatAction(Pet, Command),
+				new HuntingSendAction(Pet, Command),
+				new InventoryViewAction(Pet, Command),
+				new RenameAction(Pet, Command),
+				new SoldItemAction(Pet, Command),
+				new WearAction(Pet, Command)
 	        };
         }
 
@@ -60,11 +60,11 @@ namespace MinaBot.Controllers
             }
 			// TODO: Не забыдь после выполнения команд нужно ли сохранить изменения.
 			// TODO: Проверка на наличие Pet'a в базе должна быть выше.
-			Actions = _GetAllPetCommands(Pet, Command);
+			Actions = _GetAllPetActions();
 			return ChooseActionType(Command.GetOptions);
 		}
 
-		private MessageResult ChooseActionType(string? messageOptions)
+		public MessageResult ChooseActionType(string? messageOptions)
         {
 			if (messageOptions == null) return new TamagochiView().GetView(Pet, Command);
 

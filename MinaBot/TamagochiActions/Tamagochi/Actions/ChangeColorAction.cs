@@ -5,10 +5,9 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
     public class ChangeColorAction : APetActionCommand
     {
         public ChangeColorAction(TamagochiModel pet, CommandModel command)
-            : base(pet, command, true)
-        {
-            Options = new[] {"color"};
-        }
+            : base(pet, command, true) { }
+
+        public override string[] Options => new[] {"color"};
 
         public override MessageResult Invoke()
         {

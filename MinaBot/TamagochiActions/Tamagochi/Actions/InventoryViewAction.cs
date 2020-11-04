@@ -6,10 +6,9 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
     public class InventoryViewAction : APetActionCommand
     {
         public InventoryViewAction(TamagochiModel pet, CommandModel command)
-            : base(pet, command)
-        {
-            this.Options = new[] { "inventory", "i" };
-        }
+            : base(pet, command) { }
+
+        public override string[] Options => new[] { "inventory", "i" };
 
         public override MessageResult Invoke()
         {

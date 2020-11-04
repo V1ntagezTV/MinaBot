@@ -2,27 +2,31 @@
 using MinaBot.Controllers;
 using MinaBot.Models;
 using System;
+using System.Net.Sockets;
+using Discord.WebSocket;
 using MinaBot.BotTamagochi.DataTamagochi;
+using MinaBot.DefaultActions;
 
 namespace MinaBot
 {
     class CommandManager
     {
         CommandModel commandModel;
-        public CommandManager(IMessage message)
+        public CommandManager(SocketMessage message)
         {
-            string[] commandOptions = message.Content.ToLower().Split(' ');
-            string commandType = commandOptions[0].Split('!')[1];
-            switch (commandOptions.Length)
+            var cmdArgList = message.Content.Split();
+            var cmdType = cmdArgList[0].ToLower().Split('!')[1];
+            var cmdOptions = cmdArgList[1].ToLower();
+            switch (cmdArgList.Length)
             {
                 case 1:
-                    commandModel = new CommandModel(message, commandType);
+                    commandModel = new CommandModel(message, cmdType);
                     break;
                 case 2:
-                    commandModel = new CommandModel(message, commandType, commandOptions[1]);
+                    commandModel = new CommandModel(message, cmdType, cmdOptions);
                     break;
                 default:
-                    commandModel = new CommandModel(message, commandType, commandOptions[1], commandOptions[2..]);
+                    commandModel = new CommandModel(message, cmdType, cmdOptions, cmdArgList[2..]);
                     break;
             }
         }
@@ -40,7 +44,7 @@ namespace MinaBot
                 //    return new ShopController();
 
                 default:
-                    throw new Exception("unvalueble message");
+                    return new DefaultActionsController(commandModel).GetResult();
             }
         }
     }

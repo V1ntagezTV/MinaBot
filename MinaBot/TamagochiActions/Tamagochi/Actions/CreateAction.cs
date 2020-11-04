@@ -3,6 +3,7 @@ using MinaBot.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
@@ -13,10 +14,11 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
         TamagochiContext context;
         public CreateAction(TamagochiModel pet, CommandModel command, TamagochiContext context) : base(pet, command)
         {
-            Options = new[] { "create" };
             this.context = context;
         }
-        
+
+        public override string[] Options => new[] { "create" };
+
         public override MessageResult Invoke()
         {
             Pet = context.GetPetOrDefault(Command.GetMessage.Author.Id);

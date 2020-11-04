@@ -19,8 +19,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DefaultActions\Actions\" />
-    <Folder Include="DefaultActions\Views\" />
+    <Compile Remove="DefaultActions\CallActions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="DefaultActions\CallActions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="DefaultActions\CallActions\**" />
   </ItemGroup>
 
 </Project>

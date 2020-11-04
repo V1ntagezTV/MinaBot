@@ -1,12 +1,13 @@
 ﻿#nullable enable
 
 using Discord;
+using Discord.WebSocket;
 
 namespace MinaBot.Models
 {
     public class CommandModel
     {
-        public CommandModel(IMessage message, string prefix, string? options = null, string[]? args = null)
+        public CommandModel(SocketMessage message, string prefix, string? options = null, string[]? args = null)
         {
             GetMessage = message;
             GetPrefix = prefix;
@@ -17,6 +18,6 @@ namespace MinaBot.Models
         public string GetPrefix { get; private set; } //type
         public string? GetOptions { get; private set; } //function
         public string[]? GetArgs { get; private set; } // argument
-        public IMessage GetMessage { get; private set; }
+        public SocketMessage GetMessage { get; private set; }
     }
 }

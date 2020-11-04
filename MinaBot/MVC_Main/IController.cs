@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MinaBot.Models;
 
 namespace MinaBot.Main
 {
     public interface IController
     {
+        public CommandModel Command { get; }
         public AActionCommand[] Actions { get; }
         public MessageResult GetResult();
 

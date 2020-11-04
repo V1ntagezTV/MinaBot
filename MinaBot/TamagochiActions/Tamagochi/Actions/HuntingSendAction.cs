@@ -8,11 +8,11 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
     class HuntingSendAction : APetActionCommand
     {
 	    public HuntingSendAction(TamagochiModel pet, CommandModel cmd)
-		    : base(pet, cmd, true)
-        {
-	        this.Options = new[] { "hunting", "hunt" };
-        }
-        public override MessageResult Invoke()
+		    : base(pet, cmd, true) { }
+
+	    public override string[] Options => new[] { "hunting", "hunt" };
+
+	    public override MessageResult Invoke()
         {
 			var timeLength = new TimeSpan(0, 0, 20);
 			TamagochiController.UpdateHuntingStatus(Pet);

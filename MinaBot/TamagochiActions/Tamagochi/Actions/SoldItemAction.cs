@@ -7,10 +7,9 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
     public class SoldItemAction : APetActionCommand
     {
         public SoldItemAction(TamagochiModel pet, CommandModel command) 
-            : base(pet, command, true)
-        {
-            this.Options = new[] {"sold", "s"};
-        }
+            : base(pet, command, true) { }
+
+        public override string[] Options => new[] {"sold", "s"};
 
         public override MessageResult Invoke()
         {

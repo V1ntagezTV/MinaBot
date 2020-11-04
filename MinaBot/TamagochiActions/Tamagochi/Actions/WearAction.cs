@@ -10,10 +10,9 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
     class WearAction : APetActionCommand
     {
         public WearAction(TamagochiModel pet, CommandModel cmd) 
-            : base(pet, cmd, true)
-        {
-            this.Options = new[] { "wear", "w" };
-        }
+            : base(pet, cmd, true) { }
+
+        public override string[] Options => new[] { "wear", "w" };
 
         public override MessageResult Invoke()
         {

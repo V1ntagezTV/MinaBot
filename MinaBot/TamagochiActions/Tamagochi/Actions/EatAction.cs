@@ -9,10 +9,10 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
     class EatAction : APetActionCommand
     {
         public EatAction(TamagochiModel pet, CommandModel cmd) 
-            : base(pet, cmd, true)
-        {
-            this.Options = new[] { "eat" };
-        }
+            : base(pet, cmd, true) { }
+
+        public override string[] Options => new[] { "eat" };
+
         public override MessageResult Invoke()
         {
             var itemInd = Convert.ToInt32(Command.GetArgs[0]);
