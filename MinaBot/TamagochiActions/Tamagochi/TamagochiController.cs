@@ -66,7 +66,7 @@ namespace MinaBot.Controllers
 
 		public MessageResult ChooseActionType(string? messageOptions)
         {
-			if (messageOptions == null) return new TamagochiView().GetView(Pet, Command);
+			if (messageOptions == null) return new TamagochiView(Pet).GetView(Command);
 
 			for (int ind = 0; ind < Actions.Length; ind++)
 			{

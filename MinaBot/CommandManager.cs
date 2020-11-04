@@ -16,17 +16,18 @@ namespace MinaBot
         {
             var cmdArgList = message.Content.Split();
             var cmdType = cmdArgList[0].ToLower().Split('!')[1];
-            var cmdOptions = cmdArgList[1].ToLower();
             switch (cmdArgList.Length)
             {
                 case 1:
                     commandModel = new CommandModel(message, cmdType);
                     break;
                 case 2:
-                    commandModel = new CommandModel(message, cmdType, cmdOptions);
+                    commandModel = 
+                        new CommandModel(message, cmdType,cmdArgList[1].ToLower());
                     break;
                 default:
-                    commandModel = new CommandModel(message, cmdType, cmdOptions, cmdArgList[2..]);
+                    commandModel =
+                        new CommandModel(message, cmdType, cmdArgList[1].ToLower(), cmdArgList[2..]);
                     break;
             }
         }

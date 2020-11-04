@@ -12,7 +12,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 
         public override MessageResult Invoke()
         {
-            return new InventoryView().GetView(Pet, Command);
+            return new InventoryView(Pet).GetView(Command);
         }
     }
 }
