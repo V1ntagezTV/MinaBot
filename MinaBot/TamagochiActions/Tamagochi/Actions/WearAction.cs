@@ -16,7 +16,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 
         public override MessageResult Invoke()
         {
-            var itemInd = Convert.ToInt32(Command.GetArgs[0]);
+            var itemInd = Convert.ToInt32(Command.GetArgs[0]) - 1;
             if (Pet.Backpack.Lenght < itemInd || itemInd < 0)
                 return new ErrorView("Item index was wrong!");
 
