@@ -21,6 +21,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
                 return new ErrorView("Item index was wrong!");
 
             var item = Pet.Backpack.Items[itemInd];
+            Pet.Backpack.Remove(itemInd);
             if (item is Hat) Pet.HatID = item.ID;
             else if (item is Jacket) Pet.JacketID = item.ID;
             else if (item is Pants) Pet.PantsID = item.ID;

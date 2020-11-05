@@ -40,7 +40,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
                 {
                     return new MessageResult.BooleanView(false);
                 }
-                for (int ind = start; ind < end; ind++)
+                for (int ind = start; ind <= end; ind++)
                 {
                     pet.Money += pet.Backpack.Items[ind].SoldPrice;
                 }

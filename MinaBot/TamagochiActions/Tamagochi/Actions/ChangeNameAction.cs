@@ -2,20 +2,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.VisualBasic;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
-    class RenameAction : APetActionCommand
+    class ChangeNameAction : APetActionCommand
     {
-        public RenameAction(TamagochiModel pet, CommandModel command)
+        public ChangeNameAction(TamagochiModel pet, CommandModel command)
             : base(pet, command, true) { }
 
         public override string[] Options => new[] { "name", "rename" };
 
         public override MessageResult Invoke()
         {
-            var newName = Command.GetArgs[0];
+            var newName = Strings.Join(Command.GetArgs, " ");
             if (newName.Length <= 10)
             {
                 Pet.Name = newName;
