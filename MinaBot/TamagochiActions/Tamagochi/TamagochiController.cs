@@ -31,9 +31,11 @@ namespace MinaBot.Controllers
 				new EatAction(Pet, Command),
 				new HuntingSendAction(Pet, Command),
 				new InventoryViewAction(Pet, Command),
-				new RenameAction(Pet, Command),
+				new ChangeNameAction(Pet, Command),
 				new SoldItemAction(Pet, Command),
-				new WearAction(Pet, Command)
+				new WearAction(Pet, Command),
+				new TakeOffItemAction(Pet, Command),
+				new ChangeStatusAction(Pet, Command), 
 	        };
         }
 
@@ -43,7 +45,7 @@ namespace MinaBot.Controllers
 			if (Command.GetOptions == "create")
 			{
 				return new CreateAction(Pet, Command, Context).Invoke();
-			} 
+			}
 			else if (Command.GetOptions == "delete")
             {
 				return new DeleteAction(Pet, Command, Context).Invoke();

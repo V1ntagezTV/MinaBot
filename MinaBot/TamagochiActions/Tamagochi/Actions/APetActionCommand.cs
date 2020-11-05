@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MinaBot.Controllers;
 using MinaBot.Models;
-
+#nullable enable
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
     public abstract class APetActionCommand : AActionCommand

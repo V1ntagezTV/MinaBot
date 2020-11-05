@@ -35,7 +35,7 @@ namespace MinaBot
         {
             switch (commandModel.GetPrefix)
             {
-                case "bot":
+                case "pet":
                     using (var context = new TamagochiContext())
                     {
                         return new TamagochiController(commandModel, context).GetResult();

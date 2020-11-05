@@ -24,6 +24,8 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
 
         private Embed ConstructMainEmbed(TamagochiModel pet, CommandModel message)
         {
+            var petToDeath = TamagochiController.NeedTimeToHungryAndThristyScore(pet, 40) +
+                             (pet.Health.Score / pet.Health.MinusEveryMinute);
             var embed = new EmbedBuilder();
             embed.Title = pet.Name;
             embed.Description = pet.CurrentStatus;
@@ -33,7 +35,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
                 Name = "Статы",
                 Value = $"Coins: {pet.Money}\n" +
                         $"Level: {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})\n" +
-                        $"LiveTime: {TamagochiController.NeedTimeToHungryAndThristyScore(pet, 40) + (pet.Health.Score / pet.Health.MinusEveryMinute)}min."
+                        $"LiveTime: {Math.Round(petToDeath, 2)} min."
             });
             embed.AddField(new EmbedFieldBuilder()
             {
