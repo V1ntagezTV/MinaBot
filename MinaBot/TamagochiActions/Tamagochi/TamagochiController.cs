@@ -111,7 +111,7 @@ namespace MinaBot.Controllers
 				if (pet.Hunting.SavedSendTime + pet.Hunting.SendTimeLength < DateTime.Now)
 				{
 					pet.CurrentStatus = pet.LastStatus;
-					pet.Backpack.AddIdString(pet.Hunting.WaitingItems);
+					pet.Backpack.AddRange(pet.Hunting.WaitingItems);
 					pet.Level.CurrentExp += 5 * pet.Hunting.WaitingItems.Split(',').Length;
 				}
 			}
