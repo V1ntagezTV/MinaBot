@@ -7,7 +7,7 @@ using System;
 
 namespace MinaBot.Models
 {
-    public class TamagochiModel: IModel
+    public class TamagochiModel
     {
         public int ID { get; set; }
         public ulong DiscordId { get; set; }
