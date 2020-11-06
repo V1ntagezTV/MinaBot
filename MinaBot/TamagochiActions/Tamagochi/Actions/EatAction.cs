@@ -19,7 +19,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
             if (Pet.Backpack.Lenght < itemInd || itemInd < 0)
                 return new MessageResult.ErrorView("Item index was wrong!");
 
-            var item = Pet.Backpack.Items[itemInd];
+            var item = Pet.Backpack.GetItems()[itemInd];
             if (item is ItemTypes.Food food)
             {
                 Pet.Hungry.Score += food.Satiety;

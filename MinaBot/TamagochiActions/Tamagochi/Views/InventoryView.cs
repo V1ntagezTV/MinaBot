@@ -22,7 +22,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
 
         private Embed ConstructMainEmbed(TamagochiModel pet, CommandModel message)
         {
-            var items = pet.Backpack.Items;
+            var items = pet.Backpack.GetItems();
             var rarities = "";
             var prices = "";
             for (var ind = 0; ind < pet.Backpack.ItemCount; ind++)

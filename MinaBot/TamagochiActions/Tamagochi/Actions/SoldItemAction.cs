@@ -23,11 +23,11 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
             if (itemsRange.Count() == 1)
             {
                 var itemIndex = itemsRange.ElementAt(0) - 1;
-                if (!pet.Backpack.isIndexInBackpackRange(itemIndex))
+                if (!pet.Backpack.IsIndexInBackpackRange(itemIndex))
                 {
                     return new MessageResult.BooleanView(false);
                 }
-                var item = pet.Backpack.Items[itemIndex];
+                var item = pet.Backpack.GetItems()[itemIndex];
                 pet.Backpack.Remove(itemIndex);
                 pet.Money += item.SoldPrice;
                 return new MessageResult.BooleanView(true);
@@ -36,13 +36,13 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
             {
                 var start = itemsRange.ElementAt(0) - 1;
                 var end = itemsRange.ElementAt(1) - 1;
-                if (!pet.Backpack.isIndexInBackpackRange(start) || !pet.Backpack.isIndexInBackpackRange(end))
+                if (!pet.Backpack.IsIndexInBackpackRange(start) || !pet.Backpack.IsIndexInBackpackRange(end))
                 {
                     return new MessageResult.BooleanView(false);
                 }
                 for (int ind = start; ind <= end; ind++)
                 {
-                    pet.Money += pet.Backpack.Items[ind].SoldPrice;
+                    pet.Money += pet.Backpack.GetItems()[ind].SoldPrice;
                 }
                 return new MessageResult.BooleanView(pet.Backpack.RemoveRange(start, end + 1));
             }
