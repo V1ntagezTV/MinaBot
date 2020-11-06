@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MinaBot.BotTamagochi.BotPackValues;
+using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
-    class EatAction : APetActionCommand
+    class EatAction : APetActionCommand, IGetExperiance
     {
         public EatAction(TamagochiModel pet, CommandModel cmd) 
             : base(pet, cmd, true) { }
@@ -24,10 +25,11 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
             {
                 Pet.Hungry.Score += food.Satiety;
                 Pet.Backpack.Remove(itemInd);
-                Pet.Level.CurrentExp += 10;
                 return new MessageResult.BooleanView(true);
             }
             return new MessageResult.ErrorView("This item is not Food!");
         }
+
+        public int GetExp() => new Random().Next(0, 50);
     }
 }

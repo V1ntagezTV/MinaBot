@@ -6,6 +6,8 @@ using MinaBot.Main;
 using MinaBot.Models;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.Controllers
@@ -35,8 +37,8 @@ namespace MinaBot.Controllers
 				new SoldItemAction(Pet, Command),
 				new WearAction(Pet, Command),
 				new TakeOffItemAction(Pet, Command),
-				new ChangeStatusAction(Pet, Command), 
-	        };
+				new ChangeStatusAction(Pet, Command),
+			};
         }
 
 		public MessageResult GetResult()
@@ -60,33 +62,48 @@ namespace MinaBot.Controllers
 				return new ErrorView($"I'm sorry, but your pet: {Pet.ID}{Pet.Name} is dead.\n" +
 					$" You need to recreate your tamagochi.");
             }
-			// TODO: Не забыдь после выполнения команд нужно ли сохранить изменения.
-			// TODO: Проверка на наличие Pet'a в базе должна быть выше.
 			Actions = _GetAllPetActions();
-			return ChooseActionType(Command.GetOptions);
+			var calledAction = GetActionOrDefault(Command.GetOptions);
+			return InvokeAction(calledAction);
 		}
 
-		public MessageResult ChooseActionType(string? messageOptions)
-        {
-			if (messageOptions == null) return new TamagochiView(Pet).GetView(Command);
+		private MessageResult InvokeAction(APetActionCommand? action)
+		{
+			if (action == null) return new EmptyView();
 
-			for (int ind = 0; ind < Actions.Length; ind++)
+			MessageResult result = action.Invoke();
+			if (action is IGetExperiance expAction)
+			{
+				var lastLevel = Pet.Level.Level;
+				Pet.Level.CurrentExp += expAction.GetExp();
+				if (lastLevel < Pet.Level.Level)
+				{
+					new LevelUpAction(Pet, Command).SendResultInChannel();
+				}
+			}
+			if (action.NeedToSaveInData)
+			{
+				Console.Write("Saving!");
+				Context.SaveChanges();
+			}
+			return result;
+		}
+
+		private APetActionCommand GetActionOrDefault(string? messageOptions)
+        {
+	        if (messageOptions == null) return new PetViewAction(Pet, Command);
+	        for (var ind = 0; ind < Actions.Length; ind++)
 			{
 				var cmd = Actions[ind] as APetActionCommand;
 				if (cmd.Options.Contains(messageOptions))
 				{
-					var resultMessage = cmd.Invoke();
-					if (cmd.NeedToSaveInData)
-					{
-						Context.SaveChanges();
-					}
-					return resultMessage;
+					return cmd;
 				}
 			}
-			return new EmptyView();
-		}
+	        return null;
+        }
 		
-		public void UpdateStats(DateTime updateTime, TamagochiModel pet)
+		private void UpdateStats(DateTime updateTime, TamagochiModel pet)
 		{
 			var pastTime = updateTime - pet.LastCheckDate;
 			if (pastTime.TotalMinutes >= 2)

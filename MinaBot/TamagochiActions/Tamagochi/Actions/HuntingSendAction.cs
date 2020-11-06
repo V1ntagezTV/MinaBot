@@ -1,11 +1,13 @@
 ﻿using MinaBot.Models;
 using System;
+using Microsoft.EntityFrameworkCore.Update;
+using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
 using MinaBot.Controllers;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
-    class HuntingSendAction : APetActionCommand
+    class HuntingSendAction : APetActionCommand, IGetExperiance
     {
 	    public HuntingSendAction(TamagochiModel pet, CommandModel cmd)
 		    : base(pet, cmd, true) { }
@@ -26,5 +28,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 			Pet.Hunting.SendToHunting(timeLength);
 			return new BooleanView(true);
 		}
+
+	    public int GetExp() => new Random().Next(25, 50);
     }
 }

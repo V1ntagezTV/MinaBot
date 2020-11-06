@@ -44,7 +44,6 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
                 Pet.BootsID = item.ID;
             }
             else return new ErrorView($"You can't wear this item!\nIndex{itemInd}");
-            Pet.Level.CurrentExp += 10;
             return new BooleanView(true);
         }
 
