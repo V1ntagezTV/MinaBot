@@ -17,7 +17,7 @@ namespace MinaBot.BotTamagochi.BotPackValues
 
         public IEnumerable<Item> ShopList()
         {
-            return Data.Where(i => i.Rarity <= ERarity.Legendary);
+            return Data.Where(i => i.Rarity > ERarity.Legendary);
         }
 
         public Item GetRandomItemWithChance()
