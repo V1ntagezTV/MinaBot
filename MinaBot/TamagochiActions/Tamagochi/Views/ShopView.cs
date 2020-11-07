@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Discord;
@@ -24,7 +25,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
         }
         public MessageResult GetView(CommandModel cmdModel)
         {
-            EmbedFieldBuilder[] fields;
+            EmbedFieldBuilder fields;
             if (cmdModel.GetArgs == null)
             {
                 fields = _GetShopFields(ItemMocks.AllItems.ShopList());
@@ -34,39 +35,27 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
                 fields = cmdModel.GetArgs[0] switch
                 {
                     "foods" => _GetShopFields(ItemMocks.Foods.ShopList()),
-                    "hats" => _GetShopFields(ItemMocks.Boots.ShopList()),
+                    "hats" => _GetShopFields(ItemMocks.Hats.ShopList()),
                     "jackets" => _GetShopFields(ItemMocks.Jackets.ShopList()),
                     "boots" => _GetShopFields(ItemMocks.Boots.ShopList()),
-                    "pants" => _GetShopFields(ItemMocks.Pants.ShopList())
+                    "pants" => _GetShopFields(ItemMocks.Pants.ShopList()),
+                    _ => throw new NotImplementedException()
                 };
             }
-            for (var ind = 0; ind < fields.Length; ind++)
-            {
-                _embed.AddField(fields[ind]);
-            }
+            _embed.AddField(fields);
             return new MessageResult.EmbedView(_embed.Build());
         }
 
-        private EmbedFieldBuilder[] _GetShopFields(IEnumerable<Item> shopItems)
+        private EmbedFieldBuilder _GetShopFields(IEnumerable<Item> shopItems)
         {
             var itemNames = new StringBuilder();
-            //var itemRarity = new StringBuilder();
-           // var itemPrices = new StringBuilder();
-            
             for (var ind = 0; ind < shopItems.Count(); ind++)
             {
                 var item = shopItems.ElementAt(ind);
-                itemNames.Append($"{item.Name} ({item.ID}) P: {item.Price} R: {item.Rarity}\n");
-                //itemPrices.Append($"{item.Price}\n");
-                //itemRarity.Append($"{item.Rarity}\n");    
+                var indStr = item.ID >= 10 ? $"{item.ID}" : $"0{item.ID}";
+                itemNames.Append($"`{indStr}` {item.Name} — :dollar: `{item.Price}.00` —  :gem: {item.Rarity}\n");  
             }
-
-            return new EmbedFieldBuilder[]
-            {
-                new EmbedFieldBuilder() {Name = "**Item/Index:**", Value = itemNames, IsInline = true},
-                //new EmbedFieldBuilder() {Name = "**Rarity:**", Value = itemRarity, IsInline = true},
-                //new EmbedFieldBuilder() {Name = "**Prices:**", Value = itemPrices, IsInline = true}
-            };
+            return new EmbedFieldBuilder() { Name = "**Item/Index:**", Value = itemNames, IsInline = true };
         }
     }
 }
