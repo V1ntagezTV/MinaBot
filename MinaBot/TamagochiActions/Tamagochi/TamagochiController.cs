@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
+using MinaBot.TamagochiActions.Tamagochi.Actions;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.Controllers
@@ -38,6 +39,7 @@ namespace MinaBot.Controllers
 				new WearAction(Pet, Command),
 				new TakeOffItemAction(Pet, Command),
 				new ChangeStatusAction(Pet, Command),
+				new ShopViewAction(Pet, Command), 
 			};
         }
 
@@ -54,7 +56,7 @@ namespace MinaBot.Controllers
             }
 			if (Pet == null)
 			{
-				return new ErrorView("You need create your pet with `m!bot create` command.");
+				return new ErrorView("You need create your pet with `m!pet create` command.");
 			}
 			UpdateStats(DateTime.Now, Pet);
 			if (Pet.Health.Score == 0)
