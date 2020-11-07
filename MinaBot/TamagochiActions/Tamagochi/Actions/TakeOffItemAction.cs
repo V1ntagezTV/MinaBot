@@ -33,7 +33,6 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
                 
                 default:
                     return new MessageResult.BooleanView(false);
-                    break;
             }
             return new MessageResult.BooleanView(true);
         }
