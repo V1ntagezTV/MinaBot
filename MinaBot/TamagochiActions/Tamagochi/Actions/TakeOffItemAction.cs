@@ -16,19 +16,19 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
             {
                 case "h":
                     Pet.Backpack.Add(Pet.HatID.ToString());
-                    Pet.HatID = ItemMocks.defaultCleanItem.ID;
+                    Pet.HatID = ItemMocks.DefaultItem.ID;
                     break;
                 case "j":
                     Pet.Backpack.Add(Pet.JacketID.ToString());
-                    Pet.JacketID = ItemMocks.defaultCleanItem.ID;
+                    Pet.JacketID = ItemMocks.DefaultItem.ID;
                     break;
                 case "p":
                     Pet.Backpack.Add(Pet.PantsID.ToString());
-                    Pet.PantsID = ItemMocks.defaultCleanItem.ID;
+                    Pet.PantsID = ItemMocks.DefaultItem.ID;
                     break;
                 case "b":
                     Pet.Backpack.Add(Pet.BootsID.ToString());
-                    Pet.BootsID = ItemMocks.defaultCleanItem.ID;
+                    Pet.BootsID = ItemMocks.DefaultItem.ID;
                     break;
                 
                 default:

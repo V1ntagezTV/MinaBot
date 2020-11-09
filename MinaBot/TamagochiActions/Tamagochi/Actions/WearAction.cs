@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MinaBot.BotTamagochi.ItemsPack;
-using static MinaBot.BotTamagochi.BotPackValues.ItemTypes;
+using MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
@@ -49,7 +49,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 
         private void AddWearItemBackInBackpack(int itemId)
         {
-            if (Pet.HatID == ItemMocks.defaultCleanItem.ID)
+            if (Pet.HatID == ItemMocks.DefaultItem.ID)
             {
                 Pet.Backpack.Add(Pet.HatID.ToString());
             }

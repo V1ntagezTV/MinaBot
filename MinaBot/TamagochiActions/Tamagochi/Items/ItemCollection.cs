@@ -10,15 +10,12 @@ namespace MinaBot.BotTamagochi.BotPackValues
     {
         public const string DEFAULT_VALUE = "Пусто!";
         public IList<T> Data;
-        public ItemCollection(IList<T> list)
+        public ItemCollection(List<T> list)
         {
             Data = list;
         }
 
-        public IEnumerable<Item> ShopList()
-        {
-            return Data.Where(i => i.Rarity > ERarity.Legendary);
-        }
+        public IEnumerable<Item> ShopList() => Data.Where(i => i.Rarity > ERarity.Legendary);
 
         public Item GetRandomItemWithChance()
         {
@@ -40,13 +37,13 @@ namespace MinaBot.BotTamagochi.BotPackValues
             {
                 return ItemMocks.CommonItems[random.Next(ItemMocks.CommonItems.Data.Count())];
             }
-            else return ItemMocks.defaultCleanItem;
+            else return ItemMocks.DefaultItem;
         }
 
         public string ToStringWithPriceInLine()
         {
-            string result = "";
-            for (int ind = 0; ind < Data.Count; ind++)
+            var result = "";
+            for (var ind = 0; ind < Data.Count; ind++)
             {
                 result += Data[ind].Name + " " + Data[ind].Price + "\n";
             }
@@ -59,8 +56,8 @@ namespace MinaBot.BotTamagochi.BotPackValues
 
         public string ToStringInLine()
         {
-            string result = "";
-            for (int ind = 0; ind < Data.Count; ind++)
+            var result = "";
+            for (var ind = 0; ind < Data.Count(); ind++)
             {
                 result += Data[ind].Name + "\n";
             }
@@ -73,8 +70,8 @@ namespace MinaBot.BotTamagochi.BotPackValues
 
         public string ToStringPricesInLine()
         {
-            string result = "";
-            for (int ind = 0; ind < Data.Count; ind++)
+            var result = "";
+            for (var ind = 0; ind < Data.Count(); ind++)
             {
                 result += Data[ind].Price + "\n";
             }
@@ -86,11 +83,10 @@ namespace MinaBot.BotTamagochi.BotPackValues
         }
 
         public Item this[int index] => Data[index];
-
         public override string ToString()
         {
-            string result = "";
-            for (int ind = 0; ind < Data.Count; ind++)
+            var result = "";
+            for (var ind = 0; ind < Data.Count(); ind++)
             {
                 result += Data[ind].Name + " ";
             }

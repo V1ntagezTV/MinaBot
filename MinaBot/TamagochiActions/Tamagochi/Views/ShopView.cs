@@ -6,6 +6,7 @@ using Microsoft.Extensions.Primitives;
 using MinaBot.BotTamagochi.ItemsPack;
 using MinaBot.Main;
 using MinaBot.Models;
+using MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
 {
@@ -33,11 +34,12 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             {
                 fields = cmdModel.GetArgs[0] switch
                 {
-                    "foods" => _GetShopFields(ItemMocks.Foods.ShopList()),
-                    "hats" => _GetShopFields(ItemMocks.Boots.ShopList()),
-                    "jackets" => _GetShopFields(ItemMocks.Jackets.ShopList()),
-                    "boots" => _GetShopFields(ItemMocks.Boots.ShopList()),
-                    "pants" => _GetShopFields(ItemMocks.Pants.ShopList())
+                    "foods" => _GetShopFields(Meal.GetAll),
+                    "hats" => _GetShopFields(Hat.GetAll),
+                    "jackets" => _GetShopFields(Jacket.GetAll),
+                    "boots" => _GetShopFields(Boots.GetAll),
+                    "pants" => _GetShopFields(Pants.GetAll),
+                    "liquid" => _GetShopFields(Liquid.GetAll)
                 };
             }
             for (var ind = 0; ind < fields.Length; ind++)
@@ -50,22 +52,16 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
         private EmbedFieldBuilder[] _GetShopFields(IEnumerable<Item> shopItems)
         {
             var itemNames = new StringBuilder();
-            //var itemRarity = new StringBuilder();
-           // var itemPrices = new StringBuilder();
             
             for (var ind = 0; ind < shopItems.Count(); ind++)
             {
                 var item = shopItems.ElementAt(ind);
                 itemNames.Append($"{item.Name} ({item.ID}) P: {item.Price} R: {item.Rarity}\n");
-                //itemPrices.Append($"{item.Price}\n");
-                //itemRarity.Append($"{item.Rarity}\n");    
             }
 
             return new EmbedFieldBuilder[]
             {
                 new EmbedFieldBuilder() {Name = "**Item/Index:**", Value = itemNames, IsInline = true},
-                //new EmbedFieldBuilder() {Name = "**Rarity:**", Value = itemRarity, IsInline = true},
-                //new EmbedFieldBuilder() {Name = "**Prices:**", Value = itemPrices, IsInline = true}
             };
         }
     }

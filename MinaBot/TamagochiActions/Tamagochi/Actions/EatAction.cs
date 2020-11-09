@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using MinaBot.BotTamagochi.BotPackValues;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
+using MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
@@ -21,7 +22,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
                 return new MessageResult.ErrorView("Item index was wrong!");
 
             var item = Pet.Backpack.GetItems()[itemInd];
-            if (item is ItemTypes.Food food)
+            if (item is Meal food)
             {
                 Pet.Hungry.Score += food.Satiety;
                 Pet.Backpack.Remove(itemInd);

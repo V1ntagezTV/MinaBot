@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using static MinaBot.BotTamagochi.BotPackValues.ItemTypes;
 
 namespace MinaBot.Models
 {
