@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Discord;
@@ -7,6 +6,7 @@ using Microsoft.Extensions.Primitives;
 using MinaBot.BotTamagochi.ItemsPack;
 using MinaBot.Main;
 using MinaBot.Models;
+using MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
 {
@@ -28,25 +28,25 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             EmbedFieldBuilder fields;
             if (cmdModel.GetArgs == null)
             {
-                fields = _GetShopFields(ItemMocks.AllItems.ShopList());
+                fields = _GetShopFields(ItemMocks.AllItems.ShopList().ToArray());
             }
             else
             {
                 fields = cmdModel.GetArgs[0] switch
                 {
-                    "foods" => _GetShopFields(ItemMocks.Foods.ShopList()),
-                    "hats" => _GetShopFields(ItemMocks.Hats.ShopList()),
-                    "jackets" => _GetShopFields(ItemMocks.Jackets.ShopList()),
-                    "boots" => _GetShopFields(ItemMocks.Boots.ShopList()),
-                    "pants" => _GetShopFields(ItemMocks.Pants.ShopList()),
-                    _ => throw new NotImplementedException()
+                    "foods" => _GetShopFields(Meal.GetAll),
+                    "hats" => _GetShopFields(Hat.GetAll),
+                    "jackets" => _GetShopFields(Jacket.GetAll),
+                    "boots" => _GetShopFields(Boots.GetAll),
+                    "pants" => _GetShopFields(Pants.GetAll),
+                    "liquid" => _GetShopFields(Liquid.GetAll)
                 };
             }
             _embed.AddField(fields);
             return new MessageResult.EmbedView(_embed.Build());
         }
 
-        private EmbedFieldBuilder _GetShopFields(IEnumerable<Item> shopItems)
+        private EmbedFieldBuilder _GetShopFields(Item[] shopItems)
         {
             var itemNames = new StringBuilder();
             for (var ind = 0; ind < shopItems.Count(); ind++)
