@@ -22,9 +22,15 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
                 return new MessageResult.ErrorView("Item index was wrong!");
 
             var item = Pet.Backpack.GetItems()[itemInd];
-            if (item is Meal food)
+            if (item is Meal meal)
             {
-                Pet.Hungry.Score += food.Satiety;
+                Pet.Hungry.Score += meal.Satiety;
+                Pet.Backpack.Remove(itemInd);
+                return new MessageResult.BooleanView(true);
+            }
+            else if (item is Liquid beverage)
+            {
+                Pet.Thirsty.Score += beverage.Satiety;
                 Pet.Backpack.Remove(itemInd);
                 return new MessageResult.BooleanView(true);
             }
