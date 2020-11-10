@@ -26,21 +26,22 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
             {
                 return new ErrorView($"You already have Pet: { Pet.Name }.");
             }
-            context.Add(GetCreatedDefaultPet(Command.GetMessage.Author.Id));
+            var name = Command.GetArgs[0] == null ? "#Tamagochi" : Command.GetArgs[0];
+            context.Add(GetCreatedDefaultPet(Command.GetMessage.Author.Id, name));
             context.SaveChanges();
             return new BooleanView(true);
         }
-        private TamagochiModel GetCreatedDefaultPet(ulong discordId)
+        private TamagochiModel GetCreatedDefaultPet(ulong discordId, string name = "#Tamagochi")
         {
             return new TamagochiModel()
             {
                 DiscordId = discordId,
-                Name = "#Tamagochi",
+                Name = name,
                 Color = "0x89ED61",
                 Level = new LevelModel() { Level = 1, ExpToNextLevel = 100 },
                 AvatarURL = @"https://i.pinimg.com/736x/16/f9/60/16f960c5ba68b8f0b88f1c571e8bf9ce--kim-taehyung-twice-cute.jpg",
                 Money = 150,
-                CurrentStatus = "Hi!",
+                CurrentStatus = "Hello, world!",
                 ToUpLevelScore = 100,
                 Birthday = DateTime.Now,
                 Backpack = new Backpack(),
