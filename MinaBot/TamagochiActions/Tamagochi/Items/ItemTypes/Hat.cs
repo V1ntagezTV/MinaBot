@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using MinaBot.Models;
 
 namespace MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes
 {
     public class Hat : Item
     {
-        public static Hat[] GetAll { get; private set; }
-
-        public Hat(string name, int price, ERarity rarity) : base(name, price, rarity)
-        {
-            GetAll = HatsList();
-        }
+        public static Hat[] GetAll { get; private set; } = HatsList();
+        
+        public Hat(string name, int price, ERarity rarity) : base(name, price, rarity) { }
 
         private static Hat[] HatsList()
         {
@@ -22,7 +20,7 @@ namespace MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes
                 new Hat(":mortar_board:", 1000, ERarity.Rare),
                 new Hat(":helmet_with_cross:", 3000, ERarity.Legendary),
                 new Hat(":crown:", 5000, ERarity.Immortal)
-            };
+            }.OrderBy(m => m.Price).ToArray();
         }
     }
 }

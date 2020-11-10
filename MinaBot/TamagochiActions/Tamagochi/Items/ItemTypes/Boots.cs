@@ -1,16 +1,14 @@
 ﻿using System;
+using System.Linq;
 using MinaBot.Models;
 
 namespace MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes
 {
     public class Boots : Item
     {
-        public static Boots[] GetAll { get; private set; }
+        public static Boots[] GetAll { get; private set; } = BootsList();
 
-        public Boots(string name, int price, ERarity rarity) : base(name, price, rarity)
-        {
-            GetAll = BootsList();
-        }
+        public Boots(string name, int price, ERarity rarity) : base(name, price, rarity) { }
         
         private static Boots[] BootsList()
         {
@@ -26,7 +24,7 @@ namespace MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes
                 new Boots(":mans_shoe:", 1400, ERarity.Rare),
                 new Boots(":athletic_shoe:", 5000, ERarity.Rare),
                 new Boots(":hiking_boot:", 5000, ERarity.Rare),
-            };
+            }.OrderBy(m => m.Price).ToArray();
         }
     }
 }
