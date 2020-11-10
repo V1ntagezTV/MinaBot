@@ -19,7 +19,11 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
         public double Score
         {
             get => Math.Round(score, 1);
-            set => score = Math.Max(value, 0);
+            set
+            {
+                score = Math.Max(value, 0);
+                score = Math.Min(value, 100);
+            }
         }
         public override double MinusEveryMinute => 0.4;
         public override DateTime LastConsume { get; set; }
