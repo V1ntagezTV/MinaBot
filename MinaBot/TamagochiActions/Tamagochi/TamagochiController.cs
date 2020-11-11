@@ -48,6 +48,7 @@ namespace MinaBot.Controllers
 			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
 			if (Command.GetOptions == "create")
 			{
+				Console.WriteLine(Pet.Name);
 				return new CreateAction(Pet, Command, Context).Invoke();
 			}
 			else if (Command.GetOptions == "delete")
@@ -80,7 +81,7 @@ namespace MinaBot.Controllers
 				Pet.Level.CurrentExp += expAction.GetExp();
 				if (lastLevel < Pet.Level.Level)
 				{
-					new LevelUpAction(Pet, Command).SendResultInChannel();
+				   Task.Run(() => new LevelUpAction(Pet, Command).SendResultInChannel());
 				}
 			}
 			if (action.NeedToSaveInData)
