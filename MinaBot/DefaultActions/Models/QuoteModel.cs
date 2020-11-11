@@ -3,7 +3,7 @@ using System;
 
 namespace MinaBot.DefaultActions.Models
 {
-    class PasteModel
+    public class QuoteModel
     {
         public int Id { get; set; }
         public long AuthorId { get; set; }

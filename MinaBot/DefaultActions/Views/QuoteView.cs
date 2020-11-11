@@ -9,10 +9,10 @@ namespace MinaBot.DefaultActions.Views
 {
     class PastView : IView
     {
-        PasteModel paste;
-        public PastView(PasteModel paste)
+        QuoteModel _quote;
+        public PastView(QuoteModel quote)
         {
-            this.paste = paste;
+            this._quote = quote;
         }
 
         public MessageResult GetView(CommandModel cmdModel)
@@ -25,17 +25,17 @@ namespace MinaBot.DefaultActions.Views
             //var footer = new EmbedFooterBuilder() { IconUrl = paste.Author.GetAvatarUrl(), Text = paste.Author.ToString() };
             var embed = new EmbedBuilder()
             {
-                Title = $"**{paste.Prefix}**",
+                Title = $"**{_quote.Prefix}**",
                 Color = new Color((uint)Convert.ToInt32("f47e17", 16))
             };
-            if (paste.isLink)
+            if (_quote.isLink)
             {
-                embed.ImageUrl = paste.Text;
-                embed.Description = paste.Desc;
+                embed.ImageUrl = _quote.Text;
+                embed.Description = _quote.Desc;
             }
             else
             {
-                embed.Description = paste.Text;
+                embed.Description = _quote.Text;
             }
             return embed.Build();
         }

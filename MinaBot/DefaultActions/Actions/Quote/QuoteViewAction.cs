@@ -9,15 +9,15 @@ using static MinaBot.MessageResult;
 
 namespace MinaBot.DefaultActions.Actions
 {
-    public class PastViewAction : AActionCommand
+    public class QuoteViewAction : AActionCommand
     {
-        public PastViewAction(CommandModel command) : base(command){ }
+        public QuoteViewAction(CommandModel command) : base(command){ }
 
         public override string[] Options => new[] { "pasta" };
 
         public override MessageResult Invoke()
         {
-            using var data = new PastaContext();
+            using var data = new DefaultCommandContext();
             var pasta = data.GetPastaOrDefault(Command.GetOptions);
             return new PastView(pasta).GetView(Command);
         }
