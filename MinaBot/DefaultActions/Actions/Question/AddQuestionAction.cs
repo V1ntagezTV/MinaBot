@@ -9,15 +9,17 @@ namespace MinaBot.DefaultActions.Actions.Question
     {
         public AddQuestionAction(CommandModel command) : base(command) { }
 
-        public override string[] Options => new[] {"askworld", "ask"};
+        public override string[] Options => new[] {"askworld", "askw"};
         public override MessageResult Invoke()
         {
             using var data = new DefaultCommandContext();
             var question = new QuestionModel()
             {
                 AuthorId = (long)Command.GetMessage.Author.Id,
-                Content = String.Join(" ", Command.GetArgs)
+                Content = String.Join(" ", Command.GetMessage.Content.Split()[1..]),
+                ChannelId = (long)Command.GetMessage.Channel.Id
             };
+            Console.WriteLine(question.ChannelId);
             data.Questions.Add(question);
             data.SaveChanges();
             return new MessageResult.BooleanView(true);

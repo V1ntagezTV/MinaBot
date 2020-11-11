@@ -8,6 +8,7 @@ using Discord;
 using MinaBot.DefaultActions.Actions;
 using MinaBot.Models;
 using MinaBot.DefaultActions.Actions.Quote;
+using MinaBot.DefaultActions.Actions.Question;
 
 namespace MinaBot.DefaultActions
 {
@@ -29,7 +30,10 @@ namespace MinaBot.DefaultActions
                 new AvatarViewAction(Command),
                 new QuoteViewAction(Command),
                 new CreateQuoteAction(Command),
-                new DeleteQuoteAction(Command)
+                new DeleteQuoteAction(Command),
+                new AddQuestionAction(Command),
+                new AnswerQuestionAction(Command),
+                new DeleteQuestionAction(Command)
             };
         }
 

@@ -11,7 +11,7 @@ namespace MinaBot.DefaultActions.Actions.Question
         {
         }
 
-        public override string[] Options { get; }
+        public override string[] Options => new[] { "delask", "dask" };
         public override MessageResult Invoke()
         {
             using var data = new DefaultCommandContext();
