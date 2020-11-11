@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Discord;
@@ -39,7 +40,8 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
                     "jackets" => _GetShopFields(Jacket.GetAll),
                     "boots" => _GetShopFields(Boots.GetAll),
                     "pants" => _GetShopFields(Pants.GetAll),
-                    "liquid" => _GetShopFields(Liquid.GetAll)
+                    "liquid" => _GetShopFields(Liquid.GetAll),
+                    _ => throw new ArgumentException()
                 };
             }
             _embed.AddField(fields);
