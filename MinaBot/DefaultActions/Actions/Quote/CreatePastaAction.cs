@@ -12,7 +12,7 @@ namespace MinaBot.DefaultActions.Actions.Quote
     {
         public CreatePastaAction(CommandModel command) : base(command) { }
 
-        public override string[] Options => new[] { "addpasta" };
+        public override string[] Options => new[] { "addpasta", "apasta" };
 
         public override MessageResult Invoke()
         {

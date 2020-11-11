@@ -10,11 +10,9 @@ namespace MinaBot.DefaultActions.Actions.Quote
 {
     class DeletePastaAction : AActionCommand
     {
-        public DeletePastaAction(CommandModel command) : base(command)
-        {
-        }
+        public DeletePastaAction(CommandModel command) : base(command) { }
 
-        public override string[] Options => new[] { "delpasta" };
+        public override string[] Options => new[] { "delpasta", "dpasta" };
 
         public override MessageResult Invoke()
         {
