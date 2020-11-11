@@ -8,15 +8,15 @@ using static MinaBot.MessageResult;
 
 namespace MinaBot.DefaultActions.Actions.Quote
 {
-    class DeletePastaAction : AActionCommand
+    class DeleteQuoteAction : AActionCommand
     {
-        public DeletePastaAction(CommandModel command) : base(command) { }
+        public DeleteQuoteAction(CommandModel command) : base(command) { }
 
         public override string[] Options => new[] { "delpasta", "dpasta" };
 
         public override MessageResult Invoke()
         {
-            using var data = new PastaContext();
+            using var data = new DefaultCommandContext();
             var pasta = data.GetPastaOrDefault(Command.GetOptions);
             data.Quotes.Remove(pasta);
             data.SaveChanges();
