@@ -26,6 +26,7 @@ namespace MinaBot.DefaultActions
                 new RoleNameChange(Command),
                 new RoleColorChange(Command),
                 new AvatarViewAction(Command),
+                new PastViewAction(Command)
             };
         }
 
