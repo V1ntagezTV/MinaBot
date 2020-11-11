@@ -2,6 +2,7 @@
 using MinaBot.DefaultActions.Models;
 using MinaBot.Main;
 using MinaBot.Models;
+using System;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.DefaultActions.Views
@@ -22,10 +23,20 @@ namespace MinaBot.DefaultActions.Views
         public Embed GetEmbed()
         {
             //var footer = new EmbedFooterBuilder() { IconUrl = paste.Author.GetAvatarUrl(), Text = paste.Author.ToString() };
-            var embed = new EmbedBuilder() { Title = $"**Pasta: {paste.Prefix}**",
-                Description= "https://media.discordapp.net/attachments/587316273013063712/773693633698201600/unknown.png"
-                ImageUrl = @"https://media.discordapp.net/attachments/587316273013063712/773693633698201600/unknown.png"
+            var embed = new EmbedBuilder()
+            {
+                Title = $"**{paste.Prefix}**",
+                Color = new Color((uint)Convert.ToInt32("f47e17", 16))
             };
+            if (paste.isLink)
+            {
+                embed.ImageUrl = paste.Text;
+                embed.Description = paste.Desc;
+            }
+            else
+            {
+                embed.Description = paste.Text;
+            }
             return embed.Build();
         }
     }

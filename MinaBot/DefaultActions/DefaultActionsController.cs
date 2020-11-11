@@ -7,6 +7,7 @@ using System.Text;
 using Discord;
 using MinaBot.DefaultActions.Actions;
 using MinaBot.Models;
+using MinaBot.DefaultActions.Actions.Quote;
 
 namespace MinaBot.DefaultActions
 {
@@ -26,7 +27,9 @@ namespace MinaBot.DefaultActions
                 new RoleNameChange(Command),
                 new RoleColorChange(Command),
                 new AvatarViewAction(Command),
-                new PastViewAction(Command)
+                new PastViewAction(Command),
+                new CreatePastaAction(Command),
+                new DeletePastaAction(Command)
             };
         }
 

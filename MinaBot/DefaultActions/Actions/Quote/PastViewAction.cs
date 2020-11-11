@@ -13,11 +13,13 @@ namespace MinaBot.DefaultActions.Actions
     {
         public PastViewAction(CommandModel command) : base(command){ }
 
-        public override string[] Options => new[] { "paste" };
+        public override string[] Options => new[] { "pasta" };
 
         public override MessageResult Invoke()
         {
-            return new PastView(new PasteModel() { Prefix="fe"}).GetView(Command);
+            using var data = new PastaContext();
+            var pasta = data.GetPastaOrDefault(Command.GetOptions);
+            return new PastView(pasta).GetView(Command);
         }
     }
 }
