@@ -8,16 +8,16 @@ using static MinaBot.MessageResult;
 
 namespace MinaBot.DefaultActions.Actions.Quote
 {
-    class CreatePastaAction : AActionCommand
+    class CreateQuoteAction : AActionCommand
     {
-        public CreatePastaAction(CommandModel command) : base(command) { }
+        public CreateQuoteAction(CommandModel command) : base(command) { }
 
         public override string[] Options => new[] { "addpasta", "apasta" };
 
         public override MessageResult Invoke()
         {
-            using var data = new PastaContext();
-            var pasta = new PasteModel();
+            using var data = new DefaultCommandContext();
+            var pasta = new QuoteModel();
 
             pasta.Prefix = Command.GetOptions;
             pasta.Text = String.Join(' ', Command.GetArgs[Command.GetArgs.Length - 1]);
