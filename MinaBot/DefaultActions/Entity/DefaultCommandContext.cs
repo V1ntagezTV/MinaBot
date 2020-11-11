@@ -7,27 +7,31 @@ using System.Text;
 
 namespace MinaBot.DefaultActions
 {
-    class PastaContext : DbContext
+    public class DefaultCommandContext : DbContext
     {
-        public DbSet<PasteModel> Quotes { get; set; }
+        public DbSet<QuoteModel> Quotes { get; set; }
+        public DbSet<QuestionModel> Questions { get; set; }
 
-        public PastaContext()
+        public DefaultCommandContext()
         {
             Database.EnsureCreated();
         }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Pastas;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=CommandData;Trusted_Connection=True;");
         }
 
-        public PasteModel GetPastaOrDefault(ulong discordId)
+        public QuoteModel GetPastaOrDefault(ulong discordId)
         {
             return Quotes.FirstOrDefault(t => t.AuthorId == (long)discordId);
         }
 
-        public PasteModel GetPastaOrDefault(string prefix)
+        public QuoteModel GetPastaOrDefault(string prefix)
         {
             return Quotes.FirstOrDefault(t => t.Prefix == prefix);
         }
+
+        public QuestionModel GetQuestionOrDefault(int id) => Questions.FirstOrDefault(q => q.Id == id);
     }
 }
