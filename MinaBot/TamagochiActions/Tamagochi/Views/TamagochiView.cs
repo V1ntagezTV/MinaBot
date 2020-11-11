@@ -33,7 +33,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "Статы",
-                Value = $"Coins: {pet.Money}\n" +
+                Value = $":dollar: {pet.Money}\n" +
                         $"Level: {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})\n" +
                         $"LiveTime: {Math.Round(petToDeath, 2)} min."
             });
