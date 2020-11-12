@@ -38,8 +38,9 @@ namespace MinaBot.DefaultActions.Actions.Question
 
         private async void SendMessage(ITextChannel channel, QuestionModel question, string answer)
         {
-            var emb = new QuestionView(question, answer);
-            await channel.SendMessageAsync(embed: emb.GetEmbed());
+            var emb = new AnswerToQuestionView(question, answer);
+            var askAuthor = Command.GetMessage.Author;
+            await channel.SendMessageAsync(text: askAuthor.Mention ,embed: emb.GetEmbed(askAuthor));
         }
     }
 }

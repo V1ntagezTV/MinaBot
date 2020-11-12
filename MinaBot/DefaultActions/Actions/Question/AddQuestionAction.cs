@@ -9,7 +9,7 @@ namespace MinaBot.DefaultActions.Actions.Question
     {
         public AddQuestionAction(CommandModel command) : base(command) { }
 
-        public override string[] Options => new[] {"askworld", "askw"};
+        public override string[] Options => new[] {"ask"};
         public override MessageResult Invoke()
         {
             using var data = new DefaultCommandContext();

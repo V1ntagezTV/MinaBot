@@ -33,7 +33,8 @@ namespace MinaBot.DefaultActions
                 new DeleteQuoteAction(Command),
                 new AddQuestionAction(Command),
                 new AnswerQuestionAction(Command),
-                new DeleteQuestionAction(Command)
+                new DeleteQuestionAction(Command),
+                new GetRandomQuestionAction(Command),
             };
         }
 

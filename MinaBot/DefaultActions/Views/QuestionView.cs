@@ -1,39 +1,38 @@
-﻿using Discord;
+﻿using System;
+using Discord;
+using Microsoft.EntityFrameworkCore.Internal;
 using MinaBot.DefaultActions.Models;
 using MinaBot.Main;
 using MinaBot.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using static MinaBot.MessageResult;
 
 namespace MinaBot.DefaultActions.Views
 {
-    class QuestionView : IView
+    public class QuestionView : IView
     {
         private QuestionModel _question;
-        private string _answer;
-        public QuestionView(QuestionModel question, string answerContent)
+
+        public QuestionView(QuestionModel question)
         {
             _question = question;
-            _answer = answerContent;
         }
-
+        
         public MessageResult GetView(CommandModel cmdModel)
         {
-            return new EmbedView(GetEmbed());
+            return new MessageResult.EmbedView(GetEmbed());
         }
 
         public Embed GetEmbed()
         {
-            //var footer = new EmbedFooterBuilder() { IconUrl = paste.Author.GetAvatarUrl(), Text = paste.Author.ToString() };
-            var embed = new EmbedBuilder()
+            var author = Program.client.GetUser((ulong) _question.AuthorId);
+            var footer = new EmbedFooterBuilder() {IconUrl = author.GetAvatarUrl(), Text = $"asked by {author.Username}"};
+            var builder = new EmbedBuilder()
             {
-                Title = $"**{_question.Id}#Question**",
+                Title = $"**Question#{_question.Id}**",
                 Color = new Color((uint)Convert.ToInt32("f47e17", 16)),
-                Description = $"**Q:** {_question.Content}\n**A:** {_answer}"
+                Description = $"{_question.Content}",
+                Footer = footer
             };
-            return embed.Build();
+            return builder.Build();
         }
     }
 }
