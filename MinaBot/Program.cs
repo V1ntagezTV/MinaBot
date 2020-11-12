@@ -12,7 +12,7 @@ namespace MinaBot
 {
     class Program
     {
-        private DiscordSocketClient client;
+        public static DiscordSocketClient client;
         private CommandService commands;
         private IServiceProvider services;
         private const string TOKEN = @"";
