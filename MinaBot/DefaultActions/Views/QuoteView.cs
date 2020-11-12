@@ -22,11 +22,13 @@ namespace MinaBot.DefaultActions.Views
 
         public Embed GetEmbed()
         {
-            //var footer = new EmbedFooterBuilder() { IconUrl = paste.Author.GetAvatarUrl(), Text = paste.Author.ToString() };
+            var author = Program.client.GetUser((ulong) _quote.AuthorId);
+            var footer = new EmbedFooterBuilder() { IconUrl = author.GetAvatarUrl(), Text = $"created by {author}" };
             var embed = new EmbedBuilder()
             {
                 Title = $"**{_quote.Prefix}**",
-                Color = new Color((uint)Convert.ToInt32("f47e17", 16))
+                Color = new Color((uint)Convert.ToInt32("f47e17", 16)),
+                Footer = footer
             };
             if (_quote.isLink)
             {
