@@ -13,8 +13,18 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
             get => Math.Round(score, 1);
             set
             {
-                score = Math.Max(value, 0);
-                score = Math.Min(value, 100);
+                if (value <= 0)
+                {
+                    score = 0;
+                } 
+                else if (value >= 100)
+                {
+                    score = 100;
+                }
+                else
+                {
+                    score = value;
+                }
             }
         }
         public Thirsty()
