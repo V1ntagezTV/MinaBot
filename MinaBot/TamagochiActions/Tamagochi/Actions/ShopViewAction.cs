@@ -9,7 +9,7 @@ namespace MinaBot.TamagochiActions.Tamagochi.Actions
         public ShopViewAction(TamagochiModel pet, CommandModel command, bool needToSaveInData = false)
             : base(pet, command, needToSaveInData) { }
 
-        public override string[] Options => new[] {"shop", "sh", "sho"};
+        public override string[] Options => new[] {"shop"};
         public override MessageResult Invoke() => new ShopView().GetView(Command);
     }
 }
