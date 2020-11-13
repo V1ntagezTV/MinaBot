@@ -2,7 +2,7 @@
 
 using Discord;
 using Discord.WebSocket;
-
+#nullable enable
 namespace MinaBot.Models
 {
     public class CommandModel
@@ -15,9 +15,9 @@ namespace MinaBot.Models
             GetArgs = args;
         }
 
-        public string GetPrefix { get; private set; } //type
-        public string? GetOptions { get; private set; } //function
-        public string[]? GetArgs { get; private set; } // argument
+        public string GetPrefix { get; private set; }
+        public string? GetOptions { get; private set; }
+        public string[]? GetArgs { get; private set; }
         public SocketMessage GetMessage { get; private set; }
     }
 }
