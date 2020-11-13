@@ -48,7 +48,6 @@ namespace MinaBot.Controllers
 			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
 			if (Command.GetOptions == "create")
 			{
-				Console.WriteLine(Pet.Name);
 				return new CreateAction(Pet, Command, Context).Invoke();
 			}
 			else if (Command.GetOptions == "delete")

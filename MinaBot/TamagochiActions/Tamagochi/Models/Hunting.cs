@@ -25,13 +25,13 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi
             for (int itemInd = 0; itemInd < MAXITEMCOUNT; itemInd++)
             {
                 var item = ItemMocks.AllItems.GetRandomItemWithChance();
-                if (item.ID == 0) { continue; } // You get nothing.
+                if (item.Id == 0) { continue; } // You get nothing.
                 if (resultItemList == "")
                 {
-                    resultItemList += item.ID;
+                    resultItemList += item.Id;
                     continue;
                 }
-                resultItemList += "," + item.ID;
+                resultItemList += "," + item.Id;
             }
             return resultItemList;
         }
