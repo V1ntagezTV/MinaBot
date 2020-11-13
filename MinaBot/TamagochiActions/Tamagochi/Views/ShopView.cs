@@ -8,6 +8,7 @@ using MinaBot.BotTamagochi.ItemsPack;
 using MinaBot.Main;
 using MinaBot.Models;
 using MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes;
+using MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes.ItemsJson;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
 {
@@ -33,14 +34,15 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             }
             else
             {
+                var contr = new ItemsJsonController().GetConfigValuesAsync().Result; 
                 fields = cmdModel.GetArgs[0] switch
                 {
-                    "foods" => _GetShopFields(Meal.GetAll),
-                    "hats" => _GetShopFields(Hat.GetAll),
-                    "jackets" => _GetShopFields(Jacket.GetAll),
-                    "boots" => _GetShopFields(Boots.GetAll),
-                    "pants" => _GetShopFields(Pants.GetAll),
-                    "liquid" => _GetShopFields(Liquid.GetAll),
+                    "foods" => _GetShopFields(contr.Meals.ToArray()),
+                    "hats" => _GetShopFields(contr.Hats.ToArray()),
+                    "jackets" => _GetShopFields(contr.Jackets.ToArray()),
+                    "boots" => _GetShopFields(contr.Boots.ToArray()),
+                    "pants" => _GetShopFields(contr.Pants.ToArray()),
+                    "liquid" => _GetShopFields(contr.Liquids.ToArray()),
                     _ => throw new ArgumentException()
                 };
             }
@@ -54,7 +56,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             for (var ind = 0; ind < shopItems.Count(); ind++)
             {
                 var item = shopItems.ElementAt(ind);
-                var indStr = item.ID >= 10 ? $"{item.ID}" : $"0{item.ID}";
+                var indStr = item.Id >= 10 ? $"{item.Id}" : $"0{item.Id}";
                 itemNames.Append($"`{indStr}` {item.Name} — :dollar: `{item.Price}.00` —  :gem: {item.Rarity}\n");  
             }
             return new EmbedFieldBuilder() { Name = "**Item/Index:**", Value = itemNames, IsInline = true };
