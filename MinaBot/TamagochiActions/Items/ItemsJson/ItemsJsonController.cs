@@ -10,7 +10,7 @@ namespace MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes.ItemsJson
 {
     public class ItemsJsonController
     {
-        private const string Path = @"C:\Users\Vintage\Desktop\C# Projects\MinaBot\MinaBot\TamagochiActions\Items\ItemTypes\ItemsJson\ItemsConfig.json";
+        private const string Path = @"C:\Users\Vintage\Desktop\C# Projects\MinaBot\MinaBot\TamagochiActions\Items\ItemsJson\ItemsConfig.json";
         public async Task<ItemsJsonModel> GetConfigValuesAsync()
         {
             var json = await File.ReadAllTextAsync(Path);
@@ -25,7 +25,7 @@ namespace MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes.ItemsJson
 
         public async Task AddItem(Item item)
         {
-            var itemsData = this.GetConfigValuesAsync().Result;
+            var itemsData = await this.GetConfigValuesAsync();
             itemsData.IdCount++;
             item.Id = itemsData.IdCount;
             if (item is Boots boots) { itemsData.Boots.Add(boots); }
@@ -35,7 +35,7 @@ namespace MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes.ItemsJson
             else if (item is Liquid liquid) {itemsData.Liquids.Add(liquid);}
             else if (item is Pants pants) {itemsData.Pants.Add(pants);}
             else throw new ArgumentException("Item type was not indefinite!");
-            SaveConfigValueAsync(itemsData);
+            await SaveConfigValueAsync(itemsData);
         }
     }
     
