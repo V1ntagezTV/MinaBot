@@ -86,7 +86,8 @@ namespace MinaBot.Models
             var idList = itemCollectionStringWithID.Split(",");
             for (int ind = 0; ind < idList.Length; ind++)
             {
-                var item = ItemMocks.AllItems[Convert.ToInt32(idList[ind])];
+                var item = ItemMocks.AllItems
+                    .Data.FirstOrDefault(item => item.Id == Convert.ToInt32(idList[ind]));
                 items.Data.Add(item);
             }
             return items;

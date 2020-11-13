@@ -3,13 +3,16 @@ using MinaBot.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes;
+using MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes.ItemsJson;
 
 namespace MinaBot.BotTamagochi.ItemsPack
 {
     static class ItemMocks
     {
-        public static Item DefaultItem = new Item("-", 0, ERarity.Common);
+        public static Item DefaultItem = new Item("-", 0, ERarity.Common) {Id = 0};
         public static ItemCollection<Item> AllItems { get; private set; }
         public static ItemCollection<Item> CommonItems { get; private set; }
         public static ItemCollection<Item> RareItems { get; private set; }
@@ -27,17 +30,15 @@ namespace MinaBot.BotTamagochi.ItemsPack
 
         private static ItemCollection<Item> ToCollection()
         {
-            /* 
-             * ID по возрастанию!
-             * 0 = default item
-            */
+            var jsonItems = Task.Run(() => new ItemsJsonController().GetConfigValuesAsync()).Result;
             var result = new List<Item>();
             result.Add(DefaultItem);
-            result.AddRange(Boots.GetAll);
-            result.AddRange(Meal.GetAll);
-            result.AddRange(Hat.GetAll);
-            result.AddRange(Jacket.GetAll);
-            result.AddRange(Pants.GetAll);
+            result.AddRange(jsonItems.Boots);
+            result.AddRange(jsonItems.Meals);
+            result.AddRange(jsonItems.Hats);
+            result.AddRange(jsonItems.Jackets);
+            result.AddRange(jsonItems.Pants);
+            result.AddRange(jsonItems.Liquids);
             return new ItemCollection<Item>(result);
         }
     }
