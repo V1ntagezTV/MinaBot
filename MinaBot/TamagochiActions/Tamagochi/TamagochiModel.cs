@@ -4,6 +4,7 @@ using MinaBot.BotTamagochi.MVC.Tamagochi;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
 using MinaBot.Main;
 using System;
+using System.Linq;
 
 namespace MinaBot.Models
 {
@@ -28,13 +29,13 @@ namespace MinaBot.Models
         public uint ToUpLevelScore { get; set; }
         public int AgeDays { get => (DateTime.Now - Birthday).Days + 1; }
         public int HatID { get; set; }
-        public Item Hat { get => ItemMocks.AllItems[HatID]; }
+        public Item Hat => ItemMocks.AllItems.Data.First(item => item.Id == HatID);
         public int JacketID { get; set; }
-        public Item Jacket { get => ItemMocks.AllItems[JacketID]; }
+        public Item Jacket => ItemMocks.AllItems.Data.First(item => item.Id == JacketID);
         public int PantsID { get; set; }
-        public Item Pants{ get => ItemMocks.AllItems[PantsID]; }
+        public Item Pants => ItemMocks.AllItems.Data.First(item => item.Id == PantsID);
         public int BootsID { get; set; }
-        public Item Boots { get => ItemMocks.AllItems[BootsID]; }
+        public Item Boots => ItemMocks.AllItems.Data.First(item => item.Id == BootsID);
         public Backpack Backpack { get; set; }
         public DateTime Birthday { get; set; }
         // STATS

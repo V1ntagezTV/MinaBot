@@ -17,31 +17,32 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 
         public override MessageResult Invoke()
         {
-            var itemInd = Convert.ToInt32(Command.GetArgs[0]) - 1;
+            var itemInd = Convert.ToInt32(Command.GetArgs[0]) - 1;    
             if (Pet.Backpack.Lenght < itemInd || itemInd < 0)
                 return new ErrorView("Item index was wrong!");
-
+            
             var item = Pet.Backpack.GetItems()[itemInd];
+            Console.WriteLine($"item id to wear: {item.Id}");
             Pet.Backpack.Remove(itemInd);
             if (item is Hat)
             {
                 AddWearItemBackInBackpack(Pet.HatID);
-                Pet.HatID = item.ID;
+                Pet.HatID = item.Id;
             }
             else if (item is Jacket)
             {
                 AddWearItemBackInBackpack(Pet.JacketID);
-                Pet.JacketID = item.ID;
+                Pet.JacketID = item.Id;
             }
             else if (item is Pants)
             {
                 AddWearItemBackInBackpack(Pet.PantsID);
-                Pet.PantsID = item.ID;
+                Pet.PantsID = item.Id;
             }
             else if (item is Boots)
             {
                 AddWearItemBackInBackpack(Pet.BootsID);
-                Pet.BootsID = item.ID;
+                Pet.BootsID = item.Id;
             }
             else return new ErrorView($"You can't wear this item!\nIndex{itemInd}");
             return new BooleanView(true);
@@ -49,10 +50,9 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 
         private void AddWearItemBackInBackpack(int itemId)
         {
-            if (Pet.HatID == ItemMocks.DefaultItem.ID)
-            {
-                Pet.Backpack.Add(Pet.HatID.ToString());
-            }
+            if (Pet.HatID == ItemMocks.DefaultItem.Id) return;
+            
+            Pet.Backpack.Add(Pet.HatID.ToString());
         }
     }
 }
