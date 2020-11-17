@@ -26,7 +26,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
             {
                 return new ErrorView($"You already have Pet: { Pet.Name }.");
             }
-            var name = Command.GetArgs[0] == null ? "#Tamagochi" : Command.GetArgs[0];
+            var name = Command.GetArgs == null || Command.GetArgs[0] == null ? "#Tamagochi" : Command.GetArgs[0];
             context.Add(GetCreatedDefaultPet(Command.GetMessage.Author.Id, name));
             context.SaveChanges();
             return new BooleanView(true);
