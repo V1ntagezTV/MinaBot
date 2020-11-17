@@ -6,16 +6,20 @@ using System.Collections.Generic;
 using System.Net.Mime;
 using System.Text;
 using Discord;
+using MinaBot.Base.ActionInterfaces;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.DefaultActions.Actions.Quote
 {
-    class CreateQuoteAction : AActionCommand
+    class CreateQuoteAction : AActionCommand, IHelper
     {
+        public string Title => "**m!addpasta <prefix> <content> [imageLink]**";
+        public string Description =>
+            "Create quote with text or image or together and call it with prefix.\nExample:\nm!pasta <prefix>";
+        public override string[] Options => new[] { "addpasta" };
+        
         public CreateQuoteAction(CommandModel command) : base(command) { }
-
-        public override string[] Options => new[] { "addpasta", "apasta" };
-
+        
         public override MessageResult Invoke()
         {
             using var data = new DefaultCommandContext();

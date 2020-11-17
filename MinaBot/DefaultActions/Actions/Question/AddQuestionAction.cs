@@ -1,15 +1,20 @@
 ﻿using System;
+using System.ComponentModel.Design;
+using System.Threading.Tasks.Dataflow;
+using Discord;
+using MinaBot.Base.ActionInterfaces;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions;
 using MinaBot.DefaultActions.Models;
 using MinaBot.Models;
 
 namespace MinaBot.DefaultActions.Actions.Question
 {
-    public class AddQuestionAction : AActionCommand
+    public class AddQuestionAction : AActionCommand, IHelper
     {
         public AddQuestionAction(CommandModel command) : base(command) { }
 
         public override string[] Options => new[] {"ask"};
+
         public override MessageResult Invoke()
         {
             using var data = new DefaultCommandContext();
@@ -24,5 +29,8 @@ namespace MinaBot.DefaultActions.Actions.Question
             data.SaveChanges();
             return new MessageResult.BooleanView(true);
         }
+
+        public string Title =>  "**m!ask <question>**";
+        public string Description => "Ask and get random answer from any servers and people.";
     }
 }

@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using Discord.WebSocket;
 using MinaBot.BotTamagochi.DataTamagochi;
 using MinaBot.DefaultActions;
+using MinaBot.HelpActions;
 
 namespace MinaBot
 {
@@ -41,8 +42,8 @@ namespace MinaBot
                         return new TamagochiController(commandModel, context).GetResult();
                     }
 
-                //case "shop":
-                //    return new ShopController();
+                case "help":
+                    return new HelpController(commandModel).GetResult();
 
                 default:
                     return new DefaultActionsController(commandModel).GetResult();

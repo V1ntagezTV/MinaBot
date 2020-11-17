@@ -14,14 +14,28 @@ namespace MinaBot.DefaultActions
 {
     public class DefaultActionsController : IController
     {
+        public EmbedFieldBuilder GetInfoController()
+        {
+            return new EmbedFieldBuilder()
+            {
+                Name = ":gear: General",
+                Value = ":star: *m!<command> [arguments]*\n"
+                        + string.Join(" | ", _GetAllActions()
+                            .Select(a => "`"+string.Join(" / ",a.Options)+"`")),
+                IsInline = true
+            };
+        }
+
         public CommandModel Command { get; }
         public AActionCommand[] Actions { get; set; }
         public DefaultActionsController(CommandModel cmd)
         {
             Command = cmd;
         }
+        
+        public DefaultActionsController() {}
 
-        private AActionCommand[] _GetAllDefaultActions()
+        public AActionCommand[] _GetAllActions()
         {
             return new AActionCommand[]
             {
@@ -40,7 +54,7 @@ namespace MinaBot.DefaultActions
 
         public MessageResult GetResult()
         {
-            Actions = _GetAllDefaultActions();
+            Actions = _GetAllActions();
             for (int ind = 0; ind < Actions.Length; ind++)
             {
                 if (Actions[ind].Options.Contains(Command.GetPrefix))

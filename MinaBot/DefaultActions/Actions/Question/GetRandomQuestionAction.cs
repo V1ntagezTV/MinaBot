@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Linq;
+using Discord;
+using MinaBot.Base.ActionInterfaces;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions;
 using MinaBot.DefaultActions.Views;
 using MinaBot.Models;
 
 namespace MinaBot.DefaultActions.Actions.Question
 {
-    public class GetRandomQuestionAction : AActionCommand
+    public class GetRandomQuestionAction : AActionCommand, IHelper
     {
+        public string Title => "**m!getask**";
+        public string Description => "Get random questions.";
+        public override string[] Options => new[] {"getask"};
+        
         private readonly Random rnd = new Random();
+        
         public GetRandomQuestionAction(CommandModel command) : base(command) { }
-
-        public override string[] Options => new[] {"getask", "getask"};
+        
         public override MessageResult Invoke()
         {
             using var data = new DefaultCommandContext();

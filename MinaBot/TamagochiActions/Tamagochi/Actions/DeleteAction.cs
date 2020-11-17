@@ -3,19 +3,23 @@ using MinaBot.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Discord;
+using MinaBot.Base.ActionInterfaces;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
-    class DeleteAction : APetActionCommand
+    class DeleteAction : APetActionCommand, IHelper
     {
+        public string Title => "**m!pet delete**";
+        public string Description => "Delete your pet.\nUse it if your pet was dead.";
+        public override string[] Options => new[] { "delete" };
+        
         TamagochiContext context;
         public DeleteAction(TamagochiModel pet, CommandModel command, TamagochiContext context) : base(pet, command)
         {
             this.context = context;
         }
-
-        public override string[] Options => new[] { "delete" };
 
         public override MessageResult Invoke()
         {

@@ -4,21 +4,25 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Discord;
+using MinaBot.Base.ActionInterfaces;
 using MinaBot.BotTamagochi.Models;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
-    class CreateAction : APetActionCommand
+    class CreateAction : APetActionCommand, IHelper
     {
+        public string Title => "**m!pet create [pet_name]**";
+        public string Description => "Create new pet.\nYou can't have more pets then one.";
+        public override string[] Options => new[] { "create" };
+        
         TamagochiContext context;
         public CreateAction(TamagochiModel pet, CommandModel command, TamagochiContext context) : base(pet, command)
         {
             this.context = context;
         }
-
-        public override string[] Options => new[] { "create" };
 
         public override MessageResult Invoke()
         {

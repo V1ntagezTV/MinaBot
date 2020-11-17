@@ -5,15 +5,18 @@ using MinaBot.DefaultActions.Views;
 using MinaBot.Models;
 using System;
 using System.Threading.Tasks;
+using MinaBot.Base.ActionInterfaces;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.DefaultActions.Actions.Question
 {
-    public class AnswerQuestionAction : AActionCommand
+    public class AnswerQuestionAction : AActionCommand, IHelper
     {
+        public override string[] Options => new[] { "answer" };
+        public string Title => "**m!answer <ask-id>**";
+        public string Description => "Answer to random questions to real people in other servers.";
+        
         public AnswerQuestionAction(CommandModel command) : base(command) { }
-
-        public override string[] Options => new[] { "answ", "answer" };
 
         public override MessageResult Invoke()
         {

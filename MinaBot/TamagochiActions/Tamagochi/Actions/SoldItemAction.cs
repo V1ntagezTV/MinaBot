@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Linq;
+using Discord;
+using MinaBot.Base.ActionInterfaces;
 using MinaBot.Models;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
-    public class SoldItemAction : APetActionCommand
+    public class SoldItemAction : APetActionCommand, IHelper
     {
+        public string Title => "**m!pet sold <itemIndex>**";
+        public string Description => "Sold recieved items.\nItem index from your invetory (1-10).";
+        public override string[] Options => new[] {"sold"};
         public SoldItemAction(TamagochiModel pet, CommandModel command) 
             : base(pet, command, true) { }
-
-        public override string[] Options => new[] {"sold", "s"};
-
+        
         public override MessageResult Invoke()
         {
             var itemInd = Command.GetArgs[0];

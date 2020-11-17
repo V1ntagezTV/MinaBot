@@ -4,15 +4,19 @@ using MinaBot.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Discord;
+using MinaBot.Base.ActionInterfaces;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.DefaultActions.Actions.Quote
 {
-    class DeleteQuoteAction : AActionCommand
+    class DeleteQuoteAction : AActionCommand, IHelper
     {
+        public string Title => "**m!delpasta <pasta-prefix>**";
+        public string Description => "Remove your pasta.";
+        public override string[] Options => new[] { "delpasta"};
+        
         public DeleteQuoteAction(CommandModel command) : base(command) { }
-
-        public override string[] Options => new[] { "delpasta", "dpasta" };
 
         public override MessageResult Invoke()
         {
@@ -22,5 +26,7 @@ namespace MinaBot.DefaultActions.Actions.Quote
             data.SaveChanges();
             return new BooleanView(true);
         }
+
+       
     }
 }

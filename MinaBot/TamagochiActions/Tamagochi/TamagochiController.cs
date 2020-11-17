@@ -7,6 +7,7 @@ using MinaBot.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Discord;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
 using MinaBot.TamagochiActions.Tamagochi.Actions;
 using static MinaBot.MessageResult;
@@ -14,8 +15,20 @@ using static MinaBot.MessageResult;
 namespace MinaBot.Controllers
 {
     class TamagochiController : IController
-	{
-		public CommandModel Command { get; }
+    {
+	    public EmbedFieldBuilder GetInfoController()
+	    {
+		    return new EmbedFieldBuilder()
+		    {
+			    Name = ":cat: Tamagochi",
+			    Value = ":star: *m!pet <command> [arguments]*\n" +
+			            string.Join(" | ", _GetAllActions()
+					    .Select(a => "`"+string.Join(" / ",a.Options)+"`")),
+			    IsInline = true
+		    };
+	    }
+
+	    public CommandModel Command { get; }
 		public AActionCommand[] Actions { get; set; }
 		public TamagochiModel Pet;
 		private TamagochiContext Context;
@@ -25,7 +38,11 @@ namespace MinaBot.Controllers
 			Command = commandModel;
 			Context = context;
 		}
-        private APetActionCommand[] _GetAllPetActions()
+		public TamagochiController()
+		{
+			
+		}
+		public AActionCommand[] _GetAllActions()
         {
 			return new APetActionCommand[]
 			{
@@ -39,7 +56,9 @@ namespace MinaBot.Controllers
 				new WearAction(Pet, Command),
 				new TakeOffItemAction(Pet, Command),
 				new ChangeStatusAction(Pet, Command),
-				new ShopViewAction(Pet, Command), 
+				new ShopViewAction(Pet, Command),
+				new CreateAction(Pet, Command, Context),
+				new DeleteAction(Pet, Command, Context), 
 			};
         }
 
@@ -64,7 +83,7 @@ namespace MinaBot.Controllers
 				return new ErrorView($"I'm sorry, but your pet: {Pet.ID}{Pet.Name} is dead.\n" +
 					$" You need to recreate your tamagochi.");
             }
-			Actions = _GetAllPetActions();
+			Actions = _GetAllActions();
 			var calledAction = GetActionOrDefault(Command.GetOptions);
 			return InvokeAction(calledAction);
 		}

@@ -2,20 +2,23 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Discord;
+using MinaBot.Base.ActionInterfaces;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions;
 using MinaBot.Models;
 
 namespace MinaBot.DefaultActions.Actions
 {
-    public class RoleColorChange : AActionCommand
+    public class RoleColorChange : AActionCommand, IHelper
     {
+        public string Title => "**m!rolecolor <role-mention> <hex-color>**";
+        public string Description => "Change own role color.";
+        public override string[] Options => new[] {"rolecolor"};
+        
         public RoleColorChange(CommandModel command) : base(command)
         {
             Command = command;
         }
-
-        public override string[] Options => new[] {"color"};
-
+        
         public override MessageResult Invoke()
         {
             var role = Command.GetMessage.MentionedRoles.First();

@@ -1,18 +1,24 @@
 ﻿using MinaBot.Models;
 using System;
+using Discord;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.EntityFrameworkCore.Update;
+using MinaBot.Base.ActionInterfaces;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
 using MinaBot.Controllers;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
-    class HuntingSendAction : APetActionCommand, IGetExperiance
+    class HuntingSendAction : APetActionCommand, IGetExperiance, IHelper
     {
+	    public string Title => "**m!pet hunt**";
+	    public string Description =>
+		    "Send your pet on a hunting for items.\nGives experience to your pet.\nLenght: 2:30h";
+	    public override string[] Options => new[] { "hunt" };
+	    
 	    public HuntingSendAction(TamagochiModel pet, CommandModel cmd)
 		    : base(pet, cmd, true) { }
-
-	    public override string[] Options => new[] { "hunting", "hunt" };
 
 	    public override MessageResult Invoke()
         {

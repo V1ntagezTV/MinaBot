@@ -2,18 +2,21 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Discord;
+using MinaBot.Base.ActionInterfaces;
 using MinaBot.BotTamagochi.ItemsPack;
 using MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
-    class WearAction : APetActionCommand
+    class WearAction : APetActionCommand, IHelper
     {
+        public string Title => "**m!pet wear <itemIndex>**";
+        public string Description => "Wear items on your pet.\nItem index from your invetory (1-10).";
+        public override string[] Options => new[] {"wear"};
         public WearAction(TamagochiModel pet, CommandModel cmd) 
             : base(pet, cmd, true) { }
-
-        public override string[] Options => new[] { "wear", "w" };
 
         public override MessageResult Invoke()
         {
