@@ -16,7 +16,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 
 	    public override MessageResult Invoke()
         {
-			var timeLength = new TimeSpan(0, 0, 20);
+			var timeLength = new TimeSpan(2, 30, 0);
 			TamagochiController.UpdateHuntingStatus(Pet);
 			if (Pet.CurrentStatus == EStatus.HUNT)
 			{

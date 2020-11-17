@@ -4,8 +4,14 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using MinaBot.BotTamagochi.ItemsPack;
+using MinaBot.Models;
+using MinaBot.TamagochiActions.Shop;
+using MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes;
+using MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes.ItemsJson;
 using static MinaBot.MessageResult;
 
 namespace MinaBot

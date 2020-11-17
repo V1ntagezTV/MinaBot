@@ -21,42 +21,51 @@ namespace MinaBot.TamagochiActions.Shop
     public static class ShopJsonController
     {
         static Random rnd = new Random();
- 
-        public static Item[] items
+        private static Item[] items;
+        public static Item[] GetItems()
         {
-            get
+            if (items == null)
             {
-                var itemsId = GetConfigValuesAsync().Result.RndItemsId;
-                return ItemMocks.AllItems.Data.Where(item => itemsId.Contains(item.Id)).ToArray();
+                UpdateOnNewDays();
+                var itemsId = GetConfigValuesAsync().RndItemsId;
+                items = ItemMocks.AllItems.Data.Where(item => itemsId.Contains(item.Id)).ToArray();
+                return items;
             }
+            return items;
         }
+        
         private const string PATH = @"C:\Users\Vintage\Desktop\C# Projects\MinaBot\MinaBot\TamagochiActions\Shop\shopconfig.json";
-        public static async Task<ShopModel> GetConfigValuesAsync()
+        public static ShopModel GetConfigValuesAsync()
         {
-            var json = await File.ReadAllTextAsync(PATH);
+            var json = File.ReadAllText(PATH);
             return JsonConvert.DeserializeObject<ShopModel>(json);
         }
         
         public static async Task UpdateOnNewDays()
         {
-            var lastShop = await GetConfigValuesAsync();
+            var lastShop = GetConfigValuesAsync();
             if (lastShop.UpdateDate + new TimeSpan(24, 0, 0) > DateTime.Now)
             {
                 return;
             }
-            lastShop.UpdateDate = DateTime.Now;
+            lastShop.UpdateDate += new TimeSpan(24, 0,0 );
             var items = await new ItemsJsonController().GetConfigValuesAsync();
             lastShop.RndItemsId = new int[6]
             {
-                GetRandomItem(items.Meals.Where(it => it.Rarity >= ERarity.Rare)).Id,
-                GetRandomItem(items.Liquids.Where(it => it.Rarity >= ERarity.Rare)).Id,
-                GetRandomItem(items.Hats.Where(it => it.Rarity >= ERarity.Rare)).Id,
-                GetRandomItem(items.Jackets.Where(it => it.Rarity >= ERarity.Rare)).Id,
-                GetRandomItem(items.Pants.Where(it => it.Rarity >= ERarity.Rare)).Id,
-                GetRandomItem(items.Boots.Where(it => it.Rarity >= ERarity.Rare)).Id
+                GetRandomItem(GetOnlyCommonAndRare(items.Meals)).Id,
+                GetRandomItem(GetOnlyCommonAndRare(items.Liquids)).Id,
+                GetRandomItem(GetOnlyCommonAndRare(items.Hats)).Id,
+                GetRandomItem(GetOnlyCommonAndRare(items.Jackets)).Id,
+                GetRandomItem(GetOnlyCommonAndRare(items.Pants)).Id,
+                GetRandomItem(GetOnlyCommonAndRare(items.Boots)).Id
             };
             var newData = JsonConvert.SerializeObject(lastShop, Formatting.Indented);
             await File.WriteAllTextAsync(PATH, newData);
+        }
+
+        private static IEnumerable<T> GetOnlyCommonAndRare<T>(this IEnumerable<T> items) where T: Item
+        {
+            return items.Where(it => it.Rarity >= ERarity.Rare);
         }
 
         private static T GetRandomItem<T>(IEnumerable<T> items)
