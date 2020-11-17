@@ -20,7 +20,7 @@ namespace MinaBot.Controllers
 	    {
 		    return new EmbedFieldBuilder()
 		    {
-			    Name = ":cat: Tamagochi",
+			    Name = "<a:gifKotRoll:618924584703361035> Tamagochi",
 			    Value = ":star: *m!pet <command> [arguments]*\n" +
 			            string.Join(" | ", _GetAllActions()
 					    .Select(a => "`"+string.Join(" / ",a.Options)+"`")),
