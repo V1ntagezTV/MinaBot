@@ -14,18 +14,6 @@ namespace MinaBot.DefaultActions
 {
     public class DefaultActionsController : IController
     {
-        public EmbedFieldBuilder GetInfoController()
-        {
-            return new EmbedFieldBuilder()
-            {
-                Name = ":gear: General",
-                Value = ":star: *m!<command> [arguments]*\n"
-                        + string.Join(" | ", _GetAllActions()
-                            .Select(a => "`"+string.Join(" / ",a.Options)+"`")),
-                IsInline = true
-            };
-        }
-
         public CommandModel Command { get; }
         public AActionCommand[] Actions { get; set; }
         public DefaultActionsController(CommandModel cmd)
@@ -35,6 +23,18 @@ namespace MinaBot.DefaultActions
         
         public DefaultActionsController() {}
 
+        public EmbedFieldBuilder GetInfoController()
+        {
+            return new EmbedFieldBuilder()
+            {
+                Name = ":gear: General",
+                Value = ":star: *m!<command> [arguments]*\n"
+                        + string.Join(" | ", _GetAllActions()
+                            .Select(a => "`" + string.Join(" / ", a.Options) + "`")),
+                IsInline = true
+            };
+        }
+
         public AActionCommand[] _GetAllActions()
         {
             return new AActionCommand[]
@@ -43,6 +43,7 @@ namespace MinaBot.DefaultActions
                 new RoleColorChange(Command),
                 new AvatarViewAction(Command),
                 new QuoteViewAction(Command),
+                new GetQuoteListAction(Command),
                 new CreateQuoteAction(Command),
                 new DeleteQuoteAction(Command),
                 new AddQuestionAction(Command),

@@ -26,7 +26,7 @@ namespace MinaBot.DefaultActions.Views
             var footer = new EmbedFooterBuilder() { IconUrl = author.GetAvatarUrl(), Text = $"created by {author}" };
             var embed = new EmbedBuilder()
             {
-                Title = $"**{_quote.Prefix}**",
+                Title = $":spaghetti: **{_quote.Prefix}**",
                 Color = new Color((uint)Convert.ToInt32("f47e17", 16)),
                 Footer = footer
             };
@@ -37,7 +37,7 @@ namespace MinaBot.DefaultActions.Views
             }
             else
             {
-                embed.Description = _quote.Text;
+                embed.Description = _quote.Text; 
             }
             return embed.Build();
         }
