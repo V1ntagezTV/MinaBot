@@ -21,7 +21,7 @@ namespace MinaBot
         public static DiscordSocketClient client;
         private CommandService commands;
         private IServiceProvider services;
-        private const string TOKEN = @"";
+        private const string TOKEN = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XLLpfA.HYYGCSOcEbwjfSdmXZC5OUCTqQE";
         private const string BOT_PREFIX = "m!";
         public static void Main(string[] args)
         {
