@@ -11,6 +11,7 @@ namespace MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes.ItemsJson
     public class ItemsJsonController
     {
         private const string Path = @"C:\Users\Vintage\Desktop\C# Projects\MinaBot\MinaBot\TamagochiActions\Items\ItemsJson\ItemsConfig.json";
+        private string directoryFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
         public async Task<ItemsJsonModel> GetConfigValuesAsync()
         {
             var json = await File.ReadAllTextAsync(Path);

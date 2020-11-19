@@ -22,7 +22,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             {
                 Title = "SecretShop! :convenience_store:",
                 Description = ":shopping_cart: Buy items with `m!pet buy {itemIndex}`\n" +
-                              $"**Update time:** {ShopJsonController.GetConfigValuesAsync().UpdateDate.ToShortTimeString()}",
+                              $"**Update time:** {ShopJsonController.GetConfigValues().UpdateDate.ToShortTimeString()}",
                 Color = Color.Orange
             };
             var embedFields = _GetShopFields(ShopJsonController.GetItems());
