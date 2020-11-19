@@ -21,29 +21,37 @@ namespace MinaBot.TamagochiActions.Shop
     public static class ShopJsonController
     {
         static Random rnd = new Random();
-        private static Item[] items;
+        private static Item[] _itemsCached;
+        private static ShopModel _shopModelCache;
+        private const string PATH = @"C:\Users\Vintage\Desktop\C# Projects\MinaBot\MinaBot\TamagochiActions\Shop\shopconfig.json";
+        
         public static Item[] GetItems()
         {
-            if (items == null)
+            if (_itemsCached == null)
             {
                 UpdateOnNewDays();
-                var itemsId = GetConfigValuesAsync().RndItemsId;
-                items = ItemMocks.AllItems.Data.Where(item => itemsId.Contains(item.Id)).ToArray();
-                return items;
+                var itemsId = GetConfigValues().RndItemsId;
+                _itemsCached = ItemMocks.AllItems.Data.Where(item => itemsId.Contains(item.Id)).ToArray();
+                return _itemsCached;
             }
-            return items;
+            return _itemsCached;
         }
         
-        private const string PATH = @"C:\Users\Vintage\Desktop\C# Projects\MinaBot\MinaBot\TamagochiActions\Shop\shopconfig.json";
-        public static ShopModel GetConfigValuesAsync()
+        public static ShopModel GetConfigValues()
         {
+            if (_shopModelCache != null)
+            {
+                return _shopModelCache;
+            }
             var json = File.ReadAllText(PATH);
-            return JsonConvert.DeserializeObject<ShopModel>(json);
+            var shopModel = JsonConvert.DeserializeObject<ShopModel>(json);
+            _shopModelCache = shopModel;
+            return shopModel;
         }
         
         public static async Task UpdateOnNewDays()
         {
-            var lastShop = GetConfigValuesAsync();
+            var lastShop = GetConfigValues();
             if (lastShop.UpdateDate + new TimeSpan(24, 0, 0) > DateTime.Now)
             {
                 return;
@@ -59,6 +67,7 @@ namespace MinaBot.TamagochiActions.Shop
                 GetRandomItem(GetOnlyCommonAndRare(items.Pants)).Id,
                 GetRandomItem(GetOnlyCommonAndRare(items.Boots)).Id
             };
+            _shopModelCache = lastShop;
             var newData = JsonConvert.SerializeObject(lastShop, Formatting.Indented);
             await File.WriteAllTextAsync(PATH, newData);
         }
