@@ -8,25 +8,26 @@ using Newtonsoft.Json;
 
 namespace MinaBot.TamagochiActions.Tamagochi.ItemsPack.ItemTypes.ItemsJson
 {
-    public class ItemsJsonController
+    public static class ItemsJsonController
     {
-        private const string Path = @"C:\Users\Vintage\Desktop\C# Projects\MinaBot\MinaBot\TamagochiActions\Items\ItemsJson\ItemsConfig.json";
-        private string directoryFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-        public async Task<ItemsJsonModel> GetConfigValuesAsync()
+        private const string relativePath = @"\TamagochiActions\Items\ItemsJson\ItemsConfig.json";
+        private static string directoryFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+        private static string fullPath = directoryFolder + relativePath;
+        public static async Task<ItemsJsonModel> GetConfigValuesAsync()
         {
-            var json = await File.ReadAllTextAsync(Path);
+            var json = await File.ReadAllTextAsync(fullPath);
             return JsonConvert.DeserializeObject<ItemsJsonModel>(json);
         }
 
-        public async Task SaveConfigValueAsync(ItemsJsonModel items)
+        public static async Task SaveConfigValueAsync(ItemsJsonModel items)
         {
             var newData = JsonConvert.SerializeObject(items, Formatting.Indented);
-            await File.WriteAllTextAsync(Path, newData);
+            await File.WriteAllTextAsync(fullPath, newData);
         }
 
-        public async Task AddItem(Item item)
+        public static async Task AddItem(Item item)
         {
-            var itemsData = await this.GetConfigValuesAsync();
+            var itemsData = await GetConfigValuesAsync();
             itemsData.IdCount++;
             item.Id = itemsData.IdCount;
             if (item is Boots boots) { itemsData.Boots.Add(boots); }

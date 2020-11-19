@@ -30,7 +30,7 @@ namespace MinaBot.BotTamagochi.ItemsPack
 
         private static ItemCollection<Item> ToCollection()
         {
-            var jsonItems = Task.Run(() => new ItemsJsonController().GetConfigValuesAsync()).Result;
+            var jsonItems = ItemsJsonController.GetConfigValuesAsync().Result;
             var result = new List<Item>();
             result.Add(DefaultItem);
             result.AddRange(jsonItems.Boots);

@@ -23,8 +23,9 @@ namespace MinaBot.TamagochiActions.Shop
         static Random rnd = new Random();
         private static Item[] _itemsCached;
         private static ShopModel _shopModelCache;
-        private const string PATH = @"C:\Users\Vintage\Desktop\C# Projects\MinaBot\MinaBot\TamagochiActions\Shop\shopconfig.json";
-        
+        private const string relativePath = @"\TamagochiActions\Shop\shopconfig.json";
+        private static string directoryFolder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+        private static string fullPath = directoryFolder + relativePath;
         public static Item[] GetItems()
         {
             if (_itemsCached == null)
@@ -43,7 +44,7 @@ namespace MinaBot.TamagochiActions.Shop
             {
                 return _shopModelCache;
             }
-            var json = File.ReadAllText(PATH);
+            var json = File.ReadAllText(fullPath);
             var shopModel = JsonConvert.DeserializeObject<ShopModel>(json);
             _shopModelCache = shopModel;
             return shopModel;
@@ -57,7 +58,7 @@ namespace MinaBot.TamagochiActions.Shop
                 return;
             }
             lastShop.UpdateDate += new TimeSpan(24, 0,0 );
-            var items = await new ItemsJsonController().GetConfigValuesAsync();
+            var items = await ItemsJsonController.GetConfigValuesAsync();
             lastShop.RndItemsId = new int[6]
             {
                 GetRandomItem(GetOnlyCommonAndRare(items.Meals)).Id,
@@ -69,7 +70,7 @@ namespace MinaBot.TamagochiActions.Shop
             };
             _shopModelCache = lastShop;
             var newData = JsonConvert.SerializeObject(lastShop, Formatting.Indented);
-            await File.WriteAllTextAsync(PATH, newData);
+            await File.WriteAllTextAsync(fullPath, newData);
         }
 
         private static IEnumerable<T> GetOnlyCommonAndRare<T>(this IEnumerable<T> items) where T: Item
