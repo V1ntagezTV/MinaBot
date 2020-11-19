@@ -49,6 +49,7 @@ namespace MinaBot.Controllers
 				new ChangeColorAction(Pet, Command),
 				new ClothesViewAction(Pet, Command),
 				new EatAction(Pet, Command),
+				new BuyAction(Pet,Command), 
 				new HuntingSendAction(Pet, Command),
 				new InventoryViewAction(Pet, Command),
 				new ChangeNameAction(Pet, Command),
