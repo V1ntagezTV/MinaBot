@@ -96,7 +96,7 @@ namespace MinaBot.Models
         {
             if (itemCollectionStringWithID == "") 
             {
-                return "Пусто!";
+                return "Empty...";
             }
             return GetItems().ToString();
         }

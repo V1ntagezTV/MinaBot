@@ -10,7 +10,7 @@ namespace MinaBot.Main
 {
     public interface IController
     {
-        public AActionCommand[] _GetAllActions();
+        public AActionCommand[] GetAllActions();
         public EmbedFieldBuilder GetInfoController();
         public CommandModel Command { get; }
         public AActionCommand[] Actions { get; }

@@ -16,7 +16,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
                 if (value <= 0)
                 {
                     score = 0;
-                } 
+                }
                 else if (value >= 100)
                 {
                     score = 100;
@@ -32,7 +32,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
             this.Score = 100;
             LastConsume = DateTime.Now;
         }
-        public override double MinusEveryMinute => 0.5;
+        public override double MinusEveryMinute => 0.1;
         public override DateTime LastConsume { get; set; }
     }
 }

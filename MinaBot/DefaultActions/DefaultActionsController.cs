@@ -27,15 +27,15 @@ namespace MinaBot.DefaultActions
         {
             return new EmbedFieldBuilder()
             {
-                Name = ":gear: General",
+                Name = "<:global:781833312742014976> General",
                 Value = ":star: *m!<command> [arguments]*\n"
-                        + string.Join(" | ", _GetAllActions()
+                        + string.Join(" | ", GetAllActions()
                             .Select(a => "`" + string.Join(" / ", a.Options) + "`")),
                 IsInline = true
             };
         }
 
-        public AActionCommand[] _GetAllActions()
+        public AActionCommand[] GetAllActions()
         {
             return new AActionCommand[]
             {
@@ -55,7 +55,7 @@ namespace MinaBot.DefaultActions
 
         public MessageResult GetResult()
         {
-            Actions = _GetAllActions();
+            Actions = GetAllActions();
             for (int ind = 0; ind < Actions.Length; ind++)
             {
                 if (Actions[ind].Options.Contains(Command.GetPrefix))
