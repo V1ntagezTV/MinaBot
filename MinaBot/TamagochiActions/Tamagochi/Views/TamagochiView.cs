@@ -1,4 +1,5 @@
 ﻿using Discord;
+using MinaBot.Base;
 using MinaBot.BotTamagochi.ItemsPack;
 using MinaBot.Controllers;
 using MinaBot.Main;
@@ -33,26 +34,26 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**Info:**",
-                Value = $"<a:coins:781827813715869696> `{pet.Money}`\n" +
-                        $"<:happines:781836925492264960> `{pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})`\n" +
+                Value = $"{Icons.Coins} `{pet.Money}`\n" +
+                        $"{Icons.Level} `{pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})`\n" +
                         $"LiveTime: {Math.Round(petToDeath, 2)} min."
             });
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**Stats:**",
-                Value = $":heart:  **Health**: `{ pet.Health.Score }`\n" +
-                        $":meat_on_bone:  **Hungry**: `{ pet.Hungry.Score }`\n" +
-                        $":sweat_drops:  **Thirsty**: `{ pet.Thirsty.Score }`\n" +
-                        $":partying_face:   **Happines**: `{ pet.Happiness.Score }`",
+                Value = $":heart:  Health: `{ pet.Health.Score }`\n" +
+                        $":meat_on_bone:  Hungry: `{ pet.Hungry.Score }`\n" +
+                        $":sweat_drops:  Thirsty: `{ pet.Thirsty.Score }`\n" +
+                        $":partying_face:   Happines: `{ pet.Happiness.Score }`",
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**Clothes:**",
-                Value = $"**Hat**: { pet.Hat.Name }\n" +
-                        $"**Jacket**: { pet.Jacket.Name }\n" +
-                        $"**Pants**: { pet.Pants.Name }\n" +
-                        $"**Boots**: { pet.Boots.Name }",
+                Value = $"Hat: { pet.Hat.Name }\n" +
+                        $"Jacket: { pet.Jacket.Name }\n" +
+                        $"Pants: { pet.Pants.Name }\n" +
+                        $"Boots: { pet.Boots.Name }",
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()

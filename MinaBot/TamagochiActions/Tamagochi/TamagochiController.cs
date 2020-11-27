@@ -106,11 +106,7 @@ namespace MinaBot.Controllers
 				   Task.Run(() => new LevelUpAction(Pet, Command).SendResultInChannel());
 				}
 			}
-			if (action.NeedToSaveInData)
-			{
-				Console.Write("Saving!");
-				Context.SaveChanges();
-			}
+			Context.SaveChanges();
 			return result;
 		}
 

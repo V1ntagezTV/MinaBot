@@ -35,7 +35,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
                 }
             }
         }
-        public override double MinusEveryMinute => 0.15;
+        public override double MinusEveryMinute => 0.05;
         public override DateTime LastConsume { get; set; }
 
     }

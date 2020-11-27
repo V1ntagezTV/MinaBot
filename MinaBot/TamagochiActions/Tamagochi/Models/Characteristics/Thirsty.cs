@@ -32,7 +32,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
             this.Score = 100;
             LastConsume = DateTime.Now;
         }
-        public override double MinusEveryMinute => 0.1;
+        public override double MinusEveryMinute => 0.065;
         public override DateTime LastConsume { get; set; }
     }
 }

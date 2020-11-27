@@ -26,7 +26,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
             Pet = context.GetPetOrDefault(Command.GetMessage.Author.Id);
             if (Pet != null)
             {
-                context.Data.Remove(Pet);
+                context.Remove(Pet);
                 context.SaveChanges();
                 return new BooleanView(true);
             }
