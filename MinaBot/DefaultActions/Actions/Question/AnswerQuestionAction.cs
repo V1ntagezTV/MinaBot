@@ -6,6 +6,7 @@ using MinaBot.Models;
 using System;
 using System.Threading.Tasks;
 using MinaBot.Base.ActionInterfaces;
+using MinaBot.Entity;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.DefaultActions.Actions.Question
@@ -20,16 +21,15 @@ namespace MinaBot.DefaultActions.Actions.Question
 
         public override MessageResult Invoke()
         {
-            using var data = new DefaultCommandContext();
+            using var data = new DataContext();
             var question = data.GetQuestionOrDefault(Convert.ToInt32(Command.GetOptions));
-
             if (question == null)
             {
                 return new ErrorView("Error question!");
             }
             var channel = Program.client.GetChannel((ulong)question.ChannelId);
-            var author = Program.client.GetUser((ulong)question.AuthorId);
-            if (channel is ITextChannel tChannel)
+            var author = Program.client.GetUser(question.Author.DiscordId);
+            if (channel is ITextChannel tChannel)    
             {
                 SendMessage(tChannel, question, string.Join(" ", Command.GetArgs));
                 data.Questions.Remove(question);
