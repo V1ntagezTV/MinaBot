@@ -22,7 +22,19 @@ namespace MinaBot.DefaultActions.Actions.Question
         public override MessageResult Invoke()
         {
             using var context = new DataContext();
-            var author = context.GetUserOrNew(Command.GetMessage.Author.Id);
+            var author = context.Users
+                .Include(u => u.Questions)
+                .FirstOrDefault(u => u.DiscordId == Command.GetMessage.Author.Id);
+            
+            if (author == null)
+            {
+                author = new User()
+                {
+                    DiscordId = Command.GetMessage.Author.Id,
+                    Questions = new List<QuestionModel>(),
+                };
+                context.Add(author);
+            }
             
             var question = new QuestionModel()
             {
