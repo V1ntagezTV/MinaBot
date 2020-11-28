@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Linq;
 using System.Threading.Tasks.Dataflow;
 using Discord;
+using Microsoft.EntityFrameworkCore;
 using MinaBot.Base.ActionInterfaces;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions;
 using MinaBot.DefaultActions.Models;
+using MinaBot.Entity;
 using MinaBot.Models;
 
 namespace MinaBot.DefaultActions.Actions.Question
@@ -17,16 +21,29 @@ namespace MinaBot.DefaultActions.Actions.Question
 
         public override MessageResult Invoke()
         {
-            using var data = new DefaultCommandContext();
+            using var context = new DataContext();
+            var author = context.Users
+                .Include(u => u.Questions)
+                .FirstOrDefault(u => u.DiscordId == Command.GetMessage.Author.Id);
+            
+            if (author == null)
+            {
+                author = new User()
+                {
+                    DiscordId = Command.GetMessage.Author.Id,
+                    Questions = new List<QuestionModel>(),
+                };
+                context.Add(author);
+            }
+            
             var question = new QuestionModel()
             {
-                AuthorId = (long)Command.GetMessage.Author.Id,
-                Content = String.Join(" ", Command.GetMessage.Content.Split()[1..]),
+                Author = author,
+                Content = string.Join(" ", Command.GetMessage.Content.Split()[1..]),
                 ChannelId = (long)Command.GetMessage.Channel.Id
             };
-            Console.WriteLine(question.ChannelId);
-            data.Questions.Add(question);
-            data.SaveChanges();
+            author.Questions.Add(question);
+            context.SaveChanges();
             return new MessageResult.BooleanView(true);
         }
 
