@@ -22,7 +22,7 @@ namespace MinaBot.DefaultActions.Views
 
         public MessageResult GetView(CommandModel cmdModel)
         {
-            return new EmbedView(GetEmbed(Program.client.GetUser((ulong) _question.AuthorId)));
+            return new EmbedView(GetEmbed(Program.client.GetUser((ulong) _question.Author.DiscordId)));
         }
 
         public Embed GetEmbed(SocketUser author)
