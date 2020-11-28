@@ -30,7 +30,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
             
             if (user.Pet != null)
             {
-                context.Pets.Remove(user.Pet);
+                context.Pets.Remove(Pet);
                 context.SaveChanges();
                 return new BooleanView(true);
             }
