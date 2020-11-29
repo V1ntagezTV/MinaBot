@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MinaBot.Entity;
 
 namespace MinaBot.DefaultActions.Actions.Quote
 {
@@ -21,7 +22,7 @@ namespace MinaBot.DefaultActions.Actions.Quote
 
         public override MessageResult Invoke()
         {
-            using var data = new DefaultCommandContext();
+            using var data = new DataContext();
             var yourQuotes = data.Quotes.AsQueryable().Where(q => (ulong)q.AuthorId == Command.GetMessage.Author.Id).ToArray();
             return new PastaListView(yourQuotes).GetView(Command);
         }

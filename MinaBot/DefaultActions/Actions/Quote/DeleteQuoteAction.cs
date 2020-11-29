@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using Discord;
 using MinaBot.Base.ActionInterfaces;
+using MinaBot.Entity;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.DefaultActions.Actions.Quote
@@ -20,7 +21,7 @@ namespace MinaBot.DefaultActions.Actions.Quote
 
         public override MessageResult Invoke()
         {
-            using var data = new DefaultCommandContext();
+            using var data = new DataContext();
             var pasta = data.GetPastaOrDefault(Command.GetOptions);
             data.Quotes.Remove(pasta);
             data.SaveChanges();
