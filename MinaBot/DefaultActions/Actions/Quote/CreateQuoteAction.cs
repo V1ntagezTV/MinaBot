@@ -3,11 +3,9 @@ using MinaBot.DefaultActions.Models;
 using MinaBot.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mime;
 using System.Text;
 using Discord;
-using Microsoft.EntityFrameworkCore;
 using MinaBot.Base.ActionInterfaces;
 using MinaBot.Entity;
 using static MinaBot.MessageResult;
@@ -25,15 +23,14 @@ namespace MinaBot.DefaultActions.Actions.Quote
         
         public override MessageResult Invoke()
         {
-            if (!(Command.GetMessage.Channel is ITextChannel)) { return new BooleanView(false); }
-            
             using var data = new DataContext();
-            var author = data.GetUserOrNew(Command.GetMessage.Author.Id);
+            if (!(Command.GetMessage.Channel is ITextChannel)) { return new BooleanView(false); }
+
             var text = string.Join(' ', Command.GetArgs);
             var pasta = new QuoteModel()
             {
                 Prefix = Command.GetOptions,
-                Author = author,
+                AuthorId = (long)Command.GetMessage.Author.Id,
             };
             var lastWord = Command.GetArgs[Command.GetArgs.Length - 1];
             if (lastWord.StartsWith("https://") || lastWord.StartsWith("http://"))

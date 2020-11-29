@@ -63,9 +63,7 @@ namespace MinaBot.Controllers
 		public MessageResult GetResult()
 		{
 			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
-			Actions = _GetAllActions();
-			var calledAction = GetActionOrDefault(Command.GetOptions);
-
+			
 			if (Command.GetOptions == "create")
 			{
 				return new CreateAction(Pet, Command, Context).Invoke();
@@ -84,6 +82,8 @@ namespace MinaBot.Controllers
 				return new ErrorView($"I'm sorry, but your pet: {Pet.ID}{Pet.Name} is dead.\n" +
 					$" You need to recreate your tamagochi.");
             }
+			Actions = _GetAllActions();
+			var calledAction = GetActionOrDefault(Command.GetOptions);
 			return InvokeAction(calledAction);
 		}
 
