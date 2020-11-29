@@ -3,7 +3,7 @@
     public class QuoteModel
     {
         public int Id { get; set; }
-        public UserModel Author { get; set; }
+        public User Author { get; set; }
         public string Prefix { get; set; }
         public string Text { get; set; }
         public string Desc { get; set; }
