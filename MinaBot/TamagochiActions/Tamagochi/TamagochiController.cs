@@ -16,18 +16,6 @@ namespace MinaBot.Controllers
 {
     class TamagochiController : IController
     {
-	    public EmbedFieldBuilder GetInfoController()
-	    {
-		    return new EmbedFieldBuilder()
-		    {
-			    Name = "<a:gifKotRoll:618924584703361035> Tamagochi",
-			    Value = ":star: *m!pet <command> [arguments]*\n" +
-			            string.Join(" | ", _GetAllActions()
-					    .Select(a => "`"+string.Join(" / ",a.Options)+"`")),
-			    IsInline = true
-		    };
-	    }
-
 	    public CommandModel Command { get; }
 		public AActionCommand[] Actions { get; set; }
 		public TamagochiModel Pet;
@@ -38,11 +26,8 @@ namespace MinaBot.Controllers
 			Command = commandModel;
 			Context = context;
 		}
-		public TamagochiController()
-		{
-			
-		}
-		public AActionCommand[] _GetAllActions()
+
+		public AActionCommand[] GetAllActions()
         {
 			return new APetActionCommand[]
 			{
@@ -63,10 +48,20 @@ namespace MinaBot.Controllers
 			};
         }
 
+		public EmbedFieldBuilder GetInfoController()
+		{
+			return new EmbedFieldBuilder()
+			{
+				Name = "<a:gifKotRoll:618924584703361035> Tamagochi",
+				Value = ":star: *m!pet <command> [arguments]*\n" +
+						string.Join(" | ", GetAllActions()
+						.Select(a => "`" + string.Join(" / ", a.Options) + "`")),
+				IsInline = true
+			};
+		}
+
 		public MessageResult GetResult()
 		{
-			Actions = _GetAllActions();
-			var calledAction = GetActionOrDefault(Command.GetOptions);
 			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
 			
 			if (Command.GetOptions == "create")
@@ -87,6 +82,8 @@ namespace MinaBot.Controllers
 				return new ErrorView($"I'm sorry, but your pet: {Pet.ID}{Pet.Name} is dead.\n" +
 					$" You need to recreate your tamagochi.");
             }
+			Actions = _GetAllActions();
+			var calledAction = GetActionOrDefault(Command.GetOptions);
 			return InvokeAction(calledAction);
 		}
 
