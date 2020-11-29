@@ -25,7 +25,6 @@ namespace MinaBot.DefaultActions.Actions.Quote
         
         public override MessageResult Invoke()
         {
-            using var data = new DataContext();
             if (!(Command.GetMessage.Channel is ITextChannel)) { return new BooleanView(false); }
             
             using var data = new DataContext();
