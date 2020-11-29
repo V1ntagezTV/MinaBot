@@ -61,6 +61,8 @@ namespace MinaBot.Controllers
 
 		public MessageResult GetResult()
 		{
+			Actions = _GetAllActions();
+			var calledAction = GetActionOrDefault(Command.GetOptions);
 			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
 			Actions = _GetAllActions();
 			var calledAction = GetActionOrDefault(Command.GetOptions);
