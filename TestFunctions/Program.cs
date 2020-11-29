@@ -6,14 +6,15 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+using TestFunctions.Modules;
 
 namespace MinaBot
 {
     class Program
     {
-        private DiscordSocketClient client;
-        private CommandService commands;
-        private string token = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XwMDMg.BkEtu1TJoXxIRcgGLBEA8YJ9HZo";
+        private DiscordSocketClient _client;
+        private CommandService _commands;
+        private const string Token = @"";
 
         public static void Main(string[] args)
         {
@@ -22,13 +23,11 @@ namespace MinaBot
 
         public async Task MainAsync()
         {
-            client = new DiscordSocketClient();
-            client.Log += Logging;
-            client.MessageReceived += MessageReceivedFunction;
-            commands = new CommandService();
-            await commands.AddModulesAsync(assembly: Assembly.GetEntryAssembly(), services: null);
-            await client.LoginAsync(TokenType.Bot, token);
-            await client.StartAsync();
+            _client = new DiscordSocketClient();
+            _client.Log += Logging;
+            _client.MessageReceived += MessageReceivedFunction;
+            await _client.LoginAsync(TokenType.Bot, Token);
+            await _client.StartAsync();
             await Task.Delay(-1);
         }
 
@@ -36,19 +35,13 @@ namespace MinaBot
         {
             if (!(message is SocketUserMessage msg)) return;
             if (msg.Author.IsBot) return;
-
-            int commandArg = 0;
-            if (msg.HasStringPrefix("m!", ref commandArg))
+            
+            if (msg.Content.StartsWith("m!looser"))
             {
-                var context = new SocketCommandContext(client, msg);
-                Console.WriteLine("true");
-                await commands.ExecuteAsync(
-                        context: context,
-                        argPos: commandArg,
-                        services: null);
+                var callback = new GetReactionCallBack(_client, TimeSpan.FromSeconds(15), msg);
+                callback.GetFirstReactionAsync();
             }
         }
-
         private Task Logging(LogMessage log)
         {
             Console.WriteLine(log.Message);

@@ -23,7 +23,7 @@ namespace MinaBot.DefaultActions.Views
 
         public Embed GetEmbed()
         {
-            var author = Program.client.GetUser((ulong) _question.AuthorId);
+            var author = Program.client.GetUser((ulong) _question.Author.DiscordId);
             var footer = new EmbedFooterBuilder() {IconUrl = author.GetAvatarUrl(), Text = $"asked by {author.Username}"};
             var builder = new EmbedBuilder()
             {

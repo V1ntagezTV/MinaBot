@@ -7,6 +7,7 @@ using System.Net.Mime;
 using System.Text;
 using Discord;
 using MinaBot.Base.ActionInterfaces;
+using MinaBot.Entity;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.DefaultActions.Actions.Quote
@@ -22,7 +23,7 @@ namespace MinaBot.DefaultActions.Actions.Quote
         
         public override MessageResult Invoke()
         {
-            using var data = new DefaultCommandContext();
+            using var data = new DataContext();
             if (!(Command.GetMessage.Channel is ITextChannel)) { return new BooleanView(false); }
 
             var text = string.Join(' ', Command.GetArgs);

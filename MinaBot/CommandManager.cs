@@ -4,8 +4,8 @@ using MinaBot.Models;
 using System;
 using System.Net.Sockets;
 using Discord.WebSocket;
-using MinaBot.BotTamagochi.DataTamagochi;
 using MinaBot.DefaultActions;
+using MinaBot.Entity;
 using MinaBot.HelpActions;
 
 namespace MinaBot
@@ -37,7 +37,7 @@ namespace MinaBot
             switch (commandModel.GetPrefix)
             {
                 case "pet":
-                    using (var context = new TamagochiContext())
+                    using (var context = new DataContext())
                     {
                         return new TamagochiController(commandModel, context).GetResult();
                     }
