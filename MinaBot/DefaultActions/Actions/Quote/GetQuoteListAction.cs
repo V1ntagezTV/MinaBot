@@ -23,11 +23,7 @@ namespace MinaBot.DefaultActions.Actions.Quote
         public override MessageResult Invoke()
         {
             using var data = new DataContext();
-            var yourQuotes = data.Quotes
-                .AsQueryable()
-                .Where(q => q.Author.DiscordId == Command.GetMessage.Author.Id)
-                .ToArray();
-            
+            var yourQuotes = data.Quotes.AsQueryable().Where(q => (ulong)q.AuthorId == Command.GetMessage.Author.Id).ToArray();
             return new PastaListView(yourQuotes).GetView(Command);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions;
+using MinaBot.BotTamagochi.MVC.Tamagochi.View;
 using MinaBot.Main;
 using MinaBot.Models;
 using System;
@@ -15,6 +16,18 @@ namespace MinaBot.Controllers
 {
     class TamagochiController : IController
     {
+	    public EmbedFieldBuilder GetInfoController()
+	    {
+		    return new EmbedFieldBuilder()
+		    {
+			    Name = "<a:gifKotRoll:618924584703361035> Tamagochi",
+			    Value = ":star: *m!pet <command> [arguments]*\n" +
+			            string.Join(" | ", _GetAllActions()
+					    .Select(a => "`"+string.Join(" / ",a.Options)+"`")),
+			    IsInline = true
+		    };
+	    }
+
 	    public CommandModel Command { get; }
 		public AActionCommand[] Actions { get; set; }
 		public TamagochiModel Pet;
@@ -25,8 +38,11 @@ namespace MinaBot.Controllers
 			Command = commandModel;
 			Context = context;
 		}
-
-		public AActionCommand[] GetAllActions()
+		public TamagochiController()
+		{
+			
+		}
+		public AActionCommand[] _GetAllActions()
         {
 			return new APetActionCommand[]
 			{
@@ -47,24 +63,12 @@ namespace MinaBot.Controllers
 			};
         }
 
-		public EmbedFieldBuilder GetInfoController()
-		{
-			return new EmbedFieldBuilder()
-			{
-				Name = "<a:gifKotRoll:618924584703361035> Tamagochi",
-				Value = ":star: *m!pet <command> [arguments]*\n" +
-						string.Join(" | ", GetAllActions()
-						.Select(a => "`" + string.Join(" / ", a.Options) + "`")),
-				IsInline = true
-			};
-		}
-
 		public MessageResult GetResult()
 		{
-			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
 			Actions = _GetAllActions();
 			var calledAction = GetActionOrDefault(Command.GetOptions);
-
+			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
+			
 			if (Command.GetOptions == "create")
 			{
 				return new CreateAction(Pet, Command, Context).Invoke();
