@@ -13,13 +13,15 @@ namespace MinaBot
     class Program
     {
         public static DiscordSocketClient client;
+        private CommandService commands;
+        private IServiceProvider services;
         private const string TOKEN = @"";
         private const string BOT_PREFIX = "m!";
         public static void Main(string[] args)
         {
             new Program().MainAsync().GetAwaiter().GetResult();
         }
-
+        
         public async Task MainAsync()
         {
             client = new DiscordSocketClient();
@@ -34,7 +36,8 @@ namespace MinaBot
         {
             if (!(message is SocketUserMessage msg)) return;
             if (msg.Author.IsBot) return;
-
+            
+            var context = new SocketCommandContext(client, msg);
             if (message.Content.ToLower().StartsWith(BOT_PREFIX))
             {
                 var manager = new CommandManager(message);
@@ -44,7 +47,9 @@ namespace MinaBot
                     EmbedView embView => message.Channel.SendMessageAsync(embed: embView.Data),
                     MessageView messView => message.Channel.SendMessageAsync(text: messView.Data),
                     ErrorView errorView => message.Channel.SendMessageAsync(embed: errorView.Exception),
-                    BooleanView boolView => boolView.Value ? message.AddReactionAsync(new Emoji("✅")) : message.AddReactionAsync(new Emoji("❌")),
+                    BooleanView boolView => boolView.Value ?
+                        message.AddReactionAsync(new Emoji("✅")) :
+                        message.AddReactionAsync(new Emoji("❌")),
                     _ => throw new NotImplementedException()
                 };
             }

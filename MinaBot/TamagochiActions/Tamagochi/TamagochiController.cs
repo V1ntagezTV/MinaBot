@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MinaBot.BotTamagochi.DataTamagochi;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions;
 using MinaBot.BotTamagochi.MVC.Tamagochi.View;
 using MinaBot.Main;
@@ -9,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Discord;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
+using MinaBot.Entity;
 using MinaBot.TamagochiActions.Tamagochi.Actions;
 using static MinaBot.MessageResult;
 
@@ -19,11 +19,9 @@ namespace MinaBot.Controllers
 	    public CommandModel Command { get; }
 		public AActionCommand[] Actions { get; set; }
 		public TamagochiModel Pet;
-		private TamagochiContext Context;
+		private DataContext Context;
 
-		public TamagochiController() { }
-
-		public TamagochiController(CommandModel commandModel, TamagochiContext context)
+		public TamagochiController(CommandModel commandModel, DataContext context)
 		{
 			Command = commandModel;
 			Context = context;
@@ -65,6 +63,7 @@ namespace MinaBot.Controllers
 		public MessageResult GetResult()
 		{
 			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
+			
 			if (Command.GetOptions == "create")
 			{
 				return new CreateAction(Pet, Command, Context).Invoke();
@@ -83,12 +82,8 @@ namespace MinaBot.Controllers
 				return new ErrorView($"I'm sorry, but your pet: {Pet.ID}{Pet.Name} is dead.\n" +
 					$" You need to recreate your tamagochi.");
             }
-			Actions = GetAllActions();
+			Actions = _GetAllActions();
 			var calledAction = GetActionOrDefault(Command.GetOptions);
-			if (calledAction == null)
-            {
-				return new EmptyView();
-            }
 			return InvokeAction(calledAction);
 		}
 
@@ -106,7 +101,11 @@ namespace MinaBot.Controllers
 				   Task.Run(() => new LevelUpAction(Pet, Command).SendResultInChannel());
 				}
 			}
-			Context.SaveChanges();
+			if (action.NeedToSaveInData)
+			{
+				Console.Write("Saving!");
+				Context.SaveChanges();
+			}
 			return result;
 		}
 

@@ -1,5 +1,4 @@
-﻿using MinaBot.BotTamagochi.DataTamagochi;
-using MinaBot.Models;
+﻿using MinaBot.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +6,9 @@ using System.Threading.Tasks;
 using Discord;
 using MinaBot.Base.ActionInterfaces;
 using MinaBot.BotTamagochi.Models;
+using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
+using MinaBot.Entity;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
@@ -18,10 +19,10 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
         public string Description => "Create new pet.\nYou can't have more pets then one.";
         public override string[] Options => new[] { "create" };
         
-        TamagochiContext context;
-        public CreateAction(TamagochiModel pet, CommandModel command, TamagochiContext context) : base(pet, command)
+        private DataContext _getContext;
+        public CreateAction(TamagochiModel pet, CommandModel command, DataContext context) : base(pet, command)
         {
-            this.context = context;
+            this._getContext = context;
         }
 
         public override MessageResult Invoke()
@@ -31,11 +32,11 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
                 return new ErrorView($"You already have Pet: { Pet.Name }.");
             }
             var name = Command.GetArgs == null || Command.GetArgs[0] == null ? "#Tamagochi" : Command.GetArgs[0];
-            context.Add(GetCreatedDefaultPet(Command.GetMessage.Author.Id, name));
-            context.SaveChanges();
+            _getContext.Add(GetPetWithDefaultValues(Command.GetMessage.Author.Id, name));
+            _getContext.SaveChanges();
             return new BooleanView(true);
         }
-        private TamagochiModel GetCreatedDefaultPet(ulong discordId, string name = "#Tamagochi")
+        private TamagochiModel GetPetWithDefaultValues(ulong discordId, string name = "#Tamagochi")
         {
             return new TamagochiModel()
             {
