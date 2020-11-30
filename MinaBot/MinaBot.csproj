@@ -31,4 +31,8 @@
     <None Remove="DefaultActions\CallActions\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entity\" />
+  </ItemGroup>
+
 </Project>
