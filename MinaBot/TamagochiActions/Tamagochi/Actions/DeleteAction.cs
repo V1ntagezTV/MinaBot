@@ -1,8 +1,10 @@
 ﻿using MinaBot.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Discord;
+using Microsoft.EntityFrameworkCore;
 using MinaBot.Base.ActionInterfaces;
 using MinaBot.Entity;
 using static MinaBot.MessageResult;
@@ -22,10 +24,13 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 
         public override MessageResult Invoke()
         {
-            Pet = context.GetPetOrDefault(Command.GetMessage.Author.Id);
-            if (Pet != null)
+            var user = context.Users
+                .Include(p => p.Pet)
+                .FirstOrDefault(u => u.DiscordId == Command.GetMessage.Author.Id);
+            
+            if (user.Pet != null)
             {
-                context.Pets.Remove(Pet);
+                context.Pets.Remove(user.Pet);
                 context.SaveChanges();
                 return new BooleanView(true);
             }
