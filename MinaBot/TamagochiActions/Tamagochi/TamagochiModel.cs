@@ -12,7 +12,7 @@ namespace MinaBot.Models
     public class TamagochiModel
     {
         public int ID { get; set; }
-        public int UserModelID { get; set; }
+        public int UserID { get; set; }
         public UserModel UserModel { get; set; }
         public string Name { get; set; }
         public string AvatarURL { get; set; }

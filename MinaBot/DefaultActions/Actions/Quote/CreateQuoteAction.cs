@@ -28,19 +28,7 @@ namespace MinaBot.DefaultActions.Actions.Quote
             if (!(Command.GetMessage.Channel is ITextChannel)) { return new BooleanView(false); }
             
             using var data = new DataContext();
-            var author = data.Users
-                .Include(u => u.Quotes)
-                .FirstOrDefault(u => u.DiscordId == Command.GetMessage.Author.Id);
-            
-            if (author == null)
-            {
-                author = new User()
-                {
-                    DiscordId = Command.GetMessage.Author.Id,
-                    Quotes = new List<QuoteModel>(),
-                };
-                data.Add(author);
-            }
+            var author = data.GetUserOrNew(Command.GetMessage.Author.Id);
             var text = string.Join(' ', Command.GetArgs);
             var pasta = new QuoteModel()
             {

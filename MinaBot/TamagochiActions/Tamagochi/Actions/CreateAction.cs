@@ -20,10 +20,10 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
         public string Description => "Create new pet.\nYou can't have more pets then one.";
         public override string[] Options => new[] { "create" };
         
-        private DataContext _getContext;
+        private DataContext _context;
         public CreateAction(TamagochiModel pet, CommandModel command, DataContext context) : base(pet, command)
         {
-            this._getContext = context;
+            this._context = context;
         }
 
         public override MessageResult Invoke()
@@ -32,16 +32,19 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
             {
                 return new ErrorView($"You already have Pet: { Pet.Name }.");
             }
+            
             var name = Command.GetArgs == null || Command.GetArgs[0] == null ? "#Tamagochi" : Command.GetArgs[0];
-            _getContext.Add(GetPetWithDefaultValues(Command.GetMessage.Author.Id, name));
-            _getContext.SaveChanges();
+            var user = _context.GetUserOrNew(Command.GetMessage.Author.Id);
+            var pet = GetPetWithDefaultValues(name);
+            user.Pet = pet;
+            _context.Add(pet);
+            _context.SaveChanges();
             return new BooleanView(true);
         }
-        private TamagochiModel GetPetWithDefaultValues(ulong discordId, string name = "#Tamagochi")
+        private TamagochiModel GetPetWithDefaultValues(string name = "#Tamagochi")
         {
             return new TamagochiModel()
             {
-                DiscordId = discordId,
                 Name = name,
                 Color = "0x89ED61",
                 Level = new LevelModel() { Level = 1, ExpToNextLevel = 100 },
