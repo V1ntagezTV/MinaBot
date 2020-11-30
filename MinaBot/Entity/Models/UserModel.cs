@@ -3,9 +3,10 @@ using MinaBot.Models;
 
 namespace MinaBot.DefaultActions.Models
 {
-    public class User
+    public class UserModel
     {
         public int Id { get; set; }
+        public int PetId { get; set; }
         public TamagochiModel Pet { get; set; }
         public ulong DiscordId { get; set; }
         public List<QuestionModel> Questions { get; set; }
