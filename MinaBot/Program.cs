@@ -1,10 +1,7 @@
 ﻿using Discord;
-using Discord.Addons.Interactive;
 using Discord.Commands;
 using Discord.WebSocket;
-using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using static MinaBot.MessageResult;
 
@@ -13,8 +10,6 @@ namespace MinaBot
     class Program
     {
         public static DiscordSocketClient client;
-        private CommandService commands;
-        private IServiceProvider services;
         private const string TOKEN = @"";
         private const string BOT_PREFIX = "m!";
         public static void Main(string[] args)
@@ -37,7 +32,6 @@ namespace MinaBot
             if (!(message is SocketUserMessage msg)) return;
             if (msg.Author.IsBot) return;
             
-            var context = new SocketCommandContext(client, msg);
             if (message.Content.ToLower().StartsWith(BOT_PREFIX))
             {
                 var manager = new CommandManager(message);
