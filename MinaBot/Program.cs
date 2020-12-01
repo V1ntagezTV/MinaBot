@@ -1,10 +1,7 @@
 ﻿using Discord;
-using Discord.Addons.Interactive;
 using Discord.Commands;
 using Discord.WebSocket;
-using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using static MinaBot.MessageResult;
 
@@ -19,7 +16,7 @@ namespace MinaBot
         {
             new Program().MainAsync().GetAwaiter().GetResult();
         }
-
+        
         public async Task MainAsync()
         {
             client = new DiscordSocketClient();
@@ -34,7 +31,7 @@ namespace MinaBot
         {
             if (!(message is SocketUserMessage msg)) return;
             if (msg.Author.IsBot) return;
-
+            
             if (message.Content.ToLower().StartsWith(BOT_PREFIX))
             {
                 var manager = new CommandManager(message);
@@ -44,7 +41,9 @@ namespace MinaBot
                     EmbedView embView => message.Channel.SendMessageAsync(embed: embView.Data),
                     MessageView messView => message.Channel.SendMessageAsync(text: messView.Data),
                     ErrorView errorView => message.Channel.SendMessageAsync(embed: errorView.Exception),
-                    BooleanView boolView => boolView.Value ? message.AddReactionAsync(new Emoji("✅")) : message.AddReactionAsync(new Emoji("❌")),
+                    BooleanView boolView => boolView.Value ?
+                        message.AddReactionAsync(new Emoji("✅")) :
+                        message.AddReactionAsync(new Emoji("❌")),
                     _ => throw new NotImplementedException()
                 };
             }

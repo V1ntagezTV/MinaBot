@@ -5,13 +5,15 @@ using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
 using MinaBot.Main;
 using System;
 using System.Linq;
+using MinaBot.DefaultActions.Models;
 
 namespace MinaBot.Models
 {
     public class TamagochiModel
     {
         public int ID { get; set; }
-        public ulong DiscordId { get; set; }
+        public int UserModelID { get; set; }
+        public UserModel UserModel { get; set; }
         public string Name { get; set; }
         public string AvatarURL { get; set; }
         public string Color { get; set; }

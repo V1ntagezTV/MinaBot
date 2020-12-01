@@ -1,13 +1,12 @@
 ﻿using MinaBot.BotTamagochi.ItemsPack;
-using MinaBot.Models;
 using System;
-using System.Collections.Generic;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi
 {
     public class Hunting
     {
         public int ID { get; set; }
+        public int TamagochiModelID { get; set; }
         public DateTime SavedSendTime { get; set; }
         public TimeSpan SendTimeLength { get; set; }
         public string WaitingItems { get; private set; } = "";

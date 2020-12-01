@@ -36,7 +36,7 @@ namespace MinaBot.HelpActions
             };
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = "**Links**",
+                Name = ":link: **Links**",
                 Value = "[`Invite bot to your server`](http://example.com)",
             });
             for (var ind = 0; ind < Controllers.Length; ind++)

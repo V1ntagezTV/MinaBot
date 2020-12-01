@@ -4,9 +4,12 @@ using MinaBot.DefaultActions.Views;
 using MinaBot.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Discord;
+using Microsoft.EntityFrameworkCore;
 using MinaBot.Base.ActionInterfaces;
+using MinaBot.Entity;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.DefaultActions.Actions
@@ -22,9 +25,11 @@ namespace MinaBot.DefaultActions.Actions
 
         public override MessageResult Invoke()
         {
-            using var data = new DefaultCommandContext();
-            var pasta = data.GetPastaOrDefault(Command.GetOptions);
-            return new PastView(pasta).GetView(Command);
+            using var data = new DataContext();
+            var pasta = data.Quotes
+                .Include(p => p.Author)
+                .FirstOrDefault(t => t.Prefix == Command.GetOptions);
+            return new PastView(pasta).GetView(Command);    
         }
     }
 }
