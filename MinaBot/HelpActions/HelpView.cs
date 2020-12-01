@@ -10,6 +10,8 @@ namespace MinaBot.HelpActions
 {
     public class HelpView : IView
     {
+        private const string InviteLink = @"https://discord.com/api/oauth2/authorize?client_id=566896476756639744&permissions=0&scope=bot";
+        private const string ServerLink = @"https://discord.gg/ghGMV6n";
         private IController[] Controllers;
         public HelpView(IController[] controllers)
         {
@@ -37,7 +39,8 @@ namespace MinaBot.HelpActions
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = ":link: **Links**",
-                Value = "[`Invite bot to your server`](http://example.com)",
+                Value = $"[`Bot invite`]({InviteLink})\n" +
+                        $"[`Server invite]({ServerLink})",
             });
             for (var ind = 0; ind < Controllers.Length; ind++)
             {
