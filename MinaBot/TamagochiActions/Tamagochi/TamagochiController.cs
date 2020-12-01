@@ -64,9 +64,6 @@ namespace MinaBot.Controllers
 			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
 			Actions = _GetAllActions();
 			var calledAction = GetActionOrDefault(Command.GetOptions);
-			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
-			Actions = _GetAllActions();
-			var calledAction = GetActionOrDefault(Command.GetOptions);
 
 			if (Command.GetOptions == "create")
 			{
