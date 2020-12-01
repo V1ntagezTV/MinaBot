@@ -1,7 +1,4 @@
-﻿using Discord;
-using System;
-
-namespace MinaBot.DefaultActions.Models
+﻿namespace MinaBot.DefaultActions.Models
 {
     public class QuoteModel
     {

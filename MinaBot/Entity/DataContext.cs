@@ -42,8 +42,8 @@ namespace MinaBot.Entity
                     Questions = new List<QuestionModel>(),
                     Quotes = new List<QuoteModel>()
                 };
+                this.Add(user);
             }
-            this.Add(user);
             return user;
         }
         
