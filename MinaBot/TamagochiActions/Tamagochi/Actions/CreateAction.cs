@@ -2,9 +2,7 @@
 using System;
 using MinaBot.Base.ActionInterfaces;
 using MinaBot.BotTamagochi.Models;
-using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
-using MinaBot.DefaultActions.Models;
 using MinaBot.Entity;
 using static MinaBot.MessageResult;
 
