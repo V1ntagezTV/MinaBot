@@ -8,7 +8,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
     public class InventoryViewAction : APetActionCommand, IHelper
     {
         public string Title => "**m!pet inventory**";
-        public string Description => "Delete your pet.\nUse it if your pet was dead or if you wanna restart.";
+        public string Description => "Shows your items information";
         public InventoryViewAction(TamagochiModel pet, CommandModel command)
             : base(pet, command) { }
 

@@ -18,7 +18,5 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces
         {
             return new TamagochiView(Pet).GetView(Command);
         }
-
-       
     }
 }

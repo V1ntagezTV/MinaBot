@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MinaBot.BotTamagochi.Models
 {
     public class LevelModel
     {
         public int ID { get; set; }
+        public int TamagochiModelID { get; set; }
         public int Level { get; set; }
         public int ExpToNextLevel { get; set; }
         public int currentExp { get; set; }
@@ -26,6 +24,5 @@ namespace MinaBot.BotTamagochi.Models
                 }
             }
         }
-
     }
 }

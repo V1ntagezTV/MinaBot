@@ -1,4 +1,5 @@
 ﻿using Discord;
+using MinaBot.Base;
 using MinaBot.BotTamagochi.ItemsPack;
 using MinaBot.Controllers;
 using MinaBot.Main;
@@ -32,37 +33,37 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             embed.Color = new Discord.Color((uint)Convert.ToInt32(pet.Color, 16));
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = "Статы",
-                Value = $":dollar: {pet.Money}\n" +
-                        $"Level: {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})\n" +
+                Name = "**Info:**",
+                Value = $"{Icons.Coins} `{pet.Money}`\n" +
+                        $"{Icons.Level} `{pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})`\n" +
                         $"LiveTime: {Math.Round(petToDeath, 2)} min."
             });
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = "**ХАРАКТЕРИСТИКА:**",
-                Value = $":heart:  **Здоровье**: { pet.Health.Score }\n" +
-                        $":meat_on_bone:  **Голод**: { pet.Hungry.Score }\n" +
-                        $":sweat_drops:  **Жажда**: { pet.Thirsty.Score }\n" +
-                        $":partying_face:   **Счастье**: { pet.Happiness.Score }",
+                Name = "**Stats:**",
+                Value = $":heart:  Health: `{ pet.Health.Score }`\n" +
+                        $":meat_on_bone:  Hungry: `{ pet.Hungry.Score }`\n" +
+                        $":sweat_drops:  Thirsty: `{ pet.Thirsty.Score }`\n" +
+                        $":partying_face:   Happines: `{ pet.Happiness.Score }`",
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = "**ОДЕЖДА:**",
-                Value = $"**Шляпа**: { pet.Hat.Name }\n" +
-                        $"**Куртка**: { pet.Jacket.Name }\n" +
-                        $"**Штаны**: { pet.Pants.Name }\n" +
-                        $"**Ботинки**: { pet.Boots.Name }",
+                Name = "**Clothes:**",
+                Value = $"Hat: { pet.Hat.Name }\n" +
+                        $"Jacket: { pet.Jacket.Name }\n" +
+                        $"Pants: { pet.Pants.Name }\n" +
+                        $"Boots: { pet.Boots.Name }",
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
             {
-                Name = $"**ИНВЕНТАРЬ ({ pet.Backpack.ItemCount }/{ Backpack.MAXITEMSCOUNT }):**",
+                Name = $"Inventory **({ pet.Backpack.ItemCount }/{ Backpack.MAXITEMSCOUNT }):**",
                 Value = pet.Backpack.ToString()
             });
             embed.Footer = new EmbedFooterBuilder()
             {
-                Text = $"Дата рождения: { pet.Birthday }"
+                Text = $"Birthday: { pet.Birthday }"
             };
             return embed.Build();
         }

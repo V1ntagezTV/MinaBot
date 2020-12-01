@@ -1,14 +1,8 @@
 ﻿using MinaBot.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Discord;
 using MinaBot.Base.ActionInterfaces;
 using MinaBot.BotTamagochi.Models;
-using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics;
-using MinaBot.DefaultActions.Models;
 using MinaBot.Entity;
 using static MinaBot.MessageResult;
 

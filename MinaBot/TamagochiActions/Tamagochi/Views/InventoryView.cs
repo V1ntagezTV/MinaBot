@@ -51,9 +51,9 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
         {
             return new EmbedFieldBuilder()
             {
-                Name = "Статы",
-                Value = $"**Coins:** {pet.Money}\n" +
-                        $"**Level:** {pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})"
+                Name = "**Info:**",
+                Value = $"<a:coins:781827813715869696> `{pet.Money}`\n" +
+                        $"<:happines:781836925492264960> `{pet.Level.Level} ({pet.Level.CurrentExp}/{pet.Level.ExpToNextLevel})`\n"
             };
         }
         
@@ -61,7 +61,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
         {
             return new EmbedFieldBuilder()
             {
-                Name = "**ITEMS**",
+                Name = "**Items**",
                 Value = itemsEveryInLive,
                 IsInline = true
             };

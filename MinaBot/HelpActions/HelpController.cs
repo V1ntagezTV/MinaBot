@@ -24,12 +24,12 @@ namespace MinaBot.HelpActions
             new DefaultActionsController(),
             new TamagochiController(),
         };
-        public AActionCommand[] _GetAllActions()
+        public AActionCommand[] GetAllActions()
         {
             var result = new List<AActionCommand>();
             for (var ind = 0; ind < Controllers.Length; ind++)
             {
-                result.AddRange(Controllers[ind]._GetAllActions());
+                result.AddRange(Controllers[ind].GetAllActions());
             }
             return result.ToArray();
         }
@@ -49,7 +49,7 @@ namespace MinaBot.HelpActions
             }
             else
             {
-                var act = _GetAllActions().FirstOrDefault(act=> act.Options.Contains(Command.GetOptions));
+                var act = GetAllActions().FirstOrDefault(act=> act.Options.Contains(Command.GetOptions));
                 if (act is IHelper actHelper)
                 {
                     return new ActionHelpView(actHelper).GetView(Command);

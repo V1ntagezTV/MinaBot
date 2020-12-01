@@ -1,9 +1,4 @@
-﻿using MinaBot.Models;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-using static MinaBot.Models.Item;
+﻿using System;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
 {
@@ -15,6 +10,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
             LastConsume = DateTime.Now;
         }
         public int ID { get; set; }
+        public int TamagochiModelId { get; set; }
         private double score { get; set; }
         public double Score
         {
@@ -35,7 +31,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
                 }
             }
         }
-        public override double MinusEveryMinute => 0.4;
+        public override double MinusEveryMinute => 0.05;
         public override DateTime LastConsume { get; set; }
 
     }
