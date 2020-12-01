@@ -4,6 +4,11 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
 {
     public class Happiness : ACharacteristic
     {
+        public Happiness()
+        {
+            this.Score = 100;
+            LastConsume = DateTime.Now;
+        }
         public int ID { get; set; }
         public int TamagochiModelId { get; set; }
         private double score { get; set; }
@@ -25,12 +30,6 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Characteristics
                     score = value;
                 }
             }
-        }
-
-        public Happiness() 
-        {
-            this.Score = 100;
-            LastConsume = DateTime.Now;
         }
         public override double MinusEveryMinute => 0.3;
         public override DateTime LastConsume { get; set; }

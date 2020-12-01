@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions;
-using MinaBot.BotTamagochi.MVC.Tamagochi.View;
 using MinaBot.Main;
 using MinaBot.Models;
 using System;

@@ -2,8 +2,6 @@
 using MinaBot.BotTamagochi.ItemsPack;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace MinaBot.Models
@@ -12,6 +10,7 @@ namespace MinaBot.Models
     {
         public const int MAXITEMSCOUNT = 10;
         public int ID { get; set; }
+        public int TamagochiModelID { get; set; }
         public int Lenght { get; set; } = 10;
         public int ItemCount { get; set; } = 0;
         public string itemCollectionStringWithID { get; set; } = "";
