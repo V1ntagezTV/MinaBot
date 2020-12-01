@@ -25,6 +25,8 @@ namespace MinaBot.Controllers
 			Command = commandModel;
 			Context = context;
 		}
+		
+		public TamagochiController() { }
 
 		public AActionCommand[] GetAllActions()
         {
@@ -62,7 +64,7 @@ namespace MinaBot.Controllers
 		public MessageResult GetResult()
 		{
 			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
-			Actions = _GetAllActions();
+			Actions = GetAllActions();
 			var calledAction = GetActionOrDefault(Command.GetOptions);
 
 			if (Command.GetOptions == "create")
