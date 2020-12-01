@@ -3,6 +3,7 @@ using Discord;
 using MinaBot.Base.ActionInterfaces;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions;
 using MinaBot.DefaultActions.Models;
+using MinaBot.Entity;
 using MinaBot.Models;
 
 namespace MinaBot.DefaultActions.Actions.Question
@@ -17,8 +18,8 @@ namespace MinaBot.DefaultActions.Actions.Question
         
         public override MessageResult Invoke()
         {
-            using var data = new DefaultCommandContext();
-            var question = data.GetQuestionOrDefault(Command.GetOptions[0]);
+            using var data = new DataContext();
+            var question = data.GetQuestionOrDefault(Convert.ToInt32(Command.GetOptions));
             data.Questions.Remove(question);
             data.SaveChanges();
             return new MessageResult.BooleanView(true);

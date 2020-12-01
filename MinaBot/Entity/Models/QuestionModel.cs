@@ -6,7 +6,7 @@ namespace MinaBot.DefaultActions.Models
     {
         public int Id { get; set; }
         public long ChannelId { get; set; }
-        public long AuthorId { get; set; }
+        public UserModel Author { get; set; }
         public string Content { get; set; }
     }
 }
