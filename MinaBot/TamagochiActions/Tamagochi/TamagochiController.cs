@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Discord;
+using MinaBot.Base;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
 using MinaBot.Entity;
 using MinaBot.TamagochiActions.Tamagochi.Actions;
@@ -54,9 +55,9 @@ namespace MinaBot.Controllers
 			return new EmbedFieldBuilder()
 			{
 				Name = "<a:gifKotRoll:618924584703361035> Tamagochi",
-				Value = ":star: *m!pet <command> [arguments]*\n" +
-						string.Join(" | ", GetAllActions()
-						.Select(a => "`" + string.Join(" / ", a.Options) + "`")),
+				Value = $"{Icons.Star} *m!pet <command> [arguments]*\n" +
+				        string.Join(" | ", GetAllActions()
+					        .Select(a => "`" + string.Join(" / ", a.Options) + "`")),
 				IsInline = true
 			};
 		}
