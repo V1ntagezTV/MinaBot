@@ -1,18 +1,28 @@
 ﻿using Discord;
+using Discord.Rest;
+using Discord.WebSocket;
 using System;
+using System.Threading.Tasks;
 
 namespace MinaBot
 {
-    public class MessageResult
+    public abstract class MessageResult
     {
+        public abstract Task Invoke(SocketUserMessage message);
+
         private MessageResult() { }
 
         public class EmbedView: MessageResult
         {
             public Embed Data { get; private set; }
-            public EmbedView(Embed data): base()
+            public EmbedView(Embed data)
             {
                 this.Data = data;
+            }
+
+            public override async Task Invoke(SocketUserMessage message)
+            {
+                await message.Channel.SendMessageAsync(embed: Data);
             }
         }
 
@@ -22,6 +32,11 @@ namespace MinaBot
             public MessageView(string data)
             {
                 this.Data = data;
+            }
+
+            public override async Task Invoke(SocketUserMessage message)
+            {
+                await message.Channel.SendMessageAsync(text: Data);
             }
         }
 
@@ -37,6 +52,11 @@ namespace MinaBot
                 }
                 .Build();
             }
+
+            public override async Task Invoke(SocketUserMessage message)
+            {
+                await message.Channel.SendMessageAsync(embed: Exception);
+            }
         }
 
         public class BooleanView: MessageResult
@@ -46,8 +66,20 @@ namespace MinaBot
             {
                 Value = value;
             }
+
+            public override async Task Invoke(SocketUserMessage message)
+            {
+                if (Value) await message.AddReactionAsync(new Emoji("✅"));
+                else await message.AddReactionAsync(new Emoji("❌"));
+            }
         }
 
-        public class EmptyView: MessageResult { }
+        public class EmptyView : MessageResult
+        {
+            public override Task Invoke(SocketUserMessage message)
+            {
+                return Task.CompletedTask;
+            }
+        }
     }
 }

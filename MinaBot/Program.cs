@@ -36,18 +36,8 @@ namespace MinaBot
             {
                 var manager = new CommandManager(message);
                 var view = manager.GetViewResult();
-                _ = view switch
-                {
-                    EmbedView embView => message.Channel.SendMessageAsync(embed: embView.Data),
-                    MessageView messView => message.Channel.SendMessageAsync(text: messView.Data),
-                    ErrorView errorView => message.Channel.SendMessageAsync(embed: errorView.Exception),
-                    BooleanView boolView => boolView.Value ?
-                        message.AddReactionAsync(new Emoji("✅")) :
-                        message.AddReactionAsync(new Emoji("❌")),
-                    _ => throw new NotImplementedException()
-                };
+                await view.Invoke(msg);
             }
-            await Task.CompletedTask;
         }
 
         private Task Logging(LogMessage log)
