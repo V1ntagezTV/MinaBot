@@ -49,7 +49,8 @@ namespace MinaBot.HelpActions
             }
             else
             {
-                var act = GetAllActions().FirstOrDefault(act=> act.Options.Contains(Command.GetOptions));
+                var act = GetAllActions()
+                    .FirstOrDefault(act=> act.Options.Contains(Command.GetOptions));
                 if (act is IHelper actHelper)
                 {
                     return new ActionHelpView(actHelper).GetView(Command);

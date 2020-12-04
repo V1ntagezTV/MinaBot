@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Discord;
+using MinaBot.Base;
 using MinaBot.DefaultActions.Actions;
 using MinaBot.Models;
 using MinaBot.DefaultActions.Actions.Quote;
@@ -28,7 +29,7 @@ namespace MinaBot.DefaultActions
             return new EmbedFieldBuilder()
             {
                 Name = "<:global:781833312742014976> General",
-                Value = ":star: *m!<command> [arguments]*\n"
+                Value = $"{Icons.Star} *m!<command> [arguments]*\n"
                         + string.Join(" | ", GetAllActions()
                             .Select(a => "`" + string.Join(" / ", a.Options) + "`")),
                 IsInline = true

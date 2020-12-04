@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Discord;
+using MinaBot.Base;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
 using MinaBot.Entity;
 using MinaBot.TamagochiActions.Tamagochi.Actions;
@@ -25,6 +26,8 @@ namespace MinaBot.Controllers
 			Command = commandModel;
 			Context = context;
 		}
+		
+		public TamagochiController() { }
 
 		public AActionCommand[] GetAllActions()
         {
@@ -52,9 +55,9 @@ namespace MinaBot.Controllers
 			return new EmbedFieldBuilder()
 			{
 				Name = "<a:gifKotRoll:618924584703361035> Tamagochi",
-				Value = ":star: *m!pet <command> [arguments]*\n" +
-						string.Join(" | ", GetAllActions()
-						.Select(a => "`" + string.Join(" / ", a.Options) + "`")),
+				Value = $"{Icons.Star} *m!pet <command> [arguments]*\n" +
+				        string.Join(" | ", GetAllActions()
+					        .Select(a => "`" + string.Join(" / ", a.Options) + "`")),
 				IsInline = true
 			};
 		}
@@ -62,7 +65,7 @@ namespace MinaBot.Controllers
 		public MessageResult GetResult()
 		{
 			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
-			Actions = _GetAllActions();
+			Actions = GetAllActions();
 			var calledAction = GetActionOrDefault(Command.GetOptions);
 
 			if (Command.GetOptions == "create")
