@@ -108,12 +108,14 @@ namespace MinaBot.Controllers
 			} else
             {
 				if (action is ICheckable)
-                {
+				{
 					result = action.Invoke();
 				}
-				return new MessageView("нету у тебя прав хуй вонючий!");
+				else
+				{
+					return new EmptyView();
+				}
             }
-
 			if (action is IGetExperiance expAction)
 			{
 				var lastLevel = Pet.Level.Level;
