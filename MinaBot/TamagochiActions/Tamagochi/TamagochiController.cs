@@ -11,6 +11,7 @@ using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
 using MinaBot.Entity;
 using MinaBot.TamagochiActions.Tamagochi.Actions;
 using static MinaBot.MessageResult;
+using MinaBot.TamagochiActions.Tamagochi.Actions.Interfaces;
 
 namespace MinaBot.Controllers
 {
@@ -65,7 +66,15 @@ namespace MinaBot.Controllers
 
 		public MessageResult GetResult()
 		{
-			Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
+			if (Command.GetMessage.MentionedUsers.Count == 0)
+            {
+				Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
+			} else
+            {
+				var mentionedUser = Command.GetMessage.MentionedUsers.First();
+				Pet = Context.GetPetOrDefault(mentionedUser.Id);
+			}
+			
 			Actions = GetAllActions();
 			var calledAction = GetActionOrDefault(Command.GetOptions);
 
@@ -93,8 +102,21 @@ namespace MinaBot.Controllers
 		private MessageResult InvokeAction(APetActionCommand? action)
 		{
 			if (action == null) return new EmptyView();
-
-			MessageResult result = action.Invoke();
+			MessageResult result;
+			if (Pet.UserModel.DiscordId == Command.GetMessage.Author.Id)
+            {
+				result = action.Invoke();
+			} else
+            {
+				if (action is ICheckable)
+				{
+					result = action.Invoke();
+				}
+				else
+				{
+					return new EmptyView();
+				}
+            }
 			if (action is IGetExperiance expAction)
 			{
 				var lastLevel = Pet.Level.Level;
@@ -108,13 +130,14 @@ namespace MinaBot.Controllers
 			return result;
 		}
 
-		private APetActionCommand GetActionOrDefault(string? messageOptions)
+		private APetActionCommand GetActionOrDefault(string? actionOptions)
         {
-	        if (messageOptions == null) return new PetViewAction(Pet, Command);
-	        for (var ind = 0; ind < Actions.Length; ind++)
+	        if (actionOptions == null) return new PetViewAction(Pet, Command); //message: m!pet
+			if (actionOptions.StartsWith("<@!")) return new PetViewAction(Pet, Command); //message m!pet <@!userId>
+			for (var ind = 0; ind < Actions.Length; ind++)
 			{
 				var cmd = Actions[ind] as APetActionCommand;
-				if (cmd.Options.Contains(messageOptions))
+				if (cmd.Options.Contains(actionOptions))
 				{
 					return cmd;
 				}

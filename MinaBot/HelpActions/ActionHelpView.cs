@@ -29,7 +29,7 @@ namespace MinaBot.HelpActions
                     Name = "Penguin", 
                     IconUrl = Program.client.Rest.CurrentUser.GetAvatarUrl()
                 },
-                Description = $"*{Act.Title}*\n{Act.Description}",
+                Description = $"{Act.Description}\n*Example:*```fix\n{Act.Title}```",
                 Color = new Color((uint)Convert.ToInt32("f47e17", 16)),
                 Footer = new EmbedFooterBuilder()
                 {
