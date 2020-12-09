@@ -10,7 +10,7 @@ namespace MinaBot
     class Program
     {
         public static DiscordSocketClient client;
-        private const string TOKEN = @"";
+        private const string TOKEN = @"NTY2ODk2NDc2NzU2NjM5NzQ0.XLLpfA.jljA2cNl1PIkywzTrG1M-jBUOU8";
         private const string BOT_PREFIX = "m!";
         public static void Main(string[] args)
         {
@@ -36,7 +36,7 @@ namespace MinaBot
             {
                 var manager = new CommandManager(message);
                 var view = manager.GetViewResult();
-                await view.Invoke(msg);
+                view.Invoke(msg);
             }
         }
 

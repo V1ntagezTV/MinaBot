@@ -6,6 +6,8 @@ using MinaBot.Main;
 using MinaBot.Models;
 using System;
 using System.Linq;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 using static MinaBot.MessageResult;
 
 namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
@@ -41,10 +43,10 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
             embed.AddField(new EmbedFieldBuilder()
             {
                 Name = "**Stats:**",
-                Value = $":heart:  Health: `{ pet.Health.Score }`\n" +
-                        $":meat_on_bone:  Hungry: `{ pet.Hungry.Score }`\n" +
-                        $":sweat_drops:  Thirsty: `{ pet.Thirsty.Score }`\n" +
-                        $":partying_face:   Happines: `{ pet.Happiness.Score }`",
+                Value = $":heart: { GetPetStatBar("health", pet.Health.Score) }\n" +
+                        $":meat_on_bone: { GetPetStatBar("meal", pet.Hungry.Score) }\n" +
+                        $":sweat_drops: { GetPetStatBar("water", pet.Thirsty.Score) }\n" +
+                        $":partying_face: `{ pet.Happiness.Score }`",
                 IsInline = true
             });
             embed.AddField(new EmbedFieldBuilder()
@@ -66,6 +68,59 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.View
                 Text = $"Birthday: { pet.Birthday }"
             };
             return embed.Build();
+        }
+        // Types: meal, water, health.
+        private string GetPetStatBar(string barType, double score)
+        {
+            var barCount = 5;
+            var showedBarCount = 0;
+            var result = new StringBuilder();
+            var usedBars = GetTypeBar(barType);
+            var fullCount = (int)(score / 20);
+            showedBarCount += fullCount;
+            var partBar = GetPartBarOrDefault((int)(score % 20), usedBars);
+            for (var i = 0; i < fullCount; i++)
+            {
+                result.Append(usedBars[0]);
+            }
+
+            if (partBar != null)
+            {
+                result.Append(partBar);
+                fullCount++;
+            }
+
+            for (int i = 0; i < barCount - fullCount; i++)
+            {
+                result.Append(Icons.EmptyBar);
+            }
+            return result.ToString();
+        }
+
+        private string GetPartBarOrDefault(int score, string[] usedBars)
+        {
+            string barIcon = null;
+            for (int i = 0, ind = 4; ind >= 0; i += 4, ind--)
+            {
+                if (score > i && score <= i + 4)
+                {
+                    barIcon = usedBars[ind];
+                }
+            }
+            return barIcon;
+        }
+
+        private string[] GetTypeBar(string barType)
+        {
+            string[] result;
+            if (barType == "health") result =
+                new[] { Icons.Hp100Bar,Icons.Hp80Bar, Icons.Hp60Bar, Icons.Hp40Bar, Icons.Hp20Bar };
+            else if (barType == "water") result = 
+                new[] {Icons.Water100Bar, Icons.Water80Bar, Icons.Water60Bar, Icons.Water40Bar, Icons.Water20Bar };
+            else if (barType == "meal") result =
+                new[] {Icons.Meal100Bar,Icons.Meal80Bar, Icons.Meal60Bar, Icons.Meal40Bar, Icons.Meal20Bar };
+            else throw new Exception($"barType: {barType} was undefinite.");
+            return result;
         }
     }
 }
