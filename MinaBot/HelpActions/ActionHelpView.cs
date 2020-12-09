@@ -26,7 +26,7 @@ namespace MinaBot.HelpActions
                 Title = cmdModel.GetOptions,
                 Author = new EmbedAuthorBuilder()
                 {
-                    Name = "Penguin", 
+                    Name = Program.client.Rest.CurrentUser.Username, 
                     IconUrl = Program.client.Rest.CurrentUser.GetAvatarUrl()
                 },
                 Description = $"{Act.Description}\n*Example:*```fix\n{Act.Title}```",
