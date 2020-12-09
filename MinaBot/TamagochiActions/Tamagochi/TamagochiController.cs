@@ -46,7 +46,8 @@ namespace MinaBot.Controllers
 				new ChangeStatusAction(Pet, Command),
 				new ShopViewAction(Pet, Command),
 				new CreateAction(Pet, Command, Context),
-				new DeleteAction(Pet, Command, Context), 
+				new DeleteAction(Pet, Command, Context),
+				new TradeAction(Pet, Command), 
 			};
         }
 
@@ -103,11 +104,7 @@ namespace MinaBot.Controllers
 				   Task.Run(() => new LevelUpAction(Pet, Command).SendResultInChannel());
 				}
 			}
-			if (action.NeedToSaveInData)
-			{
-				Console.Write("Saving!");
-				Context.SaveChanges();
-			}
+			Context.SaveChanges();
 			return result;
 		}
 

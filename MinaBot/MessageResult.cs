@@ -74,12 +74,14 @@ namespace MinaBot
             }
         }
 
-        public class EmptyView : MessageResult
+        public class EmptyView: MessageResult
         {
             public override Task Invoke(SocketUserMessage message)
             {
                 return Task.CompletedTask;
             }
         }
+
+        public abstract class CustomViewToGet : MessageResult { }
     }
 }
