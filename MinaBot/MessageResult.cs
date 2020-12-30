@@ -82,6 +82,6 @@ namespace MinaBot
             }
         }
 
-        public abstract class CustomViewToGet : MessageResult { }
+        public abstract class CustomView : MessageResult { }
     }
 }

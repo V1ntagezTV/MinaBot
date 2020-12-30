@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Discord;
+using Discord.WebSocket;
 using MinaBot.Base;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces;
 using MinaBot.Entity;
@@ -48,7 +49,6 @@ namespace MinaBot.Controllers
 				new ShopViewAction(Pet, Command),
 				new CreateAction(Pet, Command, Context),
 				new DeleteAction(Pet, Command, Context),
-				new TradeAction(Pet, Command), 
 			};
         }
 
@@ -66,13 +66,15 @@ namespace MinaBot.Controllers
 
 		public MessageResult GetResult()
 		{
+			SocketUser petUser = null;
 			if (Command.GetMessage.MentionedUsers.Count == 0)
-            {
-				Pet = Context.GetPetOrDefault(Command.GetMessage.Author.Id);
+			{
+				petUser = Command.GetMessage.Author;
+				Pet = Context.GetPetOrDefault(petUser.Id);
 			} else
             {
-				var mentionedUser = Command.GetMessage.MentionedUsers.First();
-				Pet = Context.GetPetOrDefault(mentionedUser.Id);
+	            petUser = Command.GetMessage.MentionedUsers.First();
+				Pet = Context.GetPetOrDefault(petUser.Id);
 			}
 			
 			Actions = GetAllActions();
@@ -88,12 +90,12 @@ namespace MinaBot.Controllers
             }
 			if (Pet == null)
 			{
-				return new ErrorView("You need create your pet with `m!pet create` command.");
+				return new ErrorView($"{petUser.Mention} need create pet with `m!pet create` command.");
 			}
 			UpdateStats(DateTime.Now, Pet);
 			if (Pet.Health.Score == 0)
 			{
-				return new ErrorView($"I'm sorry, but your pet: {Pet.ID}{Pet.Name} is dead.\n" +
+				return new ErrorView($"Your pet: {Pet.ID}{Pet.Name} is dead.\n" +
 					$" You need to recreate your tamagochi.");
             }
 			return InvokeAction(calledAction);

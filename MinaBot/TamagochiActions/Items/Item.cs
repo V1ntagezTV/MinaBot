@@ -14,13 +14,12 @@
         {
             this.Name = name;
             this.Price = price;
-            this.SoldPrice = (int)((double)price / 100 * 75);
             this.Rarity = rarity;
         }
         public int Id { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
-        public int SoldPrice { get; set; }
+        public int SoldPrice => (int)((double)Price / 100 * 75);
         /*
          * Drop chance in %.
          * Example: if generated random was bigger then drop chance you didn't get this item. 

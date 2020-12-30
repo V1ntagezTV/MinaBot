@@ -4,71 +4,61 @@
     {
       "Id": 1,
       "Name": ":socks:",
-      "Price": 50,
-      "SoldPrice": 37,
+      "Price": 10,
       "Rarity": 50
     },
     {
       "Id": 3,
       "Name": ":womans_flat_shoe:",
-      "Price": 1000,
-      "SoldPrice": 750,
+      "Price":  10,
       "Rarity": 50
     },
     {
       "Id": 8,
       "Name": ":mans_shoe:",
-      "Price": 1400,
-      "SoldPrice": 1050,
+      "Price": 100,
       "Rarity": 25
     },
     {
       "Id": 5,
       "Name": ":sandal:",
-      "Price": 1500,
-      "SoldPrice": 1125,
+      "Price": 15,
       "Rarity": 50
     },
     {
       "Id": 2,
       "Name": ":ice_skate:",
-      "Price": 2000,
-      "SoldPrice": 1500,
+      "Price": 1000,
       "Rarity": 25
     },
     {
       "Id": 7,
       "Name": ":ballet_shoes:",
-      "Price": 2000,
-      "SoldPrice": 1500,
+      "Price": 1000,
       "Rarity": 5
     },
     {
       "Id": 6,
       "Name": ":boot:",
-      "Price": 3000,
-      "SoldPrice": 2250,
+      "Price": 1500,
       "Rarity": 25
     },
     {
       "Id": 9,
       "Name": ":athletic_shoe:",
-      "Price": 5000,
-      "SoldPrice": 3750,
+      "Price": 2000,
       "Rarity": 25
     },
     {
       "Id": 10,
       "Name": ":hiking_boot:",
-      "Price": 5000,
-      "SoldPrice": 3750,
+      "Price": 2000,
       "Rarity": 25
     },
     {
       "Id": 4,
       "Name": ":high_heel:",
       "Price": 10000,
-      "SoldPrice": 7500,
       "Rarity": 5
     }
   ],
@@ -76,43 +66,37 @@
     {
       "Id": 23,
       "Name": ":womans_hat:",
-      "Price": 1000,
-      "SoldPrice": 750,
+      "Price": 2000,
       "Rarity": 5
     },
     {
       "Id": 26,
       "Name": ":mortar_board:",
       "Price": 1000,
-      "SoldPrice": 750,
       "Rarity": 25
     },
     {
       "Id": 25,
       "Name": ":billed_cap:",
       "Price": 1500,
-      "SoldPrice": 1125,
       "Rarity": 50
     },
     {
       "Id": 24,
       "Name": ":tophat:",
-      "Price": 3000,
-      "SoldPrice": 2250,
+      "Price": 1550,
       "Rarity": 50
     },
     {
       "Id": 27,
       "Name": ":helmet_with_cross:",
-      "Price": 3000,
-      "SoldPrice": 2250,
+      "Price": 5000,
       "Rarity": 5
     },
     {
       "Id": 28,
       "Name": ":crown:",
-      "Price": 5000,
-      "SoldPrice": 3750,
+      "Price": 10000,
       "Rarity": 1
     }
   ],
@@ -120,222 +104,193 @@
     {
       "Id": 33,
       "Name": ":shirt:",
-      "Price": 1000,
-      "SoldPrice": 750,
+      "Price": 1500,
       "Rarity": 50
     },
     {
       "Id": 40,
       "Name": ":running_shirt_with_sash:",
-      "Price": 1200,
-      "SoldPrice": 900,
+      "Price": 100,
       "Rarity": 50
     },
     {
       "Id": 30,
       "Name": ":lab_coat:",
       "Price": 1500,
-      "SoldPrice": 1125,
       "Rarity": 25
     },
     {
       "Id": 34,
       "Name": ":necktie:",
       "Price": 2000,
-      "SoldPrice": 1500,
       "Rarity": 5
     },
     {
       "Id": 38,
       "Name": ":kimono:",
       "Price": 2000,
-      "SoldPrice": 1500,
       "Rarity": 5
     },
     {
       "Id": 32,
       "Name": ":womans_clothes:",
-      "Price": 2500,
-      "SoldPrice": 1875,
+      "Price": 250,
       "Rarity": 50
     },
     {
       "Id": 36,
       "Name": ":bikini:",
-      "Price": 3000,
-      "SoldPrice": 2250,
+      "Price": 3500,
       "Rarity": 5
     },
     {
       "Id": 37,
       "Name": ":one_piece_swimsuit:",
-      "Price": 3000,
-      "SoldPrice": 2250,
+      "Price": 1500,
       "Rarity": 25
     },
     {
       "Id": 41,
       "Name": ":martial_arts_uniform:",
-      "Price": 3000,
-      "SoldPrice": 2250,
+      "Price": 7000,
       "Rarity": 1
     },
     {
       "Id": 29,
       "Name": ":coat:",
-      "Price": 4000,
-      "SoldPrice": 3000,
+      "Price": 1000,
       "Rarity": 50
     },
     {
       "Id": 31,
       "Name": ":safety_vest:",
-      "Price": 4000,
-      "SoldPrice": 3000,
+      "Price": 2500,
       "Rarity": 25
     },
     {
       "Id": 39,
       "Name": ":sari:",
       "Price": 5000,
-      "SoldPrice": 3750,
       "Rarity": 25
     },
     {
       "Id": 35,
       "Name": ":dress:",
       "Price": 7000,
-      "SoldPrice": 5250,
       "Rarity": 1
     }
   ],
   "Liquids": [
     {
-      "Satiety": 20,
+      "Satiety": 5,
       "Id": 45,
       "Name": ":coffee:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 10,
       "Rarity": 50
     },
     {
-      "Satiety": 20,
+      "Satiety": 5,
       "Id": 46,
       "Name": ":tea:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 10,
       "Rarity": 50
     },
     {
       "Satiety": 20,
       "Id": 47,
       "Name": ":baby_bottle:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 25,
       "Rarity": 50
     },
     {
       "Satiety": 20,
       "Id": 48,
       "Name": ":milk:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 25,
       "Rarity": 50
     },
     {
       "Satiety": 20,
       "Id": 49,
       "Name": ":tumbler_glass:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 25,
       "Rarity": 50
     },
     {
-      "Satiety": 20,
+      "Satiety": 30,
       "Id": 50,
       "Name": ":mate:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 35,
       "Rarity": 25
     },
     {
-      "Satiety": 20,
+      "Satiety": 30,
       "Id": 51,
       "Name": ":bubble_tea:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 35,
       "Rarity": 25
     },
     {
-      "Satiety": 20,
+      "Satiety": 30,
       "Id": 52,
       "Name": ":beverage_box:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 35,
       "Rarity": 25
     },
     {
-      "Satiety": 20,
+      "Satiety": 30,
       "Id": 53,
       "Name": ":cup_with_straw:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 35,
       "Rarity": 25
     },
     {
-      "Satiety": 20,
+      "Satiety": 30,
       "Id": 54,
       "Name": ":cocktail:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 35,
       "Rarity": 25
     },
     {
-      "Satiety": 20,
+      "Satiety": 50,
       "Id": 55,
       "Name": ":sake:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 35,
       "Rarity": 5
     },
     {
-      "Satiety": 20,
+      "Satiety": 75,
       "Id": 56,
       "Name": ":wine_glass:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 200,
       "Rarity": 5
     },
     {
-      "Satiety": 20,
+      "Satiety": 80,
       "Id": 57,
       "Name": ":tropical_drink:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 250,
       "Rarity": 5
     },
     {
-      "Satiety": 20,
+      "Satiety": 100,
       "Id": 58,
       "Name": ":champagne:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 500,
       "Rarity": 1
     },
     {
-      "Satiety": 20,
+      "Satiety": 85,
       "Id": 59,
       "Name": ":beer:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 550,
       "Rarity": 1
     },
     {
-      "Satiety": 20,
+      "Satiety": 100,
       "Id": 60,
       "Name": ":honey_pot:",
-      "Price": 0,
-      "SoldPrice": 0,
+      "Price": 500,
       "Rarity": 1
     }
   ],
@@ -345,7 +300,6 @@
       "Id": 11,
       "Name": ":bone:",
       "Price": 0,
-      "SoldPrice": 0,
       "Rarity": 50
     },
     {
@@ -353,87 +307,76 @@
       "Id": 12,
       "Name": ":poop:",
       "Price": 0,
-      "SoldPrice": 0,
       "Rarity": 50
     },
     {
       "Satiety": 10,
       "Id": 13,
       "Name": ":egg:",
-      "Price": 5,
-      "SoldPrice": 3,
+      "Price": 15,
       "Rarity": 50
     },
     {
       "Satiety": 20,
       "Id": 14,
       "Name": ":chocolate_bar:",
-      "Price": 10,
-      "SoldPrice": 7,
+      "Price": 55,
       "Rarity": 50
     },
     {
       "Satiety": 30,
       "Id": 15,
       "Name": ":apple:",
-      "Price": 15,
-      "SoldPrice": 11,
+      "Price": 80,
       "Rarity": 50
     },
     {
       "Satiety": 40,
       "Id": 16,
       "Name": ":watermelon:",
-      "Price": 20,
-      "SoldPrice": 15,
+      "Price": 105,
       "Rarity": 50
     },
     {
       "Satiety": 50,
       "Id": 17,
       "Name": ":bread:",
-      "Price": 25,
-      "SoldPrice": 18,
+      "Price": 135,
       "Rarity": 50
     },
     {
       "Satiety": 60,
       "Id": 18,
       "Name": ":crab:",
-      "Price": 30,
-      "SoldPrice": 22,
+      "Price": 155,
       "Rarity": 50
     },
     {
       "Satiety": 70,
       "Id": 19,
       "Name": ":beer:",
-      "Price": 35,
-      "SoldPrice": 26,
+      "Price": 170,
       "Rarity": 25
     },
     {
       "Satiety": 80,
       "Id": 20,
       "Name": ":ramen:",
-      "Price": 40,
-      "SoldPrice": 30,
+      "Price": 220,
       "Rarity": 5
     },
     {
       "Satiety": 90,
       "Id": 21,
       "Name": ":chicken:",
-      "Price": 45,
-      "SoldPrice": 33,
+      "Price": 260,
       "Rarity": 5
     },
     {
       "Satiety": 100,
       "Id": 22,
       "Name": ":pizza:",
-      "Price": 50,
-      "SoldPrice": 37,
+      "Price": 300,
       "Rarity": 1
     }
   ],
@@ -441,22 +384,19 @@
     {
       "Id": 42,
       "Name": ":briefs:",
-      "Price": 300,
-      "SoldPrice": 225,
+      "Price": 500,
       "Rarity": 50
     },
     {
       "Id": 43,
       "Name": ":shorts:",
-      "Price": 1000,
-      "SoldPrice": 750,
+      "Price": 500,
       "Rarity": 50
     },
     {
       "Id": 44,
       "Name": ":jeans:",
-      "Price": 2000,
-      "SoldPrice": 1500,
+      "Price": 1000,
       "Rarity": 25
     }
   ]
