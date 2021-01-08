@@ -59,6 +59,24 @@ namespace MinaBot
             }
         }
 
+        public class ApprovedView : MessageResult
+        {
+            public Embed ApprovedEmbed;
+            public ApprovedView(string approveText)
+            {
+                ApprovedEmbed = new EmbedBuilder()
+                {
+                    Description = approveText,
+                    Color = Color.Green
+                }
+                .Build();
+            }
+            public override async Task Invoke(SocketUserMessage message)
+            {
+                await message.Channel.SendMessageAsync(embed: ApprovedEmbed);
+            }
+        }
+
         public class BooleanView: MessageResult
         {
             public bool Value { get; private set; }

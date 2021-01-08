@@ -51,6 +51,7 @@ namespace MinaBot.DefaultActions
                 new AnswerQuestionAction(Command),
                 new DeleteQuestionAction(Command),
                 new GetRandomQuestionAction(Command),
+                new ChooseAction(Command), 
             };
         }
 
