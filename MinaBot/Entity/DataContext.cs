@@ -63,7 +63,7 @@ namespace MinaBot.Entity
             .Include(q => q.Author)
             .FirstOrDefault(q => q.Id == id);
         
-        public TamagochiModel? GetPetOrDefault(ulong discordId)
+        public TamagochiModel GetPetOrDefault(ulong discordId)
         {
             return this.Pets
                 .Include(p => p.UserModel)
