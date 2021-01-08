@@ -38,6 +38,7 @@ namespace MinaBot
                 var view = manager.GetViewResult();
                 view.Invoke(msg);
             }
+            await Task.CompletedTask;
         }
 
         private Task Logging(LogMessage log)
