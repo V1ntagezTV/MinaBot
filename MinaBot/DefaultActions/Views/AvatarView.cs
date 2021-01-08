@@ -40,7 +40,7 @@ namespace MinaBot.DefaultActions.Views
                     dislikes++;
                 await Task.CompletedTask;
             }
-            var delay = Task.Delay(TimeSpan.FromSeconds(10));
+            var delay = Task.Delay(TimeSpan.FromSeconds(15));
             var task = await Task.WhenAny(delay).ConfigureAwait(false);
             Program.client.ReactionAdded -= AvatarReaction;
 
@@ -74,7 +74,7 @@ namespace MinaBot.DefaultActions.Views
 
         private Embed CreateEmbed(IUser discordUser, UserModel entityUser)
         {
-            var fullSizeAvatarUrl = discordUser.GetAvatarUrl().Replace("128", "1024");
+            var fullSizeAvatarUrl = discordUser.GetAvatarUrl().Replace("size=128", "size=1024");
             var embed = new EmbedBuilder();
             embed.ImageUrl = fullSizeAvatarUrl;
             embed.Url = discordUser.GetAvatarUrl();
