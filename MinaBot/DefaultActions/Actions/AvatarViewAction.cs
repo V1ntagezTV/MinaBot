@@ -1,7 +1,10 @@
-﻿using Discord;
+﻿using System.Linq;
+using Discord;
 using MinaBot.Base.ActionInterfaces;
 using MinaBot.BotTamagochi.MVC.Tamagochi.Actions;
+using MinaBot.DefaultActions.Models;
 using MinaBot.DefaultActions.Views;
+using MinaBot.Entity;
 using MinaBot.Models;
 
 namespace MinaBot.DefaultActions.Actions
@@ -14,7 +17,9 @@ namespace MinaBot.DefaultActions.Actions
         
         public AvatarViewAction(CommandModel command) : base(command) { }
 
-        public override MessageResult Invoke() => new AvatarView().GetView(Command);
-
+        public override MessageResult Invoke()
+        {
+            return new AvatarView();
+        }
     }
 }

@@ -1,35 +1,85 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Discord;
+using Discord.Rest;
+using Discord.WebSocket;
+using Microsoft.EntityFrameworkCore;
+using MinaBot.DefaultActions.Models;
+using MinaBot.Entity;
 using MinaBot.Main;
 using MinaBot.Models;
 
 namespace MinaBot.DefaultActions.Views
 {
-    public class AvatarView : IView
+    public class AvatarView : MessageResult.CustomView
     {
-        private CommandModel _command;
-        public MessageResult GetView(CommandModel cmdModel)
+        private DataContext Data = new DataContext();
+
+
+        public override async Task Invoke(SocketUserMessage message)
         {
-            _command = cmdModel;
-            return new MessageResult.EmbedView(ConstructEmbed());
+            var discordTargetUser = GetTargetDiscordUser(message);
+            var entityTargetUser = GetTargetEntityUser(message, discordTargetUser);
+            var embed = CreateEmbed(discordTargetUser, entityTargetUser);
+            var messageEmbed = await message.Channel.SendMessageAsync(embed: embed);
+            await messageEmbed.AddReactionAsync(new Emoji("👍"));
+            await messageEmbed.AddReactionAsync(new Emoji("👎"));
+            
+            var likes = 0;
+            var dislikes = 0;
+            Program.client.ReactionAdded += AvatarReaction;
+            async Task AvatarReaction(Cacheable<IUserMessage, ulong> arg1, ISocketMessageChannel arg2, SocketReaction arg3)
+            {
+                if (arg3.MessageId != messageEmbed.Id) return;
+                if (arg3.UserId == Program.client.CurrentUser.Id) return;
+                if ($"{arg3.Emote}" == "👍")
+                    likes++;
+                else if ($"{arg3.Emote}" == "👎")
+                    dislikes++;
+                await Task.CompletedTask;
+            }
+            var delay = Task.Delay(TimeSpan.FromSeconds(10));
+            var task = await Task.WhenAny(delay).ConfigureAwait(false);
+            Program.client.ReactionAdded -= AvatarReaction;
+
+            entityTargetUser.AvatarLikesCount += likes;
+            entityTargetUser.AvatarDislikesCount += dislikes;
+            Data.Update(entityTargetUser);
+            Data.SaveChanges();
         }
 
-        public Embed ConstructEmbed()
+        private UserModel GetTargetEntityUser(SocketUserMessage message, IUser targetDiscordUser)
         {
-            var content = _command.GetMessage.Content.Split();
+            var user = Data.Users.FirstOrDefault(u => u.DiscordId == targetDiscordUser.Id);
+            if (user == null)
+            {
+                user = new UserModel() { DiscordId = targetDiscordUser.Id };
+                Data.Add(user);
+                Data.SaveChanges();
+            }
+            return user;
+        }
+
+        private IUser GetTargetDiscordUser(SocketUserMessage message)
+        {
+            var targetUser = message.Author;
+            if (message.MentionedUsers.Count != 0)
+            {
+                targetUser = message.MentionedUsers.First();
+            }
+            return targetUser;
+        }
+
+        private Embed CreateEmbed(IUser discordUser, UserModel entityUser)
+        {
+            var fullSizeAvatarUrl = discordUser.GetAvatarUrl().Replace("128", "1024");
             var embed = new EmbedBuilder();
-            if (content.Length == 1)
-            {
-                embed.ImageUrl = _command.GetMessage.Author.GetAvatarUrl();
-                embed.Title = ((IGuildUser) _command.GetMessage.Author).Nickname;
-            }
-            else
-            {
-                var user = _command.GetMessage.MentionedUsers.First();
-                embed.ImageUrl = user.GetAvatarUrl();
-                embed.Title = user.Username;
-                embed.Description = user.Discriminator;
-            }
+            embed.ImageUrl = fullSizeAvatarUrl;
+            embed.Url = discordUser.GetAvatarUrl();
+            embed.Title = $"{discordUser}";
+            embed.WithDescription($":thumbsup: **{entityUser.AvatarLikesCount} :thumbsdown: {entityUser.AvatarDislikesCount}**");
             return embed.Build();
         }
     }

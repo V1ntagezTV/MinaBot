@@ -10,5 +10,7 @@ namespace MinaBot.DefaultActions.Models
         public ulong DiscordId { get; set; }
         public List<QuestionModel> Questions { get; set; }
         public List<QuoteModel> Quotes { get; set; }
+        public int AvatarLikesCount { get; set; }
+        public int AvatarDislikesCount { get; set; }
     }
 }
