@@ -29,7 +29,7 @@ namespace MinaBot.HelpActions
                     Name = Program.client.Rest.CurrentUser.Username, 
                     IconUrl = Program.client.Rest.CurrentUser.GetAvatarUrl()
                 },
-                Description = $"{Act.Description}\n*Example:*```fix\n{Act.Title}```",
+                Description = Act.Description,
                 Color = new Color((uint)Convert.ToInt32("f47e17", 16)),
                 Footer = new EmbedFooterBuilder()
                 {
@@ -37,6 +37,11 @@ namespace MinaBot.HelpActions
                     Text = cmdModel.GetMessage.Author.Username+" | "+DateTime.Now.ToShortTimeString()
                 }
             };
+            embed.AddField(new EmbedFieldBuilder()
+            {
+                Name = "Example:",
+                Value = $"```fix\n{Act.Title}```"
+            });
             return embed.Build();
         }
     }
