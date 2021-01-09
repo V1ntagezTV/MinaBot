@@ -10,7 +10,7 @@ namespace MinaBot.DefaultActions.Actions.Question
 {
     public class DeleteQuestionAction : AActionCommand, IHelper
     {
-        public string Title => "**m!delask <ask-id>**";
+        public string Title => "m!delask <ask-id>";
         public string Description => "Delete your question.";
         public override string[] Options => new[] { "delask", "dask" };
         

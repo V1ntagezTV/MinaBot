@@ -11,7 +11,7 @@ namespace MinaBot.DefaultActions.Actions
 {
     public class RoleNameChange : AActionCommand, IHelper
     {
-        public string Title => "**m!rolename <name>**";
+        public string Title => "m!rolename <name>";
         public string Description => "Set new role name to your own role.";
         public override string[] Options => new []{"rolename"};
         

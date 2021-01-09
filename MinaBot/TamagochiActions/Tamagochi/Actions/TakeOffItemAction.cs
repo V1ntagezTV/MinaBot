@@ -7,7 +7,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
     public class TakeOffItemAction : APetActionCommand, IHelper
     {
-        public string Title => "**m!pet takeoff <item-type>**";
+        public string Title => "m!pet takeoff <item-type>";
         public string Description =>
             "Return weared items in your invetory\n Item types: 'h'-hat, 'j'-jacket, 'p'-pants, 'b'-boots.";
         public override string[] Options => new[] {"takeoff"};

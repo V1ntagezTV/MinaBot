@@ -10,7 +10,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
     class ClothesViewAction : APetActionCommand, IHelper
     {
-        public string Title => "**m!pet clothes**";
+        public string Title => "m!pet clothes";
         public string Description => "Get info about weared items.";
         public override string[] Options => new[] { "clothes", "c" };
         

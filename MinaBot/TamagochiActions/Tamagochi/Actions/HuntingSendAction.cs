@@ -9,7 +9,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
     class HuntingSendAction : APetActionCommand, IGetExperiance, IHelper
     {
 		static readonly TimeSpan Length = new TimeSpan(0, 0, 10);
-		public string Title => "**m!pet hunt**";
+		public string Title => "m!pet hunt";
 	    public string Description =>
 		    $"Send your pet on a hunting for items.\nGives experience to your pet.\nLenght: {Length.TotalMinutes} min.";
 	    public override string[] Options => new[] { "hunt" };

@@ -17,7 +17,7 @@ namespace MinaBot.DefaultActions.Actions
     public class QuoteViewAction : AActionCommand, IHelper
     {
 
-        public string Title => "**m!pasta <pasta-prefix>**";
+        public string Title => "m!pasta <pasta-prefix>";
         public string Description => "Call your own pasta.";
         public override string[] Options => new[] { "pasta" };
         

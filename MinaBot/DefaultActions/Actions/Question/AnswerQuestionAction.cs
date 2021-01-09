@@ -14,7 +14,7 @@ namespace MinaBot.DefaultActions.Actions.Question
     public class AnswerQuestionAction : AActionCommand, IHelper
     {
         public override string[] Options => new[] { "answer" };
-        public string Title => "**m!answer <ask-id>**";
+        public string Title => "m!answer <ask-id>";
         public string Description => "Answer to random questions to real people in other servers.";
         
         public AnswerQuestionAction(CommandModel command) : base(command) { }

@@ -12,7 +12,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
     class EatAction : APetActionCommand, IGetExperiance, IHelper
     {
-        public string Title => "**m!pet eat <item-index>**";
+        public string Title => "m!pet eat <item-index>";
         public string Description => "Feed your pet with water and meal.\nItem index from your invetory (1-10).";
         public override string[] Options => new[] { "eat" };
         

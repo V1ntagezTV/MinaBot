@@ -13,7 +13,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
     class DeleteAction : APetActionCommand, IHelper
     {
-        public string Title => "**m!pet delete**";
+        public string Title => "m!pet delete";
         public string Description => "Delete your pet.\nUse it if your pet was dead.";
         public override string[] Options => new[] { "delete" };
         private DataContext context;

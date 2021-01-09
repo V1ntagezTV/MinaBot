@@ -11,7 +11,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
     class ChangeNameAction : APetActionCommand, IHelper
     {
-        public string Title => "**m!pet name <new_name>**";
+        public string Title => "m!pet name <new_name>";
         public string Description => "Answer to random questions to real people in other servers.";
         public override string[] Options => new[] { "name" };
         

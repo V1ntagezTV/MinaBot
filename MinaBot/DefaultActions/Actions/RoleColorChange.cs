@@ -10,7 +10,7 @@ namespace MinaBot.DefaultActions.Actions
 {
     public class RoleColorChange : AActionCommand, IHelper
     {
-        public string Title => "**m!rolecolor <role-mention> <hex-color>**";
+        public string Title => "m!rolecolor <role-mention> <hex-color>";
         public string Description => "Change own role color.";
         public override string[] Options => new[] {"rolecolor"};
         

@@ -10,7 +10,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
     public class ChangeStatusAction : APetActionCommand, IHelper
     {
-        public string Title => "**m!pet status <new_status>**";
+        public string Title => "m!pet status <new_status>";
         public string Description => "Change your pet status.";
         public override string[] Options => new[] { "status", "s" };
         

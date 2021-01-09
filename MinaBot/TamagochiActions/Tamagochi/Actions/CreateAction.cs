@@ -10,7 +10,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
     class CreateAction : APetActionCommand, IHelper
     {
-        public string Title => "**m!pet create [pet_name]**";
+        public string Title => "m!pet create [pet_name]";
         public string Description => "Create new pet.\nYou can't have more pets then one.";
         public override string[] Options => new[] { "create" };
         

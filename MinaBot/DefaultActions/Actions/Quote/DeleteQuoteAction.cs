@@ -13,7 +13,7 @@ namespace MinaBot.DefaultActions.Actions.Quote
 {
     class DeleteQuoteAction : AActionCommand, IHelper
     {
-        public string Title => "**m!delpasta <pasta-prefix>**";
+        public string Title => "m!delpasta <pasta-prefix>";
         public string Description => "Remove your pasta.";
         public override string[] Options => new[] { "delpasta"};
         

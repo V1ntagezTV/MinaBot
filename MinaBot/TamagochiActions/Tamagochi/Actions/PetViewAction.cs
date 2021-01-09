@@ -8,7 +8,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions.Interfaces
 {
     public class PetViewAction : APetActionCommand, IHelper, ICheckable
     {
-        public string Title => "**m!pet**";
+        public string Title => "m!pet";
         public string Description => "Get information about your pet.";
         public override string[] Options { get; } = null;
         

@@ -12,7 +12,7 @@ namespace MinaBot.DefaultActions.Actions.Question
 {
     public class GetRandomQuestionAction : AActionCommand, IHelper
     {
-        public string Title => "**m!getask**";
+        public string Title => "m!getask";
         public string Description => "Get random questions.";
         public override string[] Options => new[] {"getask"};
         

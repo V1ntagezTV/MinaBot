@@ -12,7 +12,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
     class WearAction : APetActionCommand, IHelper
     {
-        public string Title => "**m!pet wear <itemIndex>**";
+        public string Title => "m!pet wear <itemIndex>";
         public string Description => "Wear items on your pet.\nItem index from your invetory (1-10).";
         public override string[] Options => new[] {"wear"};
         public WearAction(TamagochiModel pet, CommandModel cmd) 

@@ -16,7 +16,7 @@ namespace MinaBot.DefaultActions.Actions.Quote
 {
     class CreateQuoteAction : AActionCommand, IHelper
     {
-        public string Title => "**m!addpasta <prefix> <content> [imageLink]**";
+        public string Title => "m!addpasta <prefix> <content> [imageLink]";
         public string Description =>
             "Create quote with text or image or together and call it with prefix.\nExample:\nm!pasta <prefix>";
         public override string[] Options => new[] { "addpasta" };

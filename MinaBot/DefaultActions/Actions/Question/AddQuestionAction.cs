@@ -35,7 +35,7 @@ namespace MinaBot.DefaultActions.Actions.Question
             return new MessageResult.BooleanView(true);
         }
 
-        public string Title =>  "**m!ask <question>**";
+        public string Title =>  "m!ask <question>";
         public string Description => "Ask and get random answer from any servers and people.";
     }
 }

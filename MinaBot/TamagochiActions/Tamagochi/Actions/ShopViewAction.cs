@@ -8,7 +8,7 @@ namespace MinaBot.TamagochiActions.Tamagochi.Actions
 {
     public class ShopViewAction : APetActionCommand, IHelper
     {
-        public string Title => "**m!pet shop**";
+        public string Title => "m!pet shop";
         public string Description => "Buy items from shop.\nNew items in shop generated every day";
         public override string[] Options => new[] {"shop"};
         

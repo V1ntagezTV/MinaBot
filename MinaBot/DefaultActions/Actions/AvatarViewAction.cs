@@ -11,7 +11,7 @@ namespace MinaBot.DefaultActions.Actions
 {
     public class AvatarViewAction : AActionCommand, IHelper
     {
-        public string Title => "**m!avatar [mention]**";
+        public string Title => "m!avatar [mention]";
         public string Description => "Get avatar image.";
         public override string[] Options => new[] {"avatar"};
         

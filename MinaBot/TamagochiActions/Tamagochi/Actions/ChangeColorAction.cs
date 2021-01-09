@@ -6,7 +6,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
     public class ChangeColorAction : APetActionCommand, IHelper
     {
-        public string Title => "**m!pet color <hex-color>**";
+        public string Title => "m!pet color <hex-color>";
         public string Description => "Change embed-pet color.";
         public override string[] Options => new[] {"color"};
         

@@ -8,7 +8,7 @@ namespace MinaBot.BotTamagochi.MVC.Tamagochi.Actions
 {
     public class SoldItemAction : APetActionCommand, IHelper
     {
-        public string Title => "**m!pet sold <itemIndex>**";
+        public string Title => "m!pet sold <itemIndex>";
         public string Description => "Sold recieved items.\nItem index from your invetory (1-10).";
         public override string[] Options => new[] {"sold"};
         public SoldItemAction(TamagochiModel pet, CommandModel command) 
